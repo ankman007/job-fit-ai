@@ -1,0 +1,30 @@
+# Environment Files
+.env*
+.env.local
+
+# Python Cache
+__pycache__/
+*.py[cod]
+
+# Virtual Environments
+env/
+venv/
+
+# Database Files
+*.sqlite3
+
+# Django Migrations
+*/migrations/*
+
+# Logs & Temporary Files
+*.log
+*.pot
+*.pyc
+*.pyo
+
+# Environment Files
+.env
+.env.local
+
+# static files
+/core/staticfiles/

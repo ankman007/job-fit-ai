@@ -16,3 +16,12 @@ To address this challenge, I have built a Django-based web platform that helps j
    - **Company Insights** – Providing relevant information about the company, culture, and expectations.  
 
 This AI-driven interview assistant ensures that candidates walk into interviews fully prepared, improving their chances of success while saving hours of manual preparation.
+
+## To set up this project 
+- Clone this repository and cd onto the project
+- Create a new file called .env in base directory of the project and copy contents from .env.example onto that file. Replace DJANGO_SECRET_KEY in env file with your own 
+- From base directory run `docker-compose up --build` to build and run the containers. You need to install Docker desktop in your system for this step.
+- After the containers and up and running; apply the migrations to setup database schema with `docker-compose exec web python manage.py migrate` 
+- Next, collect static files required by Django for serving assets with `docker-compose exec web python manage.py collectstatic --noinput` 
+- Now, the application should be running on port 8000
+- To stop the application and the containers, run `docker-compose down`
