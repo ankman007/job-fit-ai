@@ -28,3 +28,6 @@ venv/
 
 # static files
 /core/staticfiles/
+
+#media
+/core/media/
