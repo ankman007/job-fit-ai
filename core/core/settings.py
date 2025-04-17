@@ -6,9 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DEBUG = getenv('DEBUG', 'False') == 'True'
-if DEBUG:
-    logging.basicConfig(level=logging.DEBUG)
+DEBUG = 'True'
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
