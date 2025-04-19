@@ -1,12 +1,12 @@
 import ast
 from dotenv import load_dotenv
-from google import genai
+import google.generativeai as genai
 from loguru import logger
 from os import getenv
 import json
 
-from job.services.prompts import PromptBuilder
-from job.services.response_format import candidate_schema, interviewer_schema
+from app.response_format import candidate_schema, interviewer_schema
+from app.prompts import PromptBuilder
 
 def get_interview_cheatsheet(resume_text, job_description, type="candidate"):
     
