@@ -1,0 +1,22 @@
+import type { Metadata } from "next"
+import { ForgotPasswordForm } from "@/components/auth/forgot-password-form"
+import { AuthLayout } from "@/components/auth/auth-layout"
+
+export const metadata: Metadata = {
+  title: "Forgot Password | JobPrepAI",
+  description: "Reset your JobPrepAI password",
+}
+
+export default function ForgotPasswordPage() {
+  return (
+    <AuthLayout
+      heading="Forgot password"
+      subheading="Enter your email and we'll send you a password reset link"
+      footerText="Remember your password?"
+      footerLinkText="Log in"
+      footerLinkHref="/auth/login"
+    >
+      <ForgotPasswordForm />
+    </AuthLayout>
+  )
+}
