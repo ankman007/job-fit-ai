@@ -1,10 +1,15 @@
-from pydantic import BaseModel
-from typing import List, Optional
+from pydantic import BaseModel, EmailStr, constr
 
-class User(BaseModel):
-    user_name: str 
-    password: str 
-    
-class SignupUser(User):
-    confirm_password: str
-    
+class UserSignupRequest(BaseModel):
+    user_name: str
+    email: EmailStr
+    password: str
+
+class UserLoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    message: str

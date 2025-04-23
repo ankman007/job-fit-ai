@@ -31,3 +31,6 @@ venv/
 
 #media
 /core/media/
+
+#alembic
+/alembic/versions/

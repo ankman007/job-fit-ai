@@ -13,3 +13,5 @@ async def llm_analysis(resume_pdf, job_description: str):
         return res 
     except Exception as error:
         logger.error(f"Cheetsheet generation failed: {error}")
+        
+
