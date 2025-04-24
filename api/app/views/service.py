@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Form, File, UploadFile
 from loguru import logger 
 from sqlalchemy.orm import Session
+import traceback
+# from fastapi_limiter import RateLimiter, Depends
 
 from app.llm_service import get_interview_cheatsheet
 from app.utils import extract_text_from_pdf
@@ -14,16 +16,23 @@ router = APIRouter()
 async def llm_analysis(
     resume_pdf: UploadFile = File(...),
     job_description: str = Form(...),
-    current_user=Depends(get_current_user)
+    cheatsheet_type: str = Form("interviewer"),
+    current_user=Depends(get_current_user)  
 ):
     try: 
         resume_text = extract_text_from_pdf(resume_pdf)
-        res = get_interview_cheatsheet(resume_text, job_description)
-        # logger.info(f"res: {res}\n resume_text: {resume_text}\n")
-        logger.info(f"res: {res}\n")
+        res = get_interview_cheatsheet(resume_text, job_description, cheatsheet_type)
+        
+        if res is None:
+            logger.warning("Cheatsheet generation returned no result.")
+            raise HTTPException(status_code=204, detail="No content: Cheatsheet generation returned no data.")
+        
         return res 
+
     except Exception as error:
-        logger.error(f"Cheetsheet generation failed: {error}")
+        logger.error(f"Cheatsheet generation failed: {error}")
+        logger.debug("Stack trace:\n" + traceback.format_exc())
+        raise HTTPException(status_code=500, detail="Internal Server Error: Could not generate cheatsheet.")
 
 
 @router.get('/user/{user_id}/cheatsheets')

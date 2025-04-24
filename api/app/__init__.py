@@ -1,6 +1,6 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from app.database import SessionLocal, Base, engine
-from contextlib import contextmanager
+from dotenv import load_dotenv
 
 from app.database import SessionLocal  
 
@@ -13,7 +13,9 @@ def get_db():
         
 
 def create_app():
+    load_dotenv()
     app = FastAPI()
+    
     Base.metadata.create_all(bind=engine)
     
     from app.views.auth import router as auth_router

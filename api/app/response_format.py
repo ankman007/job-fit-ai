@@ -1,426 +1,325 @@
-candidate_schema = {
-    "type": "object",
-    "properties": {
-        "company": {
-            "type": "string",
-            "description": "The company that the job description belongs to"
-        },
-        "role": {
-            "type": "string",
-            "description": "The role that the job description belongs to"
-        },
-        "swot_analysis": {
-            "type": "object",
-            "description": "A SWOT analysis of the candidate for this particular job role in terms of experience, skillsets, and culture match",
-            "properties": {
-                "strengths": {
-                    "type": "array",
-                    "description": "Key strengths of the candidate in this job interview",
-                    "items": {"type": "string"}
-                },
-                "weaknesses": {
-                    "type": "array",
-                    "description": "Key weaknesses of the candidate in this job interview",
-                    "items": {"type": "string"}
-                },
-                "opportunities": {
-                    "type": "array",
-                    "description": "Key opportunities that may come up for the candidate in this job role",
-                    "items": {"type": "string"}
-                },
-                "threats": {
-                    "type": "array",
-                    "description": "Key threats that may come up for the candidate in this job role",
-                    "items": {"type": "string"}
-                }
-            },
-            "required": ["strengths", "weaknesses", "opportunities", "threats"]
-        },
-        "requiredskills": {
-            "type": "array",
-            "description": "A list of skills required for the role",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "skill": {"type": "string"},
-                    "candidate_skill": {
-                        "type": "boolean",
-                        "description": "Based on the resume, does the candidate have the skill or not?"
-                    }
-                },
-                "required": ["skill", "candidate_skill"]
-            }
-        },
-        "concepts_revision": {
-            "type": "array",
-            "description": "Topics that could be covered in the interview, based on the job description. Be exhaustive and cover all topics mentioned in the job description",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "topic": {"type": "string"},
-                    "brief": {
-                        "type": "string",
-                        "description": "An introduction about what the topic is, why it's relevant to the role, and how the candidate can prepare for it"
-                    },
-                    "yt_search_query": {
-                        "type": "string",
-                        "description": "Youtube search query to get videos to learn about this topic"
-                    },
-                    "interview_questions": {
-                        "type": "array",
-                        "description": "Questions that can come up during the interview on this topic. Include at least 4.",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "question": {
-                                    "type": "string",
-                                    "description": "A question on this topic relevant to the role"
-                                },
-                                "answer": {
-                                    "type": "string",
-                                    "description": "Answer for the question"
-                                }
-                            },
-                            "required": ["question", "answer"]
-                        }
-                    }
-                },
-                "required": ["topic", "brief", "yt_search_query", "interview_questions"]
-            }
-        },
-        "QA": {
-            "type": "array",
-            "description": "Questions that can come up during the interview based on the projects done and/or relevant to the job role. Include at least 10.",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "question": {
-                        "type": "string",
-                        "description": "A question deep-diving into project specifics"
-                    },
-                    "answer": {
-                        "type": "string",
-                        "description": "Suggested or example answer for the question"
-                    }
-                },
-                "required": ["question", "answer"]
-            }
-        },
-        "company_insights": {
-            "type": "array",
-            "description": "Insights about the company that might be useful during the interview, such as industry, business model, founding year, employee count, user base, annual revenue, headquarters, company values, and competitors. Add as much information about the company as possible. Be exhaustive.",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "information_type": {
-                        "type": "string",
-                        "description": "The type of information, formatted neatly (e.g., 'Industry', 'Business Model')"
-                    },
-                    "info": {
-                        "type": "string",
-                        "description": "The information specific to the company. Make it concise (e.g., 'Technology', 'Subscription-based SaaS')."
-                    }
-                },
-                "required": ["information_type", "info"]
-            }
-        }
-    },
-    "required": [
-        "company",
-        "role",
-        "swot_analysis",
-        "requiredskills",
-        "concepts_revision",
-        "QA",
-        "company_insights"
-    ]
-}
-response_format_candidate = {
 
-    "name": "interview_cheatsheet",
-    "description": "Generates a cheatsheet for a job role",
-    "strict": True,
-    "schema":candidate_schema
+candidate_schema = {
+  "type": "object",
+  "properties": {
+    "company": {
+      "type": "string",
+      "description": "The company that the job description belongs to"
+    },
+    "role": {
+      "type": "string",
+      "description": "The role that the job description belongs to"
+    },
+    "swot_analysis": {
+      "type": "object",
+      "description": "SWOT analysis with structured entries",
+      "properties": {
+        "strengths": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {"type": "string"},
+              "description": {"type": "string"}
+            },
+            "required": ["title", "description"]
+          }
+        },
+        "weaknesses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {"type": "string"},
+              "description": {"type": "string"}
+            },
+            "required": ["title", "description"]
+          }
+        },
+        "opportunities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {"type": "string"},
+              "description": {"type": "string"}
+            },
+            "required": ["title", "description"]
+          }
+        },
+        "threats": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {"type": "string"},
+              "description": {"type": "string"}
+            },
+            "required": ["title", "description"]
+          }
+        }
+      },
+      "required": ["strengths", "weaknesses", "opportunities", "threats"]
+    },
+    "skill_assessment": {
+      "type": "object",
+      "properties": {
+        "match_percentage": {
+          "type": "number",
+          "description": "Overall skill match percentage"
+        },
+        "matched_skills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {"type": "string"},
+              "description": {"type": "string"},
+              "rating": {"type": "string"}
+            },
+            "required": ["title", "description", "rating"]
+          }
+        },
+        "partial_matches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {"type": "string"},
+              "description": {"type": "string"},
+              "rating": {"type": "string"}
+            },
+            "required": ["title", "description", "rating"]
+          }
+        },
+        "missing_skills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {"type": "string"},
+              "description": {"type": "string"}
+            },
+            "required": ["title", "description"]
+          }
+        }
+      },
+      "required": ["match_percentage", "matched_skills", "partial_matches", "missing_skills"]
+    },
+    "concept_refresh": {
+      "type": "array",
+      "description": "Concepts to revise before the interview",
+      "items": {
+        "type": "object",
+        "properties": {
+          "topic": {"type": "string"},
+          "context": {
+            "type": "string",
+            "description": "Where it is mentioned (JD/resume)"
+          },
+          "review_notes": {
+            "type": "string",
+            "description": "Short description of what to revise"
+          },
+          "article_resource": {"type": "string"}
+        },
+        "required": ["topic", "context", "review_notes", "article_resource"]
+      },
+      "items": {
+        "type": "object",
+        "properties": {
+          "topic": {"type": "string"},
+          "context": {
+            "type": "string",
+            "description": "Where it is mentioned (JD/resume)"
+          },
+          "review_notes": {
+            "type": "string",
+            "description": "Short description of what to revise"
+          },
+          "video_resource": {"type": "string"},
+        },
+        "required": ["topic", "context", "review_notes", "video_resource"]
+      }
+    },
+    "interview_questions": {
+      "type": "array",
+      "description": "Key interview questions and answers",
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": ["Technical", "Behavioral", "Experience", "Project"]
+          },
+          "difficulty": {
+            "type": "string",
+            "enum": ["Easy", "Medium", "Hard"]
+          },
+          "question": {"type": "string"},
+          "answer": {"type": "string"}
+        },
+        "required": ["category", "difficulty", "question", "answer"]
+      }
+    },
+    "company_insights": {
+      "type": "object",
+      "properties": {
+        "company_overview": {"type": "string"},
+        "culture_points": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "company_values": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "interview_style": {"type": "string"},
+        "expectations": {"type": "string"},
+        "additional_info": {"type": "string"},
+        "fallback": {
+          "type": "string",
+          "description": "Fallback text if company insights are not available"
+        }
+      },
+      "required": ["company_overview", "culture_points", "company_values", "interview_style", "expectations", "additional_info"]
+    }
+  },
+  "required": [
+    "company",
+    "role",
+    "swot_analysis",
+    "skill_assessment",
+    "concept_refresh",
+    "interview_questions",
+    "company_insights"
+  ]
 }
 
 interviewer_schema = {
   "type": "object",
   "properties": {
-    "candidate_info": {
+    "candidate_overview": {
       "type": "object",
-      "description": "Basic information about the candidate",
       "properties": {
-        "name": {
-          "type": "string",
-          "description": "Full name of the candidate"
-        },
-        "contact": {
-          "type": "object",
-          "properties": {
-            "email": {"type": "string"},
-            "phone": {"type": "string"},
-            "location": {"type": "string"}
-          },
-          "required": ["email"]
-        },
-        "current_role": {"type": "string"},
-        "years_of_experience": {"type": "number"}
-      },
-      "required": ["name", "contact", "years_of_experience"]
-    },
-    "job_requirements": {
-      "type": "object",
-      "description": "Skills and qualifications required for the job",
-      "properties": {
-        "must_have_skills": {
+        "full_name": {"type": "string"},
+        "current_job_title": {"type": "string"},
+        "email": {"type": "string"},
+        "phone_number": {"type": "string"},
+        "location": {"type": "string"},
+        "top_skills": {
           "type": "array",
-          "description": "Skills that are essential for the role",
-          "items": {
-            "type": "object",
-            "properties": {
-              "skill_name": {"type": "string"},
-              "candidate_proficiency": {
-                "type": "number",
-                "description": "Score (0-2): 0 = not demonstrated, 1 = listed in resume but not proven, 2 = proven in projects/experience. Be very strict here"
-              },
-              "evidence": {
-                "type": "string",
-                "description": "Supporting evidence from resume for the proficiency score"
-              }
-            },
-            "required": ["skill_name", "candidate_proficiency"]
-          }
-        },
-        "good_to_have_skills": {
-          "type": "array",
-          "description": "Skills that are beneficial but not mandatory",
-          "items": {
-            "type": "object",
-            "properties": {
-              "skill_name": {"type": "string"},
-              "candidate_proficiency": {
-                "type": "number",
-                "description": "Score (0-2): 0 = not demonstrated, 1 = listed but not proven, 2 = proven in projects/experience"
-              },
-              "evidence": {
-                "type": "string",
-                "description": "Supporting evidence from resume for the proficiency score"
-              }
-            },
-            "required": ["skill_name", "candidate_proficiency"]
-          }
-        }
-      },
-      "required": ["must_have_skills", "good_to_have_skills"]
-    },
-    "resume_analysis": {
-      "type": "object",
-      "description": "Automated analysis of the candidate's resume",
-      "properties": {
-        "education_match": {
-          "type": "object",
-          "properties": {
-            "required_education": {"type": "string"},
-            "candidate_education": {"type": "string"},
-            "match_score": {
-              "type": "number",
-              "description": "Score from 0-10 indicating how well the candidate's education matches requirements"
-            },
-            "score_reasoning": {
-              "type": "string",
-              "description": "Detailed explanation for the education match score"
-            },
-            "notes": {"type": "string"}
-          },
-          "required": ["required_education", "candidate_education", "match_score", "score_reasoning"]
-        },
-        "experience_match": {
-          "type": "object",
-          "properties": {
-            "required_years": {"type": "number"},
-            "candidate_years": {"type": "number"},
-            "relevant_experience_score": {
-              "type": "number",
-              "description": "Score from 0-10 on relevance of experience, not just years"
-            },
-            "score_reasoning": {
-              "type": "string",
-              "description": "Detailed explanation for the experience relevance score"
-            },
-            "notes": {"type": "string"}
-          },
-          "required": ["required_years", "candidate_years", "relevant_experience_score", "score_reasoning"]
-        },
-        "skill_gaps": {
-          "type": "array",
-          "description": "Critical skills from job description that appear to be missing in resume",
           "items": {"type": "string"}
         },
-        "keyword_match_score": {
-          "type": "number",
-          "description": "Percentage of key job description terms found in resume"
-        },
-        "keyword_match_reasoning": {
-          "type": "string",
-          "description": "Explanation of keyword match analysis and significance"
-        }
+        "candidate_summary": {"type": "string"}
       },
-      "required": ["education_match", "experience_match", "skill_gaps", "keyword_match_score", "keyword_match_reasoning"]
+      "required": ["full_name", "email", "candidate_summary"]
     },
-    "screening_questions": {
+    "compatibility_score": {
+      "type": "object",
+      "properties": {
+        "overall_score": {"type": "number"},
+        "match": {"type": "string", "enum": ["excellent", "good", "poor"]},
+        "technical_skills_score": {"type": "number"},
+        "education_score": {"type": "number"},
+        "experience_score": {"type": "number"},
+        "cultural_fit_score": {"type": "number"}
+      },
+      "required": ["overall_score", "match", "technical_skills_score", "education_score", "experience_score"]
+
+    },
+    "skills_assessment": {
       "type": "array",
-      "description": "Pre-interview questions to validate resume claims and assess fit",
       "items": {
         "type": "object",
         "properties": {
-          "question": {"type": "string"},
-          "expected_response": {
-            "type": "string",
-            "description": "Indicators of a strong response"
-          },
-          "importance": {
-            "type": "string",
-            "enum": ["high", "medium", "low"]
-          },
-          "skills_validated": {
+          "skill_name": {"type": "string"},
+          "category": {"type": "string"},
+          "assessment": {"type": "string", "enum": ["exceeds", "meets", "below", "missing"]}
+        },
+        "required": ["skill_name", "category", "assessment"]
+      }
+    },
+    "education": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "degree_name": {"type": "string"},
+          "institution": {"type": "string"},
+          "location": {"type": "string"},
+          "major": {"type": "string"},
+          "notable_points": {
             "type": "array",
-            "description": "Skills being validated through this question",
             "items": {"type": "string"}
           }
         },
-        "required": ["question", "expected_response", "importance", "skills_validated"]
+        "required": ["degree_name", "institution", "notable_points"]
       }
     },
-    "preliminary_assessment": {
-      "type": "object",
-      "description": "Initial assessment based on resume review",
-      "properties": {
-        "technical_fit_score": {
-          "type": "number",
-          "description": "Score from 0-10 on technical qualifications"
+    "experience": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {"type": "string"},
+          "company": {"type": "string"},
+          "location": {"type": "string"},
+          "start_date": {"type": "string"},
+          "end_date": {"type": "string"},
+          "responsibilities": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "relevance_to_job": {"type": "string"}
         },
-        "technical_fit_reasoning": {
-          "type": "string",
-          "description": "Detailed explanation for the technical fit score"
-        },
-        "experience_fit_score": {
-          "type": "number",
-          "description": "Score from 0-10 on experience alignment"
-        },
-        "experience_fit_reasoning": {
-          "type": "string",
-          "description": "Detailed explanation for the experience fit score"
-        },
-        "potential_culture_fit": {
-          "type": "number",
-          "description": "Score from 0-10 based on resume indicators"
-        },
-        "culture_fit_reasoning": {
-          "type": "string",
-          "description": "Explanation of culture fit indicators from resume"
-        },
-        "salary_expectations": {
-          "type": "object",
-          "properties": {
-            "range_min": {"type": "number"},
-            "range_max": {"type": "number"},
-            "within_budget": {"type": "boolean"},
-            "notes": {"type": "string"}
-          }
-        },
-        "strengths": {
-          "type": "array",
-          "description": "Notable strengths that align well with the role",
-          "items": {"type": "string"}
-        }
-      },
-      "required": [
-        "technical_fit_score",
-        "technical_fit_reasoning",
-        "experience_fit_score",
-        "experience_fit_reasoning",
-        "potential_culture_fit",
-        "culture_fit_reasoning"
-      ]
+        "required": ["title", "company", "responsibilities", "relevance_to_job"]
+      }
     },
-    "screening_decision": {
-      "type": "object",
-      "properties": {
-        "decision_reasoning": {
-          "type": "string",
-          "description": "Explanation for the interview decision"
-        },
-        "interview_type": {
-          "type": "string",
-          "enum": ["technical", "behavioral", "comprehensive"]
-        },
-        "interviewer_recommendations": {
-          "type": "array",
-          "description": "Team members who should be involved in the interview",
-          "items": {
-            "type": "object",
-            "properties": {
-              "role": {"type": "string"},
-              "reason": {"type": "string"},
-              "skill_areas_to_assess": {
-                "type": "array",
-                "items": {"type": "string"}
-              }
-            },
-            "required": ["role", "skill_areas_to_assess"]
-          }
-        },
-        "priority": {
-          "type": "string",
-          "enum": ["high", "medium", "low"],
-          "description": "How quickly to schedule the interview"
-        },
-        "priority_justification": {
-          "type": "string",
-          "description": "Explanation for the assigned priority level"
-        },
-        "additional_preparation": {
-          "type": "array",
-          "description": "Additional information to gather before interview",
-          "items": {"type": "string"}
+    "skill_gaps_and_concerns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "skill_name": {"type": "string"},
+          "experience_level": {"type": "string"},
+          "recommendation": {"type": "string"},
+          "gap_level": {"type": "string", "enum": ["Critical Gap", "Minor Gap"]}
         }
-      },
-      "required": ["decision_reasoning", "interview_type", "priority", "priority_justification"]
+      }
     },
-    "compliance_check": {
+    "recommended_screening_questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "priority": {"type": "string", "enum": ["High", "Medium", "Low"]},
+          "category": {"type": "string", "enum": ["technical", "behavioral", "experience", "project"]},
+          "question": {"type": "string"},
+          "purpose": {"type": "string"}
+        },
+        "required": ["priority", "category", "question", "purpose"]
+      }
+    },
+    "interview_recommendation": {
       "type": "object",
-      "description": "Ensuring unbiased and compliant screening process",
       "properties": {
-        "bias_indicators": {
+        "proceed": {"type": "boolean"},
+        "summary": {"type": "string"},
+        "key_strengths": {
           "type": "array",
-          "description": "Potential bias elements to be aware of",
           "items": {"type": "string"}
         },
-        "accommodations_needed": {
-          "type": "boolean",
-          "description": "Whether candidate has requested accommodations"
+        "concerns": {
+          "type": "array",
+          "items": {"type": "string"}
         },
-        "diversity_initiative_alignment": {
-          "type": "boolean",
-          "description": "Whether candidate helps meet diversity goals"
+        "recommended_next_steps": {
+          "type": "array",
+          "items": {"type": "string"}
         }
       },
-      "required": ["bias_indicators"]
+      "required": ["proceed", "summary", "key_strengths", "concerns"]
     }
-  },
-  "required": [
-    "candidate_info",
-    "job_requirements",
-    "resume_analysis",
-    "preliminary_assessment",
-    "screening_decision"
-  ]
-}
-
-response_format_interviewer = {
-
-    "name": "interview_cheatsheet",
-    "description": "Generates a cheatsheet for a job role",
-    "strict": True,
-    "schema":interviewer_schema
+  }
 }

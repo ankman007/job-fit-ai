@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
-from dotenv import load_dotenv
 from os import getenv
 from fastapi.security import OAuth2PasswordBearer
 from loguru import logger
@@ -12,8 +11,6 @@ from app.database.model import UserModel
 from app import get_db
 from app.hashing import hash_password, verify_password
 from app.database.schemas import UserSignupRequest, UserLoginRequest
-
-load_dotenv()
 
 router = APIRouter()
 
