@@ -1,8 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv
+from os import getenv
 
-DATABASE_URL = "postgresql://admin:admin@localhost:5432/job_prep_db"
+load_dotenv()
+
+DATABASE_URL = getenv('DATABASE_URL')
 
 engine = create_engine(DATABASE_URL)
 
