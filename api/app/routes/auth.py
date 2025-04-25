@@ -9,7 +9,7 @@ from loguru import logger
 
 from app.database.model import UserModel
 from app import get_db
-from app.hashing import hash_password, verify_password
+from app.service.hashing import hash_password, verify_password
 from app.database.schemas import UserSignupRequest, UserLoginRequest
 
 router = APIRouter()

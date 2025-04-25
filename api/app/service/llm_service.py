@@ -6,8 +6,8 @@ import re
 import traceback
 import traceback
 
-from app.response_format import candidate_schema, interviewer_schema
-from app.prompts import get_prompt
+from app.service.response_format import candidate_schema, interviewer_schema
+from app.service.prompts import get_prompt
 
        
 def get_interview_cheatsheet(resume_text: str, job_description: str, cheatsheet_type: str = "interviewer") -> dict | None:

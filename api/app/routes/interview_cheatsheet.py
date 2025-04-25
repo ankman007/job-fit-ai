@@ -4,11 +4,11 @@ from sqlalchemy.orm import Session
 import traceback
 import json
 
-from app.llm_service import get_interview_cheatsheet
-from app.utils import extract_text_from_pdf
+from app.service.llm_service import get_interview_cheatsheet
+from app.service.extract_pdf import extract_text_from_pdf
 from app.database.model import InterviewCheatSheetModel
 from app import get_db
-from app.views.auth import get_current_user
+from app.routes.auth import get_current_user
 
 router = APIRouter()
 

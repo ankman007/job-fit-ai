@@ -1,5 +1,3 @@
-  
-     
 def get_prompt(resume_text, job_description, role):
     if role == "candidate":
         instructions = """
