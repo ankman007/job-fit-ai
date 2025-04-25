@@ -8,12 +8,15 @@ import { ScreeningQuestions } from "@/components/interviewer/screening-questions
 import { InterviewRecommendation } from "@/components/interviewer/interview-recommendation"
 import { Button } from "@/components/ui/button"
 import { Download, Printer, Share2, Star } from "lucide-react"
-
-// This would normally come from an API
 import { mockInterviewerData } from "@/lib/mock-interviewer-data"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Candidate Cheatsheet | JobPrepAI",
+  description: "Interview Preparation made easy with JobPrepAI",
+}
 
 export default function InterviewerResultsPage() {
-  // In a real app, you would fetch data from an API here
   const candidateData = mockInterviewerData
 
   return (

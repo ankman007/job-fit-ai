@@ -1,59 +1,51 @@
 import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent } from "@/components/ui/card"
-import { FileUploader } from "@/components/file-uploader"
 import { HowItWorks } from "@/components/how-it-works"
 import { Features } from "@/components/features"
 import { Hero } from "@/components/hero"
 import { Footer } from "@/components/footer"
 import { Navbar } from "@/components/navbar"
-import { UserToggle } from "@/components/user-toggle"
+import Link from "next/link"
+import { ArrowRight, CheckCircle } from "lucide-react"
 
 export default function Home() {
   return (
     <main className="min-h-screen">
       <Navbar />
       <Hero />
-      <Features />
-      <section className="py-16 px-4 md:px-6 bg-gray-50" id="upload">
-        <div className="container mx-auto max-w-4xl">
-          <h2 className="text-3xl font-bold text-center mb-4">Get Started</h2>
-          <p className="text-center text-lg mb-8">
-            <span className="bg-teal-100 text-teal-800 px-3 py-1 rounded-full font-medium">100% Free</span> - No credit
-            card required
-          </p>
 
-          <Card className="shadow-lg">
-            <CardContent className="p-6">
-              <div className="space-y-6">
-                <div className="flex justify-center mb-2">
-                  <UserToggle />
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-medium mb-2">Upload Your Resume</h3>
-                  <FileUploader />
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-medium mb-2">Enter Job Description</h3>
-                  <Textarea placeholder="Paste the job description here..." className="min-h-[150px]" />
-                </div>
-
-                <Button className="w-full" size="lg">
-                  Generate Interview Cheatsheet
-                </Button>
-
-                <p className="text-sm text-gray-500 text-center">
-                  Our AI will analyze your resume and the job description to create a personalized interview preparation
-                  guide.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+      {/* Free Section */}
+      <section id="pricing" className="py-8 bg-teal-50">
+        <div className="container mx-auto text-center">
+          <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
+            <CheckCircle className="h-5 w-5 text-teal-600" />
+            <span className="font-medium">100% Free</span>
+            <span className="text-gray-600">No credit card required</span>
+          </div>
         </div>
       </section>
-      <HowItWorks />
+
+      <div id="features">
+        <Features />
+      </div>
+
+      <section id="generate" className="py-16 px-4 md:px-6 bg-gray-50">
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-6">Ready to ace your next interview?</h2>
+          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            Create your personalized interview cheatsheet in minutes with our AI-powered platform.
+          </p>
+          <Button asChild size="lg" className="bg-teal-600 hover:bg-teal-700">
+            <Link href="/auth/login">
+              Get Started <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </section>
+
+      <div id="how-it-works">
+        <HowItWorks />
+      </div>
+
       <Footer />
     </main>
   )
