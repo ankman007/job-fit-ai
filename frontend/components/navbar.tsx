@@ -27,10 +27,6 @@ export function Navbar() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const pathname = usePathname();
   const isHomePage = pathname === "/";
-  // const shouldHideNavigation =
-  //   pathname === "/resume-templates" || pathname === "/generate" || pathname === "/results/interviewer" || pathname === "/results/candidate";
-  
-  const shouldHideNavigation = pathname === "/"
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -80,7 +76,7 @@ export function Navbar() {
 
           {!isMobile && (
             <nav className="mx-6 flex items-center space-x-4 lg:space-x-6">
-              {shouldHideNavigation && (
+              {isHomePage && (
                 <>
                   <Link
                     href="/"
@@ -170,10 +166,17 @@ export function Navbar() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="border-amber-500 text-amber-500 hover:bg-amber-50 flex items-center gap-1"
-                    >
-                      <Heart className="h-4 w-4" />
-                      <span>Sponsor</span>
+                      className="hover:bg-amber-50"
+                      >
+                      <a
+                        href="https://buymeacoffee.com/ankitpoudel"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="border-amber-500 text-amber-500 hover:bg-amber-50 flex items-center gap-1"
+                      >
+                        <Heart className="h-4 w-4" />
+                        <span>Sponsor</span>
+                      </a>
                     </Button>
 
                     <DropdownMenu>
@@ -287,10 +290,16 @@ export function Navbar() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="border-amber-500 text-amber-500 hover:bg-amber-50 flex items-center gap-1"
-                    >
-                      <Heart className="h-4 w-4" />
-                      <span>Sponsor</span>
+                      >
+                      <a
+                        href="https://buymeacoffee.com/ankitpoudel"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="border-amber-500 text-amber-500 hover:bg-amber-50 flex items-center gap-1"
+                      >
+                        <Heart className="h-4 w-4" />
+                        <span>Sponsor</span>
+                      </a>
                     </Button>
                   </>
                 )}
@@ -312,7 +321,7 @@ export function Navbar() {
       {isMobile && isMenuOpen && (
         <div className="container mx-auto px-4 pb-4">
           <nav className="flex flex-col space-y-4">
-            {!shouldHideNavigation && (
+            {!isHomePage && (
               <>
                 <Link
                   href="/"
@@ -479,11 +488,19 @@ export function Navbar() {
                     </Button>
                     <Button
                       variant="outline"
-                      size="sm"
-                      className="border-amber-500 text-amber-500 hover:bg-amber-50 flex items-center gap-1"
-                    >
-                      <Heart className="h-4 w-4" />
-                      <span>Sponsor</span>
+                        size="sm"
+                        className="hover:bg-amber-50"
+                        asChild
+                      >
+                      <a
+                        href="https://buymeacoffee.com/ankitpoudel"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="border-amber-500 text-amber-500 hover:bg-amber-50 flex items-center gap-1"
+                      >
+                        <Heart className="h-4 w-4" />
+                        <span>Sponsor</span>
+                      </a>
                     </Button>
                   </div>
                 </>

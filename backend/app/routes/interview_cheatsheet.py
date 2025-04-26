@@ -17,7 +17,7 @@ async def llm_analysis(
     resume_pdf: UploadFile = File(...),
     job_description: str = Form(...),
     cheatsheet_type: str = Form("interviewer"),
-    current_user=Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db),
 
 ):

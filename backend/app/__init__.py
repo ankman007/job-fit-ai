@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from dotenv import load_dotenv
-from starlette.middleware.base import BaseHTTPMiddleware
 
 from app.database import SessionLocal, Base, engine
 from app.core.middleware import LoggingAndPerformanceMiddleware
@@ -26,5 +25,8 @@ def create_app():
     
     from app.routes.interview_cheatsheet import router as service_router
     app.include_router(service_router, prefix='/service')
+    
+    from app.routes.users import router as users_route
+    app.include_router(users_route, prefix='/users')
     
     return app
