@@ -106,12 +106,20 @@ export function SignUpForm() {
   
     try {
       // Perform the API call
-      const response = await fetch('/api/auth/signup', {
+      const payload = {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        job_title: data.jobTitle,
+        location: data.location,
+        bio: data.bio,
+      }
+      const response = await fetch('http://localhost:8000/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       })
   
       // Check if the response is successful (status 2xx)

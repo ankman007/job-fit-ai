@@ -12,8 +12,8 @@ from app.routes.auth import get_current_user
 
 router = APIRouter()
 
-@router.post('/generate-cheatsheet')
-async def llm_analysis(
+@router.post('/generate')
+async def generate_cheetsheet(
     resume_pdf: UploadFile = File(...),
     job_description: str = Form(...),
     cheatsheet_type: str = Form("interviewer"),
