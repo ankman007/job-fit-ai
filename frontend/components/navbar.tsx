@@ -17,12 +17,6 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useSelector } from 'react-redux';
 
-const mockUser = {
-  isLoggedIn: false,
-  name: "Alex Johnson",
-  email: "alex.johnson@example.com",
-};
-
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
