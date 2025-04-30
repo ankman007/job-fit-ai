@@ -1,8 +1,9 @@
-"use client"
+'use client'
 
 import { useState } from "react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useDispatch } from "react-redux" 
+import { setTokens } from "@/redux/slices/authSlice"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -12,6 +13,7 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Loader2, AlertCircle, CheckCircle } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import Link from "next/link";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -23,6 +25,7 @@ type LoginFormValues = z.infer<typeof loginSchema>
 
 export function LoginForm() {
   const router = useRouter()
+  const dispatch = useDispatch()
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -47,15 +50,16 @@ export function LoginForm() {
     setIsLoading(true)
     setError(null)
   
-    console.log("data:", data)
     try {
-      console.log("data:", data)
       const response = await fetch("http://localhost:8000/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+        })
       })
   
       if (!response.ok) {
@@ -65,9 +69,8 @@ export function LoginForm() {
   
       const result = await response.json()
       console.log("Login successful:", result)
-  
-      localStorage.setItem("token", result.token)
-  
+
+      dispatch(setTokens(result.access_token))
       router.push("/")
     } catch (err: any) {
       setError(err.message || "Invalid email or password. Please try again.")

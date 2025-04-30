@@ -13,7 +13,6 @@ export default function Home() {
       <Navbar />
       <Hero />
 
-      {/* Free Section */}
       <section id="pricing" className="py-8 bg-teal-50">
         <div className="container mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
