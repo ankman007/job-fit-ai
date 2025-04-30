@@ -35,7 +35,7 @@ def create_app():
     from app.routes.cheatsheet import router as cheetsheet_router
     app.include_router(cheetsheet_router, prefix='/cheetsheet')
     
-    from app.routes.users import router as users_route
-    app.include_router(users_route, prefix='/users')
+    from app.routes.user import router as user_route
+    app.include_router(user_route, prefix='/user')
     
     return app

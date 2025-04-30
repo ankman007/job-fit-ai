@@ -12,6 +12,12 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Loader2, AlertCircle, CheckCircle } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { useDispatch, useSelector } from 'react-redux';
+import { setTokens } from "@/redux/slices/authSlice";
+import { setUserDetails } from "@/redux/slices/userSlice";
+import { setCheatsheets } from "@/redux/slices/cheatsheetSlice";
+
+const apiBaseURL = "http://localhost:8000";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -22,7 +28,8 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>
 
 export function LoginForm() {
-  const router = useRouter()
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -43,32 +50,68 @@ export function LoginForm() {
     trigger,
   } = form
 
-  async function onSubmit(data: LoginFormValues) {
-    setIsLoading(true)
-    setError(null)
-  
-    console.log("data:", data)
+  const handleLogin = async (data: LoginFormValues) => {
     try {
-      console.log("data:", data)
-      const response = await fetch("http://localhost:8000/auth/login", {
+      const response = await fetch(`${apiBaseURL}/auth/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       })
-  
       if (!response.ok) {
         const errorData = await response.json()
         throw new Error(errorData.message || "Login failed")
       }
-  
-      const result = await response.json()
-      console.log("Login successful:", result)
-  
-      localStorage.setItem("token", result.token)
-  
-      router.push("/")
+      return await response.json()
+    } catch (err: any) {
+      throw new Error(err.message || "Login failed")
+    }
+  }
+
+  const fetchUserDetails = async (accessToken: string) => {
+    try {
+      const userRes = await fetch(`${apiBaseURL}/user/details`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      if (!userRes.ok) throw new Error('Failed to fetch user details')
+
+      const userData = await userRes.json()
+      if (userData.user_details) {
+        dispatch(setUserDetails(userData.user_details))
+      }
+    } catch (err: any) {
+      throw new Error('User details fetch failed')
+    }
+  }
+
+  const fetchCheatsheets = async (accessToken: string) => {
+    try {
+      const cheatsheetRes = await fetch(`${apiBaseURL}/user/cheatsheets`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      if (!cheatsheetRes.ok) throw new Error('Failed to fetch cheatsheets')
+
+      const cheatsheetData = await cheatsheetRes.json()
+      if (cheatsheetData.cheatsheets) {
+        dispatch(setCheatsheets(cheatsheetData.cheatsheets))
+      }
+    } catch (err: any) {
+      throw new Error('Cheatsheets fetch failed')
+    }
+  }
+
+  const onSubmit = async (data: LoginFormValues) => {
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const result = await handleLogin(data)
+      
+      if (result.access_token) {
+        dispatch(setTokens({ accessToken: result.access_token }))
+        await fetchUserDetails(result.access_token)
+        await fetchCheatsheets(result.access_token)
+        router.push("/")
+      }
     } catch (err: any) {
       setError(err.message || "Invalid email or password. Please try again.")
     } finally {

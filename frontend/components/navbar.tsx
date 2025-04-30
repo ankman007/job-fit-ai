@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown, Heart } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { RootState } from "@/redux/store";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,10 +15,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useSelector } from 'react-redux';
 
-// Mock authentication state - in a real app, this would come from an auth provider
 const mockUser = {
-  isLoggedIn: false, // Change to false to see the logged-out state
+  isLoggedIn: false,
   name: "Alex Johnson",
   email: "alex.johnson@example.com",
 };
@@ -26,24 +27,23 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const pathname = usePathname();
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const userDetails = useSelector((state: RootState) => state.user);
   const isHomePage = pathname === "/";
+
+  const isLoggedIn = Boolean(accessToken);
+  const userName = userDetails?.username || "User";
+  const userEmail = userDetails?.email || "user@example.com";
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Get user initials for avatar
   const getUserInitials = () => {
-    if (!mockUser.name) return "U";
-    return mockUser.name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .substring(0, 2);
+    if (!userDetails?.username) return "U";
+    const names = userDetails.username.trim().split(" ");
+    return (names[0][0] + (names[1]?.[0] || "")).toUpperCase();
   };
-
-  const isLoggedIn = mockUser.isLoggedIn;
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -137,7 +137,7 @@ export function Navbar() {
           <div className="flex items-center space-x-2">
             {!isMobile ? (
               <>
-                {mockUser.isLoggedIn ? (
+                {isLoggedIn ? (
                   // Logged in state - show profile dropdown
                   <div className="flex items-center space-x-4">
                     <Button
@@ -196,9 +196,9 @@ export function Navbar() {
                       <DropdownMenuContent align="end" className="w-56">
                         <div className="flex items-center justify-start gap-2 p-2">
                           <div className="flex flex-col space-y-1 leading-none">
-                            <p className="font-medium">{mockUser.name}</p>
+                            <p className="font-medium">{userName}</p>
                             <p className="text-xs text-gray-500">
-                              {mockUser.email}
+                              {userEmail}
                             </p>
                           </div>
                         </div>
@@ -382,7 +382,7 @@ export function Navbar() {
             )}
 
             <div className="flex flex-col space-y-2 pt-2 border-t">
-              {mockUser.isLoggedIn ? (
+              {isLoggedIn ? (
                 // Mobile logged in state
                 <>
                   <div className="flex items-center space-x-2 py-2">
@@ -392,8 +392,8 @@ export function Navbar() {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-medium text-sm">{mockUser.name}</p>
-                      <p className="text-xs text-gray-500">{mockUser.email}</p>
+                      <p className="font-medium text-sm">{userName}</p>
+                      <p className="text-xs text-gray-500">{userEmail}</p>
                     </div>
                   </div>
                   <Button

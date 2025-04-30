@@ -8,17 +8,10 @@ from app.routes.auth import get_current_user
 
 router = APIRouter()
 
-@router.get('/{user_id}')
+@router.get('/details')
 async def get_user_details(
-    user_id: int,
     current_user=Depends(get_current_user)
 ):
-    if current_user.id != user_id:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="You are not authorized to access this resource."
-        )
-
     try:
         return {
             "status": "success",
@@ -40,20 +33,14 @@ async def get_user_details(
         )
 
 
-@router.get('/{user_id}/cheatsheets', response_model=dict, status_code=status.HTTP_200_OK)
+@router.get('/cheatsheets', response_model=dict, status_code=status.HTTP_200_OK)
 async def get_user_cheatsheets(
-    user_id: int,
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user)
 ):
-    if current_user.id != user_id:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="You are not authorized to access this resource."
-        )
 
     try:
-        user_cheatsheets = db.query(InterviewCheatSheetModel).filter_by(user_id=user_id).all()
+        user_cheatsheets = db.query(InterviewCheatSheetModel).filter_by(user_id=current_user.id).all()
 
         if not user_cheatsheets:
             return {
