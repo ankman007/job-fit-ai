@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from loguru import logger
 from sqlalchemy.orm import Session
-import json
 
 from app.database.model import InterviewCheatSheetModel
 from app import get_db
@@ -9,7 +8,7 @@ from app.routes.auth import get_current_user
 
 router = APIRouter()
 
-@router.get('/{user_id}', response_model=dict, status_code=status.HTTP_200_OK)
+@router.get('/{user_id}')
 async def get_user_details(
     user_id: int,
     current_user=Depends(get_current_user)
@@ -24,7 +23,14 @@ async def get_user_details(
         return {
             "status": "success",
             "message": "User details fetched successfully.",
-            "user": current_user
+            "user_details": {
+                "username": current_user.name,
+                "email": current_user.email,
+                "location": current_user.location,
+                "id": current_user.id,
+                "bio": current_user.bio,
+                "job_title": current_user.job_title  
+            }
         }
     except Exception as e:
         logger.exception(f"Error fetching user details: {str(e)}")
@@ -56,18 +62,20 @@ async def get_user_cheatsheets(
                 "cheatsheets": []
             }
 
-        formatted_cheatsheets = [
-            {
-                "id": sheet.id,
-                "user_id": sheet.user_id,
-                "resume_text": sheet.resume_text,
-                "job_description": sheet.job_description,
-                "cheatsheet_type": sheet.cheatsheet_type,
-                "content": json.loads(sheet.content)
-            }
-            for sheet in user_cheatsheets
-        ]
-
+        formatted_cheatsheets = []
+        for sheet in user_cheatsheets:
+            try:
+                formatted_cheatsheets.append({
+                    "id": sheet.id,
+                    "user_id": sheet.user_id,
+                    "resume_text": sheet.resume_text,
+                    "job_description": sheet.job_description,
+                    "cheatsheet_type": sheet.cheatsheet_type,
+                    "content": sheet.content
+                })
+            except Exception as e:
+                logger.exception(f"Error parsing content for sheet id {sheet.id}: {e}")
+                continue  
         return {
             "status": "success",
             "message": "Fetched user cheatsheets successfully.",

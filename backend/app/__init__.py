@@ -23,7 +23,7 @@ def create_app():
     from app.routes.auth import router as auth_router
     app.include_router(auth_router, prefix='/auth')
     
-    from app.routes.interview_cheatsheet import router as service_router
+    from app.routes.cheatsheet import router as service_router
     app.include_router(service_router, prefix='/service')
     
     from app.routes.users import router as users_route

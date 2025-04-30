@@ -47,7 +47,9 @@ export function LoginForm() {
     setIsLoading(true)
     setError(null)
   
+    console.log("data:", data)
     try {
+      console.log("data:", data)
       const response = await fetch("http://localhost:8000/auth/login", {
         method: "POST",
         headers: {

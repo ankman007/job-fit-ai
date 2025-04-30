@@ -34,3 +34,7 @@ venv/
 
 #alembic
 /alembic/versions/
+
+#pytest
+/test.db
+/.pytest_cache

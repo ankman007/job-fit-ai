@@ -41,7 +41,17 @@ def login(request: UserLoginRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect password")
         
     token = create_token({"sub": str(user.id)})
-    return {"access_token": token, "message": "Login Successful"}
+    return {
+        "status": "success",
+        "message": "User logged in successfully",
+        "access_token": token,
+        "token_type": "bearer",
+        "user_details": {
+            "id": user.id,
+            "name": user.name,
+            "email": user.email
+        },
+    }
 
 
 @router.post('/sign-up')
@@ -52,13 +62,28 @@ def sign_up(request: UserSignupRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User with this email already registered.")
 
     hashed_password = hash_password(request.password)
-    new_user = UserModel(user_name=request.user_name, email=request.email, password=hashed_password)
+    new_user = UserModel(
+        name=request.name, 
+        email=request.email, 
+        password=hashed_password,
+        bio=request.bio,  
+        location=request.location,
+        job_title=request.job_title
+    )
     
     try: 
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
-        return {"message": "User created successfully", "user_id": new_user.id}
+        return {
+            "status": "success",
+            "message": "User created successfully", 
+            "user_details": {
+                "id": new_user.id,
+                "name": new_user.name,
+                "email": new_user.email
+            },
+        }
         
     except IntegrityError:
         db.rollback()  
@@ -77,7 +102,6 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
         user_id: str = payload.get("sub")
 
         if user_id is None:
-            
             logger.warning(f"JWT decoded but no 'sub' (user_id) found in payload. {payload}")
             raise credentials_exception
 

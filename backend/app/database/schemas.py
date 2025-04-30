@@ -2,12 +2,12 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr, constr
 
 class UserSignupRequest(BaseModel):
-    user_name: str
+    name: str
     email: EmailStr
+    password: str
     bio: Optional[str] = None  
     location: Optional[str] = None  
     job_title: Optional[str] = None  
-    password: str
 
 class UserLoginRequest(BaseModel):
     email: EmailStr
