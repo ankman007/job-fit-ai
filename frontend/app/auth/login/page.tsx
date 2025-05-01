@@ -1,13 +1,15 @@
-import type { Metadata } from "next"
+'use client';
+import type { Metadata } from "next";
 import { LoginForm } from "@/components/auth/login-form"
 import { AuthLayout } from "@/components/auth/auth-layout"
+import withGuest from "@/hoc/withGuest"
 
-export const metadata: Metadata = {
-  title: "Login | JobPrepAI",
-  description: "Login to your JobPrepAI account",
-}
+// export const metadata: Metadata = {
+//   title: "Login | JobPrepAI",
+//   description: "Login to your JobPrepAI account",
+// }
 
-export default function LoginPage() {
+function LoginPage() {
   return (
     <AuthLayout
       heading="Welcome back"
@@ -20,3 +22,5 @@ export default function LoginPage() {
     </AuthLayout>
   )
 }
+
+export default withGuest(LoginPage);

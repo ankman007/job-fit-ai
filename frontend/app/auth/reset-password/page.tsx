@@ -1,13 +1,15 @@
-import type { Metadata } from "next"
+'use client';
+import type { Metadata } from "next";
 import { ResetPasswordForm } from "@/components/auth/reset-password-form"
-import { AuthLayout } from "@/components/auth/auth-layout"
+import { AuthLayout } from "@/components/auth/auth-layout";
+import withGuest from "@/hoc/withGuest";
 
-export const metadata: Metadata = {
-  title: "Reset Password | JobPrepAI",
-  description: "Set a new password for your JobPrepAI account",
-}
+// export const metadata: Metadata = {
+//   title: "Reset Password | JobPrepAI",
+//   description: "Set a new password for your JobPrepAI account",
+// }
 
-export default function ResetPasswordPage() {
+function ResetPasswordPage() {
   return (
     <AuthLayout
       heading="Reset password"
@@ -20,3 +22,5 @@ export default function ResetPasswordPage() {
     </AuthLayout>
   )
 }
+
+export default withGuest(ResetPasswordForm);

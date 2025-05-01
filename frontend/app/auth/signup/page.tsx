@@ -1,13 +1,15 @@
-import type { Metadata } from "next"
+'use client';
+import withGuest from "@/hoc/withGuest";
+import type { Metadata } from "next";
 import { SignUpForm } from "@/components/auth/signup-form"
 import { AuthLayout } from "@/components/auth/auth-layout"
 
-export const metadata: Metadata = {
-  title: "Sign Up | JobPrepAI",
-  description: "Create a new JobPrepAI account",
-}
+// export const metadata: Metadata = {
+//   title: "Sign Up | JobPrepAI",
+//   description: "Create a new JobPrepAI account",
+// }
 
-export default function SignUpPage() {
+function SignUpPage() {
   return (
     <AuthLayout
       heading="Create an account"
@@ -20,3 +22,5 @@ export default function SignUpPage() {
     </AuthLayout>
   )
 }
+
+export default withGuest(SignUpPage);

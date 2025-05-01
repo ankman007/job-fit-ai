@@ -1,15 +1,17 @@
-import Link from "next/link"
+'use client';
+import withGuest from "@/hoc/withGuest";
+import Link from "next/link";
 import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { AuthLayout } from "@/components/auth/auth-layout"
 import { Mail } from "lucide-react"
 
-export const metadata: Metadata = {
-  title: "Check Your Email | JobPrepAI",
-  description: "Check your email for a password reset link",
-}
+// export const metadata: Metadata = {
+//   title: "Check Your Email | JobPrepAI",
+//   description: "Check your email for a password reset link",
+// }
 
-export default function CheckEmailPage() {
+function CheckEmailPage() {
   return (
     <AuthLayout
       heading="Check your email"
@@ -29,3 +31,5 @@ export default function CheckEmailPage() {
     </AuthLayout>
   )
 }
+
+export default withGuest(CheckEmailPage);

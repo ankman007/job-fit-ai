@@ -1,15 +1,17 @@
+'use client';
+import withGuest from "@/hoc/withGuest";
 import Link from "next/link"
 import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { AuthLayout } from "@/components/auth/auth-layout"
-import { CheckCircle } from "lucide-react"
+import { CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Password Reset Success | JobPrepAI",
   description: "Your password has been reset successfully",
 }
 
-export default function ResetPasswordSuccessPage() {
+function ResetPasswordSuccessPage() {
   return (
     <AuthLayout
       heading="Password reset successful"
@@ -29,3 +31,5 @@ export default function ResetPasswordSuccessPage() {
     </AuthLayout>
   )
 }
+
+export default withGuest(ResetPasswordSuccessPage);

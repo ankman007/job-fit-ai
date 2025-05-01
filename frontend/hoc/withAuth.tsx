@@ -13,19 +13,16 @@ const withAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) =>
     const token = useSelector((state: RootState) => state.auth.accessToken);
 
     useEffect(() => {
-      // If there's no token, redirect to the homepage with the current pathname
       if (!token) {
         router.push(`/?redirect=${pathname}`);
-        return; // Prevent further execution
+        return;
       }
 
-      // If the token is expired, redirect to the homepage
       if (isTokenExpired(token)) {
         router.push(`/?redirect=${pathname}`);
       }
     }, [token, router, pathname]);
 
-    // You can return null or a loading state here if needed before the component loads
     if (!token || isTokenExpired(token)) {
       return null;
     }
@@ -37,3 +34,24 @@ const withAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) =>
 };
 
 export default withAuth;
+
+const withGuest = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
+  const GuestComponent = (props: P) => {
+    const router = useRouter();
+    const token = useSelector((state: RootState) => state.auth.accessToken);
+
+    useEffect(() => {
+      if (token && !isTokenExpired(token)) {
+        router.replace("/");
+      }
+    }, [token, router]);
+
+    if (token && !isTokenExpired(token)) {
+      return null;
+    }
+
+    return <WrappedComponent {...props} />;
+  };
+
+  return GuestComponent;
+};

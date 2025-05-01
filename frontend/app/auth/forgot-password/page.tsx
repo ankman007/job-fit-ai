@@ -1,13 +1,15 @@
+'use client';
+import withGuest from "@/hoc/withGuest";
 import type { Metadata } from "next"
 import { ForgotPasswordForm } from "@/components/auth/forgot-password-form"
 import { AuthLayout } from "@/components/auth/auth-layout"
 
-export const metadata: Metadata = {
-  title: "Forgot Password | JobPrepAI",
-  description: "Reset your JobPrepAI password",
-}
+// export const metadata: Metadata = {
+//   title: "Forgot Password | JobPrepAI",
+//   description: "Reset your JobPrepAI password",
+// }
 
-export default function ForgotPasswordPage() {
+function ForgotPasswordPage() {
   return (
     <AuthLayout
       heading="Forgot password"
@@ -20,3 +22,5 @@ export default function ForgotPasswordPage() {
     </AuthLayout>
   )
 }
+
+export default withGuest(ForgotPasswordPage);
