@@ -1,3 +1,4 @@
+'use client';
 import { Navbar } from "@/components/navbar"
 import { CandidateOverview } from "@/components/interviewer/candidate-overview"
 import { CompatibilityScore } from "@/components/interviewer/compatibility-score"
@@ -9,14 +10,15 @@ import { InterviewRecommendation } from "@/components/interviewer/interview-reco
 import { Button } from "@/components/ui/button"
 import { Download, Printer, Share2, Star } from "lucide-react"
 import { mockInterviewerData } from "@/lib/mock-interviewer-data"
-import type { Metadata } from "next"
+import type { Metadata } from "next";
+import withAuth from "@/hoc/withAuth";
 
-export const metadata: Metadata = {
-  title: "Candidate Cheatsheet | JobPrepAI",
-  description: "Interview Preparation made easy with JobPrepAI",
-}
+// export const metadata: Metadata = {
+//   title: "Candidate Cheatsheet | JobPrepAI",
+//   description: "Interview Preparation made easy with JobPrepAI",
+// }
 
-export default function InterviewerResultsPage() {
+function InterviewerResultsPage() {
   const candidateData = mockInterviewerData
 
   return (
@@ -95,3 +97,5 @@ export default function InterviewerResultsPage() {
     </main>
   )
 }
+
+export default withAuth(InterviewerResultsPage);

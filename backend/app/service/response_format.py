@@ -304,7 +304,7 @@ interviewer_schema = {
     "interview_recommendation": {
       "type": "object",
       "properties": {
-        "proceed": {"type": "boolean"},
+        "proceed": {"type": "string", "enum": ["Proceed", "Reject", "Consider"]},
         "summary": {"type": "string"},
         "key_strengths": {
           "type": "array",

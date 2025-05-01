@@ -5,6 +5,20 @@ import { Button } from "@/components/ui/button";
 import { FileText, Heart } from "lucide-react";
 
 export function Footer() {
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const absoluteElementTop = elementRect.top + window.pageYOffset;
+      const middle = absoluteElementTop - window.innerHeight / 2;
+
+      window.scrollTo({
+        top: middle,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <footer className="bg-gray-900 text-gray-300 py-12 px-4 md:px-6">
       <div className="container mx-auto">
@@ -41,8 +55,6 @@ export function Footer() {
                     <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
                   </svg>
                 </a>
-
-                {/* <span className="sr-only">Twitter</span> */}
               </Button>
               <Button
                 variant="ghost"
@@ -89,28 +101,28 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/#features"
-                  className="hover:text-white transition-colors"
+                <span
+                  onClick={() => scrollToSection("features")}
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   Features
-                </Link>
+                </span>
               </li>
               <li>
-                <Link
-                  href="/#how-it-works"
-                  className="hover:text-white transition-colors"
+                <span
+                  onClick={() => scrollToSection("how-it-works")}
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   How It Works
-                </Link>
+                </span>
               </li>
               <li>
-                <Link
-                  href="/#pricing"
-                  className="hover:text-white transition-colors"
+                <span
+                  onClick={() => scrollToSection("pricing")}
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   Pricing
-                </Link>
+                </span>
               </li>
               <li>
                 <Link

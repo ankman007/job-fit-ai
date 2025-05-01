@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown, Heart } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { RootState } from "@/redux/store";
+import { clearTokens } from "@/redux/slices/authSlice";
+import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,17 +17,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 export function Navbar() {
+  const dispatch = useDispatch();
+  const pathname = usePathname();
+  const router = useRouter();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const pathname = usePathname();
+  const isHomePage = pathname === "/";
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const userDetails = useSelector((state: RootState) => state.user);
-  const isHomePage = pathname === "/";
 
-  const isLoggedIn = Boolean(accessToken);
+  const isLoggedIn = typeof accessToken === "string" && accessToken.trim() !== "";
   const userName = userDetails?.username || "User";
   const userEmail = userDetails?.email || "user@example.com";
 
@@ -42,12 +47,10 @@ export function Navbar() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      // Calculate position to scroll to (element's position minus half the viewport height)
       const elementRect = element.getBoundingClientRect();
       const absoluteElementTop = elementRect.top + window.pageYOffset;
       const middle = absoluteElementTop - window.innerHeight / 2;
 
-      // Scroll to the calculated position
       window.scrollTo({
         top: middle,
         behavior: "smooth",
@@ -55,6 +58,12 @@ export function Navbar() {
     }
     setIsMenuOpen(false);
   };
+
+  const handleLogout = () => {
+    console.log("User logged out")
+    dispatch(clearTokens());
+    router.push('/');
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-sm">
@@ -212,14 +221,6 @@ export function Navbar() {
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link
-                            href="/profile/saved-jobs"
-                            className="cursor-pointer"
-                          >
-                            Saved Jobs
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link
                             href="/profile/settings"
                             className="cursor-pointer"
                           >
@@ -227,7 +228,10 @@ export function Navbar() {
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
+                        <DropdownMenuItem
+                          className="cursor-pointer text-red-600 focus:text-red-600"
+                            onClick={handleLogout}
+                        >
                           Log out
                         </DropdownMenuItem>
                       </DropdownMenuContent>

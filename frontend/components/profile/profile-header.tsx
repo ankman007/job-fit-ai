@@ -44,29 +44,6 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
               {user.jobTitle && <p className="text-white">{user.jobTitle}</p>}
               {user.location && <p className="text-teal-100">{user.location}</p>}
             </div>
-
-            <div className="mt-4 flex flex-wrap gap-4 justify-center md:justify-start">
-              <div className="bg-white/10 px-4 py-2 rounded-md text-center">
-                <div className="flex items-center gap-2 justify-center">
-                  <FileText className="h-4 w-4" />
-                  <span className="font-bold">{user.totalCheatsheets}</span>
-                </div>
-                <p className="text-xs text-teal-100">Cheatsheets</p>
-              </div>
-
-              <div className="bg-white/10 px-4 py-2 rounded-md text-center">
-                <div className="flex items-center gap-2 justify-center">
-                  <Award className="h-4 w-4" />
-                  <span className="font-bold">{user.savedJobs}</span>
-                </div>
-                <p className="text-xs text-teal-100">Saved Jobs</p>
-              </div>
-
-              <div className="bg-white/10 px-4 py-2 rounded-md text-center">
-                <p className="text-xs text-teal-100">Member since</p>
-                <p className="font-medium">{user.memberSince}</p>
-              </div>
-            </div>
           </div>
 
           <div className="mt-4 md:mt-0">

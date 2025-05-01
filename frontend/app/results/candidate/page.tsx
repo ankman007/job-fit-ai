@@ -1,3 +1,4 @@
+'use client';
 import { Navbar } from "@/components/navbar"
 import { ResultsHeader } from "@/components/results-header"
 import { SwotAnalysis } from "@/components/swot-analysis"
@@ -8,14 +9,15 @@ import { CompanyInsights } from "@/components/company-insights"
 import { Button } from "@/components/ui/button"
 import { Download, Printer, Share2 } from "lucide-react"
 import type { Metadata } from "next"
-import { mockResultsData } from "@/lib/mock-data"
+import { mockResultsData } from "@/lib/mock-data";
+import withAuth from "@/hoc/withAuth"
 
-export const metadata: Metadata = {
-  title: "Candidate Cheatsheet | JobPrepAI",
-  description: "Interview Preparation made easy with JobPrepAI",
-}
+// export const metadata: Metadata = {
+//   title: "Candidate Cheatsheet | JobPrepAI",
+//   description: "Interview Preparation made easy with JobPrepAI",
+// }
 
-export default function ResultsPage() {
+function ResultsPage() {
   // In a real app, you would fetch data from an API here
   const resultsData = mockResultsData
 
@@ -85,3 +87,5 @@ export default function ResultsPage() {
     </main>
   )
 }
+
+export default withAuth(ResultsPage);

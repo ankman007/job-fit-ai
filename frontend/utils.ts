@@ -2,6 +2,12 @@ import { store } from "./redux/store";
 import { setTokens, clearTokens } from "./redux/slices/authSlice";
 import { useSelector } from "react-redux";
 import type { RootState } from '@/redux/store';
+import { jwtDecode } from "jwt-decode";
+
+interface DecodedToken {
+  exp: number;
+  [key: string]: any;
+}
 
 const apiBaseURL = "http://localhost:8000/";
 
@@ -23,4 +29,15 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}): Pro
         store.dispatch(clearTokens());
     }
     return response;
+};
+
+
+export const isTokenExpired = (token: string): boolean => {
+  try {
+    const decoded: DecodedToken = jwtDecode(token);
+    const now = Math.floor(Date.now() / 1000); 
+    return decoded.exp < now;
+  } catch (e) {
+      return true;
+  }
 };

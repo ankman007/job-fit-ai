@@ -24,7 +24,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 90
 def create_token(data: dict):
     to_encode = data.copy() 
     
-    expiry_date = datetime.now(timezone.utc) + timedelta(ACCESS_TOKEN_EXPIRE_MINUTES)
+    expiry_date = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({'exp': expiry_date})
     
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
@@ -123,4 +123,15 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
     return user
     
-    
+
+@router.get('/check-token')
+def check_token(current_user: UserModel = Depends(get_current_user)):
+    return {
+        "status": "success",
+        "message": "Token is valid",
+        "user": {
+            "id": current_user.id,
+            "name": current_user.name,
+            "email": current_user.email
+        }
+    }

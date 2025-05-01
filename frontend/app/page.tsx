@@ -1,13 +1,21 @@
-import { Button } from "@/components/ui/button"
-import { HowItWorks } from "@/components/how-it-works"
-import { Features } from "@/components/features"
-import { Hero } from "@/components/hero"
-import { Footer } from "@/components/footer"
-import { Navbar } from "@/components/navbar"
-import Link from "next/link"
-import { ArrowRight, CheckCircle } from "lucide-react"
+'use client';
+import { Button } from "@/components/ui/button";
+import { HowItWorks } from "@/components/how-it-works";
+import { Features } from "@/components/features";
+import { Hero } from "@/components/hero";
+import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/navbar";
+import Link from "next/link";
+import { ArrowRight, CheckCircle } from "lucide-react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export default function Home() {
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const isLoggedIn =
+    typeof accessToken === "string" && accessToken.trim() !== "";
+  const linkHref = isLoggedIn ? "/generate" : "/auth/login";
+
   return (
     <main className="min-h-screen">
       <Navbar />
@@ -30,14 +38,17 @@ export default function Home() {
 
       <section id="generate" className="py-16 px-4 md:px-6 bg-gray-50">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to ace your next interview?</h2>
+          <h2 className="text-3xl font-bold mb-6">
+            Ready to ace your next interview?
+          </h2>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Create your personalized interview cheatsheet in minutes with our AI-powered platform.
+            Create your personalized interview cheatsheet in minutes with our
+            AI-powered platform.
           </p>
           <Button asChild size="lg" className="bg-teal-600 hover:bg-teal-700">
-            <Link href="/auth/login">
-              Get Started <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
+              <Link href={linkHref}>
+                Get Started <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
           </Button>
         </div>
       </section>
@@ -48,5 +59,5 @@ export default function Home() {
 
       <Footer />
     </main>
-  )
+  );
 }

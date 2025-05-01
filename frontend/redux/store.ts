@@ -4,12 +4,12 @@ import userReducer from './slices/userSlice';
 import cheatsheetsReducer from './slices/cheatsheetSlice';
 
 export const store = configureStore({
-    reducer: {
-      auth: authReducer,
-      user: userReducer,
-      cheatsheets: cheatsheetsReducer,
-    },
-  });
-  
-  export type RootState = ReturnType<typeof store.getState>;
-  export type AppDispatch = typeof store.dispatch;
+  reducer: {
+    auth: authReducer,
+    user: userReducer,
+    cheatsheets: cheatsheetsReducer,
+  },
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

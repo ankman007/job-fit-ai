@@ -1,14 +1,16 @@
+'use client'
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { CheatsheetGenerator } from "@/components/cheatsheet-generator"
-import type { Metadata } from "next"
+import type { Metadata } from "next";
+import withAuth from "@/hoc/withAuth";
 
-export const metadata: Metadata = {
-  title: "Generate Interview Cheatsheet | JobPrepAI",
-  description: "Create your personalized interview cheatsheet with JobPrepAI",
-}
+// export const metadata: Metadata = {
+//   title: "Generate Interview Cheatsheet | JobPrepAI",
+//   description: "Create your personalized interview cheatsheet with JobPrepAI",
+// }
 
-export default function GeneratePage() {
+function GeneratePage() {
   return (
     <main className="min-h-screen bg-gray-50">
       <Navbar />
@@ -25,3 +27,5 @@ export default function GeneratePage() {
     </main>
   )
 }
+
+export default withAuth(GeneratePage);

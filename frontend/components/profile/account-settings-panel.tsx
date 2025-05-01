@@ -10,7 +10,7 @@ import { toast } from "@/hooks/use-toast"
 import { Mail, Bell, Lock } from "lucide-react"
 
 interface AccountSettingsPanelProps {
-  user: any // Using any for simplicity, but should be properly typed in a real app
+  user?: any // Using any for simplicity, but should be properly typed in a real app
 }
 
 export function AccountSettingsPanel({ user }: AccountSettingsPanelProps) {
@@ -19,6 +19,9 @@ export function AccountSettingsPanel({ user }: AccountSettingsPanelProps) {
   const [emailNotifications, setEmailNotifications] = useState(true)
   const [jobAlerts, setJobAlerts] = useState(true)
   const [marketingEmails, setMarketingEmails] = useState(false)
+
+  // Default email to use if user or user.email is undefined
+  const userEmail = user?.email || "example@email.com"
 
   const handleChangePassword = async () => {
     setIsLoading(true)
@@ -77,7 +80,7 @@ export function AccountSettingsPanel({ user }: AccountSettingsPanelProps) {
           <div>
             <Label htmlFor="email">Email Address</Label>
             <div className="flex gap-2 mt-1.5">
-              <Input id="email" value={user.email} disabled className="flex-1" />
+              <Input id="email" value={userEmail} disabled className="flex-1" />
               <Button variant="outline">Verify</Button>
             </div>
             <p className="text-sm text-gray-500 mt-1.5">
