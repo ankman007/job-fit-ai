@@ -34,24 +34,3 @@ const withAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) =>
 };
 
 export default withAuth;
-
-const withGuest = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
-  const GuestComponent = (props: P) => {
-    const router = useRouter();
-    const token = useSelector((state: RootState) => state.auth.accessToken);
-
-    useEffect(() => {
-      if (token && !isTokenExpired(token)) {
-        router.replace("/");
-      }
-    }, [token, router]);
-
-    if (token && !isTokenExpired(token)) {
-      return null;
-    }
-
-    return <WrappedComponent {...props} />;
-  };
-
-  return GuestComponent;
-};

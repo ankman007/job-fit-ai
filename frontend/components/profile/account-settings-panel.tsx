@@ -10,27 +10,28 @@ import { toast } from "@/hooks/use-toast"
 import { Mail, Bell, Lock } from "lucide-react"
 
 interface AccountSettingsPanelProps {
-  user?: any // Using any for simplicity, but should be properly typed in a real app
+  settingsData: {
+    email: string;
+    name: string;
+  };
 }
 
-export function AccountSettingsPanel({ user }: AccountSettingsPanelProps) {
+export function AccountSettingsPanel({ settingsData }: AccountSettingsPanelProps) {
+
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [emailNotifications, setEmailNotifications] = useState(true)
   const [jobAlerts, setJobAlerts] = useState(true)
   const [marketingEmails, setMarketingEmails] = useState(false)
 
-  // Default email to use if user or user.email is undefined
-  const userEmail = user?.email || "example@email.com"
+  const userEmail = settingsData.email;
 
   const handleChangePassword = async () => {
     setIsLoading(true)
     setError(null)
 
     try {
-      // In a real app, you would call your API to send a password reset email
       await new Promise((resolve) => setTimeout(resolve, 1000))
-
       toast({
         title: "Password reset email sent",
         description: "Check your inbox for instructions to reset your password.",
@@ -44,11 +45,8 @@ export function AccountSettingsPanel({ user }: AccountSettingsPanelProps) {
 
   const handleSaveNotificationSettings = async () => {
     setIsLoading(true)
-
     try {
-      // In a real app, you would call your API to update notification settings
       await new Promise((resolve) => setTimeout(resolve, 1000))
-
       toast({
         title: "Notification settings updated",
         description: "Your notification preferences have been saved.",
@@ -98,7 +96,6 @@ export function AccountSettingsPanel({ user }: AccountSettingsPanelProps) {
         </CardContent>
       </Card>
 
-      {/* Notification Preferences */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">

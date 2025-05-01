@@ -419,15 +419,6 @@ export function Navbar() {
                     onClick={() => setIsMenuOpen(false)}
                     asChild
                   >
-                    <Link href="/profile/saved-jobs">Saved Jobs</Link>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="justify-start"
-                    onClick={() => setIsMenuOpen(false)}
-                    asChild
-                  >
                     <Link href="/profile/settings">Settings</Link>
                   </Button>
                   <div className="border-t pt-2 mt-2">

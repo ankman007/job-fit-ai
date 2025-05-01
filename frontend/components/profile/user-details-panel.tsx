@@ -15,34 +15,32 @@ import { Loader2, Check } from "lucide-react"
 const profileFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
   jobTitle: z.string().optional(),
-  company: z.string().optional(),
   location: z.string().optional(),
   bio: z.string().max(500, { message: "Bio must be less than 500 characters" }).optional(),
   website: z.string().url({ message: "Please enter a valid URL" }).optional().or(z.literal("")),
-  linkedin: z.string().url({ message: "Please enter a valid URL" }).optional().or(z.literal("")),
-  github: z.string().url({ message: "Please enter a valid URL" }).optional().or(z.literal("")),
 })
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
 interface UserDetailsPanelProps {
-  user: any // Using any for simplicity, but should be properly typed in a real app
+  userData: {
+    name: string;
+    jobTitle?: string;
+    location?: string;
+    bio?: string;
+  };
 }
 
-export function UserDetailsPanel({ user }: UserDetailsPanelProps) {
+export function UserDetailsPanel({ userData }: UserDetailsPanelProps) {
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      name: user.name || "",
-      jobTitle: user.jobTitle || "",
-      company: user.company || "",
-      location: user.location || "",
-      bio: user.bio || "",
-      website: user.website || "",
-      linkedin: user.linkedin || "",
-      github: user.github || "",
+      name: userData.name || "",
+      jobTitle: userData.jobTitle || "",
+      location: userData.location || "",
+      bio: userData.bio || "",
     },
   })
 
@@ -50,13 +48,10 @@ export function UserDetailsPanel({ user }: UserDetailsPanelProps) {
     setIsLoading(true)
 
     try {
-      // In a real app, you would call your API to update the user profile
       console.log("Profile data:", data)
 
-      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000))
 
-      // Use our simplified toast
       toast({
         title: "Profile updated",
         description: "Your profile information has been updated successfully.",
@@ -114,19 +109,7 @@ export function UserDetailsPanel({ user }: UserDetailsPanelProps) {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField
-                  control={form.control}
-                  name="company"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Company</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Acme Inc." {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                
 
                 <FormField
                   control={form.control}
@@ -162,53 +145,6 @@ export function UserDetailsPanel({ user }: UserDetailsPanelProps) {
                 )}
               />
 
-              <div className="space-y-4">
-                <h3 className="text-lg font-medium">Social Links</h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="website"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Website</FormLabel>
-                        <FormControl>
-                          <Input placeholder="https://yourwebsite.com" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="linkedin"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>LinkedIn</FormLabel>
-                        <FormControl>
-                          <Input placeholder="https://linkedin.com/in/username" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <FormField
-                  control={form.control}
-                  name="github"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>GitHub</FormLabel>
-                      <FormControl>
-                        <Input placeholder="https://github.com/username" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
             </CardContent>
 
             <CardFooter className="flex justify-between">
