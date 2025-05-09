@@ -26,37 +26,29 @@ interface InterviewerCheatsheet {
 export function CheatsheetPanel() {
   const cheatsheets = useSelector((state: RootState) => state.cheatsheets.cheatsheets);
 
-  const candidateCheatsheets: CandidateCheatsheet[] = [
-    {
-      id: "1",
-      companyName: "Company A",
-      companyOverview: "Company A is a global leader in tech solutions.",
-      role: "Software Engineer",
-    },
-    {
-      id: "2",
-      companyName: "Company B",
-      companyOverview: "Company B specializes in AI and machine learning.",
-      role: "Data Scientist",
-    },
-  ];
+  const candidateCheatsheets = cheatsheets
+  .filter(sheet => sheet.cheatsheet_type === "candidate")
+  .map(sheet => {
+    return {
+      id: sheet.id,
+      companyName: (sheet.content as any).company,
+      companyOverview: (sheet.content as any).company_insights.company_overview,
+      role: (sheet.content as any).role,
+    };
+  });
 
-  const interviewerCheatsheets: InterviewerCheatsheet[] = [
-    {
-      id: "3",
-      candidateName: "John Doe",
-      jobTitle: "Software Engineer",
-      summary: "John has strong coding skills and problem-solving abilities.",
-      recommendation: "proceed",
-    },
-    {
-      id: "4",
-      candidateName: "Jane Smith",
-      jobTitle: "Data Scientist",
-      summary: "Jane has a solid understanding of machine learning techniques.",
-      recommendation: "consider",
-    },
-  ];
+const interviewerCheatsheets = cheatsheets
+  .filter(sheet => sheet.cheatsheet_type === "interviewer")
+  .map(sheet => {
+
+    return {
+      id: sheet.id,
+      candidateName: (sheet.content as any).candidate_overview.full_name,
+      summary: (sheet.content as any).candidate_overview.candidate_summary,
+      jobTitle: (sheet.content as any).candidate_overview.current_job_title,
+      recommendation: (sheet.content as any).interview_recommendation.proceed,
+    };
+  });
 
   const hasNoCheatsheets =
     candidateCheatsheets.length === 0 && interviewerCheatsheets.length === 0;
@@ -77,11 +69,11 @@ export function CheatsheetPanel() {
 
   const getRecommendationBadge = (recommendation: string) => {
     switch (recommendation) {
-      case "proceed":
+      case "Proceed":
         return <Badge className="bg-green-500">Proceed</Badge>;
-      case "reject":
+      case "Reject":
         return <Badge className="bg-red-500">Reject</Badge>;
-      case "consider":
+      case "Consider":
         return <Badge className="bg-amber-500">Consider</Badge>;
       default:
         return null;

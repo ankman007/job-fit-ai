@@ -89,7 +89,6 @@ export function Navbar() {
                   </Link>
 
                   {isHomePage ? (
-                    // Home page specific navigation
                     <>
                       <button
                         onClick={() => scrollToSection("features")}
@@ -109,12 +108,6 @@ export function Navbar() {
                       >
                         Pricing
                       </button>
-                      {/* <button
-                        onClick={() => scrollToSection("generate")}
-                        className="text-sm font-medium text-gray-700 hover:text-teal-600 transition-colors"
-                      >
-                        Generate Cheatsheet
-                      </button> */}
                     </>
                   ) : (
                     <>
@@ -141,46 +134,7 @@ export function Navbar() {
             {!isMobile ? (
               <>
                 {isLoggedIn ? (
-                  // Logged in state - show profile dropdown
                   <div className="flex items-center space-x-4">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="text-indigo-500 hover:text-indigo-600 hover:bg-indigo-50"
-                    >
-                      <a
-                        href="https://discord.gg/FRHVNjassd"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 127.14 96.36"
-                          className="h-5 w-5"
-                          fill="currentColor"
-                        >
-                          <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z" />
-                        </svg>
-                      </a>
-                    </Button>
-
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="hover:bg-amber-50"
-                      >
-                      <a
-                        href="https://buymeacoffee.com/ankitpoudel"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border-amber-500 text-amber-500 hover:bg-amber-50 flex items-center gap-1"
-                      >
-                        <Heart className="h-4 w-4" />
-                        <span>Sponsor</span>
-                      </a>
-                    </Button>
 
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -213,7 +167,7 @@ export function Navbar() {
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link
-                            href="/profile/cheatsheets"
+                            href="/profile"
                             className="cursor-pointer"
                           >
                             My Cheatsheets
@@ -221,7 +175,7 @@ export function Navbar() {
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link
-                            href="/profile/settings"
+                            href="/profile"
                             className="cursor-pointer"
                           >
                             Settings
@@ -238,7 +192,6 @@ export function Navbar() {
                     </DropdownMenu>
                   </div>
                 ) : (
-                  // Logged out state - show login/signup buttons
                   <>
                     <Button
                       variant="ghost"
@@ -263,42 +216,6 @@ export function Navbar() {
                     >
                       <Link href="/auth/login">Get Started</Link>
                     </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="text-indigo-500 hover:text-indigo-600 hover:bg-indigo-50"
-                    >
-                      <a
-                        href="https://discord.gg/FRHVNjassd"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 127.14 96.36"
-                          className="h-5 w-5"
-                          fill="currentColor"
-                        >
-                          <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z" />
-                        </svg>
-                      </a>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      >
-                      <a
-                        href="https://buymeacoffee.com/ankitpoudel"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border-amber-500 text-amber-500 hover:bg-amber-50 flex items-center gap-1"
-                      >
-                        <Heart className="h-4 w-4" />
-                        <span>Sponsor</span>
-                      </a>
-                    </Button>
                   </>
                 )}
               </>
@@ -315,7 +232,6 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMobile && isMenuOpen && (
         <div className="container mx-auto px-4 pb-4">
           <nav className="flex flex-col space-y-4">
@@ -330,7 +246,6 @@ export function Navbar() {
                 </Link>
 
                 {isHomePage ? (
-                  // Home page specific mobile navigation
                   <>
                     <button
                       onClick={() => scrollToSection("features")}
@@ -350,15 +265,8 @@ export function Navbar() {
                     >
                       Pricing
                     </button>
-                    {/* <button
-                      onClick={() => scrollToSection("generate")}
-                      className="text-sm font-medium text-gray-500 transition-colors hover:text-teal-600 text-left"
-                    >
-                      Generate Cheatsheet
-                    </button> */}
                   </>
                 ) : (
-                  // Mobile navigation for other pages
                   <>
                     <Link
                       href="/resume-templates"
@@ -381,7 +289,6 @@ export function Navbar() {
 
             <div className="flex flex-col space-y-2 pt-2 border-t">
               {isLoggedIn ? (
-                // Mobile logged in state
                 <>
                   <div className="flex items-center space-x-2 py-2">
                     <Avatar className="h-8 w-8">
@@ -457,41 +364,6 @@ export function Navbar() {
                   >
                     <Link href="/auth/login">Get Started</Link>
                   </Button>
-                  <div className="flex space-x-2 pt-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="text-indigo-500 hover:text-indigo-600 hover:bg-indigo-50"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 127.14 96.36"
-                        className="h-5 w-5"
-                        fill="currentColor"
-                      >
-                        <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z" />
-                      </svg>
-                      {/* <span className="sr-only">Discord</span> */}
-                    </Button>
-                    <Button
-                      variant="outline"
-                        size="sm"
-                        className="hover:bg-amber-50"
-                        asChild
-                      >
-                      <a
-                        href="https://buymeacoffee.com/ankitpoudel"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border-amber-500 text-amber-500 hover:bg-amber-50 flex items-center gap-1"
-                      >
-                        <Heart className="h-4 w-4" />
-                        <span>Sponsor</span>
-                      </a>
-                    </Button>
-                  </div>
                 </>
               )}
             </div>

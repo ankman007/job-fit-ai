@@ -14,10 +14,8 @@ import { Loader2, CheckCircle, ChevronRight, ChevronLeft, AlertCircle } from "lu
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Progress } from "@/components/ui/progress"
 
-// Define a single schema for all form fields
 const signupSchema = z
   .object({
-    // Step 1: Account information
     name: z.string().min(2, { message: "Name must be at least 2 characters" }),
     email: z.string().email({ message: "Please enter a valid email address" }),
     password: z
@@ -29,7 +27,6 @@ const signupSchema = z
     confirmPassword: z.string(),
     acceptTerms: z.boolean(),
 
-    // Step 2: Profile information
     jobTitle: z.string().min(2, { message: "Job title must be at least 2 characters" }).optional(),
     location: z.string().min(2, { message: "Location must be at least 2 characters" }).optional(),
     bio: z.string().max(300, { message: "Bio must be less than 300 characters" }).optional(),
@@ -60,7 +57,7 @@ export function SignUpForm() {
       location: "",
       bio: "",
     },
-    mode: "onChange", // Validate on change for immediate feedback
+    mode: "onChange",
   })
 
   const {
@@ -69,22 +66,18 @@ export function SignUpForm() {
     getValues,
   } = form
 
-  // Check if current step is valid
   const isStepValid = async (step: number) => {
     if (step === 1) {
       const result = await trigger(["name", "email", "password", "confirmPassword", "acceptTerms"])
       console.log("Step 1 valid?", result)
       return result
     } else if (step === 2) {
-      // For step 2, we can validate the optional fields or just return true
-      // since they're optional
       const result = await trigger(["jobTitle", "location", "bio"])
       return result
     }
     return true
   }
 
-  // Handle next step
   const handleNextStep = async () => {
     const isValid = await isStepValid(currentStep)
     if (isValid) {
@@ -92,12 +85,10 @@ export function SignUpForm() {
     }
   }
 
-  // Handle previous step
   const handlePrevStep = () => {
     setCurrentStep(currentStep - 1)
   }
 
-  // Calculate progress percentage
   const progressPercentage = (currentStep / totalSteps) * 100
 
   async function onSubmit(data: SignUpFormValues) {
@@ -105,7 +96,6 @@ export function SignUpForm() {
     setError(null)
   
     try {
-      // Perform the API call
       const payload = {
         name: data.name,
         email: data.email,
@@ -114,7 +104,7 @@ export function SignUpForm() {
         location: data.location,
         bio: data.bio,
       }
-      const response = await fetch('http://localhost:8000/auth/signup', {
+      const response = await fetch('http://localhost:8000/auth/sign-up', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -122,12 +112,10 @@ export function SignUpForm() {
         body: JSON.stringify(payload),
       })
   
-      // Check if the response is successful (status 2xx)
       if (!response.ok) {
         throw new Error('Signup failed. Please try again.')
       }
   
-      // Assuming the signup is successful, redirect to login
       router.push("/auth/login")
     } catch (err) {
       setError("An error occurred during sign up. Please try again.")
@@ -136,7 +124,6 @@ export function SignUpForm() {
     }
   }
 
-  // Password strength indicator
   const getPasswordStrength = () => {
     const password = getValues("password")
     if (!password) return { strength: 0, text: "", color: "" }
@@ -167,7 +154,6 @@ export function SignUpForm() {
 
   return (
     <div className="space-y-4">
-      {/* Progress indicator */}
       <div className="mb-6">
         <div className="flex justify-between mb-2 text-sm">
           <span>
@@ -186,7 +172,6 @@ export function SignUpForm() {
       )}
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {/* Step 1: Account Information */}
         {currentStep === 1 && (
           <div className="space-y-4">
             <h2 className="text-lg font-medium">Account Information</h2>
@@ -369,7 +354,6 @@ export function SignUpForm() {
               <Button
                 type="button"
                 onClick={handleNextStep}
-                // disabled={isLoading || !form.formState.isValid}
                 className="flex items-center"
               >
                 Next Step
@@ -379,7 +363,6 @@ export function SignUpForm() {
           </div>
         )}
 
-        {/* Step 2: Profile Information */}
         {currentStep === 2 && (
           <div className="space-y-4">
             <h2 className="text-lg font-medium">Profile Information</h2>

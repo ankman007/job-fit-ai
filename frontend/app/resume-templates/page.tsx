@@ -1,22 +1,25 @@
-import type { Metadata } from "next"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Download } from "lucide-react"
-import { ResumeTemplateAccess } from "@/components/resume-template-access"
+// 'use client';
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Download } from "lucide-react";
+import { ResumeTemplateAccess } from "@/components/resume-template-access";
+import { useState, useRef } from "react";
 
+import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Free Resume Templates | JobPrepAI",
-  description: "Download free professional resume templates to help you land your dream job",
-}
+  description:
+    "Download free professional resume templates to help you land your dream job",
+};
 
 export default function ResumeTemplatesPage() {
+
   return (
     <main className="min-h-screen">
       <Navbar />
 
-      {/* Hero Section */}
       <section className="bg-gradient-to-b from-teal-600 to-teal-700 text-white py-16 px-4">
         <div className="container mx-auto max-w-5xl">
           <div className="flex flex-col md:flex-row items-center gap-8">
@@ -28,20 +31,17 @@ export default function ResumeTemplatesPage() {
                 Professional Resume Templates
               </h1>
               <p className="text-teal-100 text-lg">
-                Stand out from the competition with our professionally designed resume templates. Easy to use,
-                ATS-friendly, and completely free.
+                Stand out from the competition with our professionally designed
+                resume templates. Easy to use, ATS-friendly, and completely
+                free.
               </p>
               <div className="pt-4 flex flex-wrap gap-4 justify-center md:justify-start">
-                <Button size="lg" className="bg-white text-teal-700 hover:bg-teal-50">
-                  <Download className="mr-2 h-4 w-4" />
-                  Browse Templates
-                </Button>
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="bg-transparent border-white text-white hover:bg-teal-600"
+                  className="bg-white text-teal-700 hover:bg-teal-50"
                 >
-                  Learn More
+                  <Download className="mr-2 h-4 w-4" />
+                  Browse Templates
                 </Button>
               </div>
             </div>
@@ -74,9 +74,12 @@ export default function ResumeTemplatesPage() {
       <section className="py-16 px-4 bg-white" id="access-templates">
         <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">How to Access and Use Templates</h2>
+            <h2 className="text-3xl font-bold mb-4">
+              How to Access and Use Templates
+            </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Follow these simple steps to get started with our free resume templates
+              Follow these simple steps to get started with our free resume
+              templates
             </p>
           </div>
 
@@ -86,7 +89,10 @@ export default function ResumeTemplatesPage() {
                 <span className="text-2xl font-bold text-teal-600">1</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">Access Templates</h3>
-              <p className="text-gray-600">Click the button below to open our Google Sheets template collection</p>
+              <p className="text-gray-600">
+                Click the button below to open our Google Sheets template
+                collection
+              </p>
             </div>
 
             <div className="text-center">
@@ -94,87 +100,43 @@ export default function ResumeTemplatesPage() {
                 <span className="text-2xl font-bold text-teal-600">2</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">Make a Copy</h3>
-              <p className="text-gray-600">Select "File" {">"} "Make a copy" to create your own editable version</p>
+              <p className="text-gray-600">
+                Select "File" {">"} "Make a copy" to create your own editable
+                version
+              </p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-teal-600">3</span>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Customize & Download</h3>
-              <p className="text-gray-600">Fill in your information, then download as PDF for your job applications</p>
+              <h3 className="text-xl font-semibold mb-2">
+                Customize & Download
+              </h3>
+              <p className="text-gray-600">
+                Fill in your information, then download as PDF for your job
+                applications
+              </p>
             </div>
           </div>
 
           <div className="bg-gray-50 p-8 rounded-lg border text-center">
             <h3 className="text-2xl font-bold mb-4">Ready to Get Started?</h3>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Access our collection of free, professionally designed resume templates on Google Sheets. No sign-up
-              required, just click and start customizing!
+              Access our collection of free, professionally designed resume
+              templates on Google Sheets. No sign-up required, just click and
+              start customizing!
             </p>
             <ResumeTemplateAccess />
             <p className="mt-4 text-sm text-gray-500">
-              By using our templates, you agree to our terms of use. Templates are for personal use only.
+              By using our templates, you agree to our terms of use. Templates
+              are for personal use only.
             </p>
           </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-16 px-4 bg-white">
-        <div className="container mx-auto max-w-3xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
-          </div>
-
-          <div className="space-y-4">
-            <div className="border rounded-lg p-4">
-              <h3 className="font-semibold text-lg mb-2">Are these templates really free?</h3>
-              <p className="text-gray-600">
-                Yes, all templates are completely free to use. We believe everyone deserves access to professional
-                resume tools.
-              </p>
-            </div>
-
-            <div className="border rounded-lg p-4">
-              <h3 className="font-semibold text-lg mb-2">Can I edit the templates?</h3>
-              <p className="text-gray-600">
-                The templates are designed to be fully customizable. You can change colors, fonts, and layout elements
-                to match your personal style.
-              </p>
-            </div>
-
-            <div className="border rounded-lg p-4">
-              <h3 className="font-semibold text-lg mb-2">Do I need a Google account to use these templates?</h3>
-              <p className="text-gray-600">
-                Yes, you'll need a Google account to make a copy of the templates in Google Sheets. If you don't have
-                one, you can create a free account.
-              </p>
-            </div>
-
-            <div className="border rounded-lg p-4">
-              <h3 className="font-semibold text-lg mb-2">How do I download my resume as a PDF?</h3>
-              <p className="text-gray-600">
-                In Google Sheets, go to File &gt; Download &gt; PDF Document (.pdf). This will save your resume as a PDF
-                file ready for job applications.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 px-4 bg-teal-600 text-white">
-        <div className="container mx-auto max-w-5xl text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Create Your Professional Resume?</h2>
-          <p className="text-teal-100 mb-8 max-w-2xl mx-auto">
-            Access our free templates now and take the first step toward landing your dream job.
-          </p>
-          <ResumeTemplateAccess />
         </div>
       </section>
 
       <Footer />
     </main>
-  )
+  );
 }

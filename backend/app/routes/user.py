@@ -55,8 +55,6 @@ async def get_user_cheatsheets(
                 formatted_cheatsheets.append({
                     "id": sheet.id,
                     "user_id": sheet.user_id,
-                    "resume_text": sheet.resume_text,
-                    "job_description": sheet.job_description,
                     "cheatsheet_type": sheet.cheatsheet_type,
                     "content": sheet.content
                 })
