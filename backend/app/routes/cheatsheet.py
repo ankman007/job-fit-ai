@@ -13,7 +13,7 @@ from app.routes.auth import get_current_user
 router = APIRouter()
 
 @router.post('/generate')
-async def generate_cheetsheet(
+async def generate_cheatsheet(
     resume_pdf: UploadFile = File(...),
     job_description: str = Form(...),
     cheatsheet_type: str = Form("interviewer"),
@@ -48,6 +48,7 @@ async def generate_cheetsheet(
             "message": "Cheatsheet generated and stored successfully.",
             "data": {
                 "cheatsheet_id": cheatsheet_record.id,
+                "cheatsheet_type": cheatsheet_type,
                 "cheatsheet": res
             }
         }

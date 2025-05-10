@@ -9,10 +9,12 @@ interface Cheatsheet {
 
 interface CheatsheetState {
     cheatsheets: Cheatsheet[];
+    currentCheatsheet: Cheatsheet | null;
 }
 
 const initialState: CheatsheetState = {
     cheatsheets: [],
+    currentCheatsheet: null,
 };
 
 const cheatsheetSlice = createSlice({
@@ -25,8 +27,20 @@ const cheatsheetSlice = createSlice({
         clearCheatsheets(state) {
             state.cheatsheets = [];
         },
+        setCurrentCheatsheet(state, action: PayloadAction<Cheatsheet>) {
+            state.currentCheatsheet = action.payload;
+        },
+        addCheatsheet(state, action: PayloadAction<Cheatsheet>) {
+            state.cheatsheets.push(action.payload);
+        },
     },
 });
 
-export const { setCheatsheets, clearCheatsheets } = cheatsheetSlice.actions;
+export const {
+    setCheatsheets,
+    clearCheatsheets,
+    setCurrentCheatsheet,
+    addCheatsheet,
+} = cheatsheetSlice.actions;
+
 export default cheatsheetSlice.reducer;

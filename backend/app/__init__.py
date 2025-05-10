@@ -32,8 +32,8 @@ def create_app():
     from app.routes.auth import router as auth_router
     app.include_router(auth_router, prefix='/auth')
     
-    from app.routes.cheatsheet import router as cheetsheet_router
-    app.include_router(cheetsheet_router, prefix='/cheetsheet')
+    from app.routes.cheatsheet import router as cheatsheet_router
+    app.include_router(cheatsheet_router, prefix='/cheatsheet')
     
     from app.routes.user import router as user_route
     app.include_router(user_route, prefix='/user')
