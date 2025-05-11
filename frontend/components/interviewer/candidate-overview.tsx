@@ -19,6 +19,7 @@ interface CandidateOverviewProps {
 }
 
 export function CandidateOverview({ data }: CandidateOverviewProps) {
+  console.log("CandidateOverview data", data);
   const initials = data.name
     .split(" ")
     .map((n) => n[0])

@@ -3,8 +3,8 @@ import { CalendarDays, Briefcase, FileText } from "lucide-react"
 interface ResultsHeaderProps {
   jobTitle: string
   company: string
-  resumeName: string
-  generatedDate: string
+  resumeName?: string
+  generatedDate?: string
 }
 
 export function ResultsHeader({ jobTitle, company, resumeName, generatedDate }: ResultsHeaderProps) {

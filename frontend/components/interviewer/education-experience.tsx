@@ -31,6 +31,8 @@ interface EducationExperienceProps {
 }
 
 export function EducationExperience({ education, experience }: EducationExperienceProps) {
+  // console.log("EducationExperience data", data);
+
   const [isExpanded, setIsExpanded] = useState(true)
 
   const getRelevanceBadge = (relevance: string) => {

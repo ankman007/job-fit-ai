@@ -19,6 +19,8 @@ interface SkillGapsProps {
 }
 
 export function SkillGaps({ data }: SkillGapsProps) {
+  // console.log("SkillGaps data", data);
+
   const [isExpanded, setIsExpanded] = useState(true)
 
   const getImportanceStars = (importance: number) => {

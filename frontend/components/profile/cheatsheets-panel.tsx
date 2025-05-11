@@ -24,31 +24,49 @@ interface InterviewerCheatsheet {
 }
 
 export function CheatsheetPanel() {
-  const cheatsheets = useSelector((state: RootState) => state.cheatsheets.cheatsheets);
+  const cheatsheets = useSelector(
+    (state: RootState) => state.cheatsheets.cheatsheets
+  );
 
   const candidateCheatsheets = cheatsheets
-  .filter(sheet => sheet.cheatsheet_type === "candidate")
-  .map(sheet => {
-    return {
-      id: sheet.id,
-      companyName: (sheet.content as any).company,
-      companyOverview: (sheet.content as any).company_insights.company_overview,
-      role: (sheet.content as any).role,
-    };
-  });
+    .filter((sheet) => sheet.cheatsheet_type === "candidate")
+    .map((sheet) => {
+      return {
+        id: sheet.id,
+        companyName: (sheet.content as any).company,
+        companyOverview: (sheet.content as any).company_insights
+          .company_overview,
+        role: (sheet.content as any).role,
+      };
+    });
 
-const interviewerCheatsheets = cheatsheets
-  .filter(sheet => sheet.cheatsheet_type === "interviewer")
-  .map(sheet => {
+  const sheet = cheatsheets.find((sheet) => sheet.id === "5");
+  console.log("sheet", sheet);
 
-    return {
-      id: sheet.id,
-      candidateName: (sheet.content as any).candidate_overview.full_name,
-      summary: (sheet.content as any).candidate_overview.candidate_summary,
-      jobTitle: (sheet.content as any).candidate_overview.current_job_title,
-      recommendation: (sheet.content as any).interview_recommendation.proceed,
-    };
-  });
+  const idCheatsheets = sheet
+    ? [
+        {
+          id: sheet.id,
+          companyName: (sheet.content as any).company,
+          companyOverview: (sheet.content as any).company_insights
+            .company_overview,
+          role: (sheet.content as any).role,
+        },
+      ]
+    : [];
+  console.log("idCheatsheets", idCheatsheets);
+
+  const interviewerCheatsheets = cheatsheets
+    .filter((sheet) => sheet.cheatsheet_type === "interviewer")
+    .map((sheet) => {
+      return {
+        id: sheet.id,
+        candidateName: (sheet.content as any).candidate_overview.full_name,
+        summary: (sheet.content as any).candidate_overview.candidate_summary,
+        jobTitle: (sheet.content as any).candidate_overview.current_job_title,
+        recommendation: (sheet.content as any).interview_recommendation.proceed,
+      };
+    });
 
   const hasNoCheatsheets =
     candidateCheatsheets.length === 0 && interviewerCheatsheets.length === 0;
@@ -56,8 +74,12 @@ const interviewerCheatsheets = cheatsheets
   if (hasNoCheatsheets) {
     return (
       <div className="text-center py-12 bg-white rounded-lg border">
-        <h3 className="text-lg font-medium text-gray-900 mb-1">No cheatsheets found</h3>
-        <p className="text-gray-500 mb-4">You haven't created any cheatsheets yet</p>
+        <h3 className="text-lg font-medium text-gray-900 mb-1">
+          No cheatsheets found
+        </h3>
+        <p className="text-gray-500 mb-4">
+          You haven't created any cheatsheets yet
+        </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button asChild>
             <Link href="/">Create Cheatsheet</Link>
@@ -92,17 +114,26 @@ const interviewerCheatsheets = cheatsheets
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {candidateCheatsheets.map((sheet) => (
-              <Card key={sheet.id} className="overflow-hidden hover:shadow-md transition-shadow">
+              <Card
+                key={sheet.id}
+                className="overflow-hidden hover:shadow-md transition-shadow"
+              >
                 <CardHeader>
                   <CardTitle className="text-xl">{sheet.companyName}</CardTitle>
-                  <p className="text-sm font-medium text-gray-500">{sheet.role}</p>
+                  <p className="text-sm font-medium text-gray-500">
+                    {sheet.role}
+                  </p>
                 </CardHeader>
 
                 <CardContent>
                   <div className="space-y-4">
                     <div>
-                      <h4 className="text-sm font-medium mb-1">Company Overview</h4>
-                      <p className="text-sm text-gray-600 line-clamp-3">{sheet.companyOverview}</p>
+                      <h4 className="text-sm font-medium mb-1">
+                        Company Overview
+                      </h4>
+                      <p className="text-sm text-gray-600 line-clamp-3">
+                        {sheet.companyOverview}
+                      </p>
                     </div>
 
                     <Button asChild size="sm">
@@ -129,11 +160,18 @@ const interviewerCheatsheets = cheatsheets
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {interviewerCheatsheets.map((sheet) => (
-              <Card key={sheet.id} className="overflow-hidden hover:shadow-md transition-shadow">
+              <Card
+                key={sheet.id}
+                className="overflow-hidden hover:shadow-md transition-shadow"
+              >
                 <CardHeader className="flex flex-row items-start justify-between">
                   <div>
-                    <CardTitle className="text-xl">{sheet.candidateName}</CardTitle>
-                    <p className="text-sm font-medium text-gray-500">{sheet.jobTitle}</p>
+                    <CardTitle className="text-xl">
+                      {sheet.candidateName}
+                    </CardTitle>
+                    <p className="text-sm font-medium text-gray-500">
+                      {sheet.jobTitle}
+                    </p>
                   </div>
                   {getRecommendationBadge(sheet.recommendation)}
                 </CardHeader>
@@ -141,8 +179,12 @@ const interviewerCheatsheets = cheatsheets
                 <CardContent>
                   <div className="space-y-4">
                     <div>
-                      <h4 className="text-sm font-medium mb-1">Candidate Summary</h4>
-                      <p className="text-sm text-gray-600 line-clamp-3">{sheet.summary}</p>
+                      <h4 className="text-sm font-medium mb-1">
+                        Candidate Summary
+                      </h4>
+                      <p className="text-sm text-gray-600 line-clamp-3">
+                        {sheet.summary}
+                      </p>
                     </div>
 
                     <Button asChild size="sm">

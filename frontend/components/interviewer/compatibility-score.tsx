@@ -17,6 +17,8 @@ interface CompatibilityScoreProps {
 }
 
 export function CompatibilityScore({ data }: CompatibilityScoreProps) {
+  // console.log("CompatibilityScore data", data);
+
   const [isExpanded, setIsExpanded] = useState(true)
 
   const getScoreColor = (score: number) => {

@@ -7,20 +7,19 @@ import { Button } from "@/components/ui/button"
 
 interface Question {
   question: string
-  category: "technical" | "behavioral" | "experience" | "project"
-  difficulty: "easy" | "medium" | "hard"
-  suggestedAnswer?: string
-  tips?: string[]
+  category: "Technical" | "Behavioral" | "Experience" | "Project"
+  difficulty: "Easy" | "Medium" | "Hard"
+  answer: string
 }
 
 interface InterviewQuestionsProps {
-  data: Question[]
-}
+  data: Question[] | null;
+} 
 
 export function InterviewQuestions({ data }: InterviewQuestionsProps) {
   const [isExpanded, setIsExpanded] = useState(true)
   const [expandedQuestions, setExpandedQuestions] = useState<number[]>([])
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   const toggleQuestion = (index: number) => {
     if (expandedQuestions.includes(index)) {
@@ -38,11 +37,11 @@ export function InterviewQuestions({ data }: InterviewQuestionsProps) {
 
   const getDifficultyBadge = (difficulty: string) => {
     switch (difficulty) {
-      case "easy":
+      case "Easy":
         return <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Easy</span>
-      case "medium":
+      case "Medium":
         return <span className="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full">Medium</span>
-      case "hard":
+      case "Hard":
         return <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">Hard</span>
       default:
         return null
@@ -77,7 +76,7 @@ export function InterviewQuestions({ data }: InterviewQuestionsProps) {
           </div>
           <div className="flex items-center">
             <div className="mr-4 bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-sm font-medium">
-              {data.length} Questions
+              {data?.length} Questions
             </div>
             {isExpanded ? (
               <ChevronUp className="h-5 w-5 text-gray-500" />
@@ -110,7 +109,7 @@ export function InterviewQuestions({ data }: InterviewQuestionsProps) {
               </div>
             </div>
 
-            {data.map((question, index) => (
+            {data?.map((question, index) => (
               <div key={index} className="border rounded-lg overflow-hidden">
                 <div
                   className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50"
@@ -135,7 +134,7 @@ export function InterviewQuestions({ data }: InterviewQuestionsProps) {
 
                 {expandedQuestions.includes(index) && (
                   <div className="p-4 bg-gray-50 border-t">
-                    {question.suggestedAnswer && (
+                    {question.answer && (
                       <div className="mb-4">
                         <div className="flex items-center justify-between mb-2">
                           <h4 className="text-sm font-medium text-gray-700 flex items-center">
@@ -146,7 +145,7 @@ export function InterviewQuestions({ data }: InterviewQuestionsProps) {
                             variant="ghost"
                             size="sm"
                             className="h-8 text-gray-500 hover:text-gray-700"
-                            onClick={() => copyToClipboard(question.suggestedAnswer!, index)}
+                            onClick={() => copyToClipboard(question.answer!, index)}
                           >
                             {copiedIndex === index ? (
                               <span className="text-xs flex items-center">
@@ -161,20 +160,7 @@ export function InterviewQuestions({ data }: InterviewQuestionsProps) {
                             )}
                           </Button>
                         </div>
-                        <p className="text-gray-700 text-sm bg-white p-3 rounded border">{question.suggestedAnswer}</p>
-                      </div>
-                    )}
-
-                    {question.tips && question.tips.length > 0 && (
-                      <div>
-                        <h4 className="text-sm font-medium text-gray-700 mb-2">Tips:</h4>
-                        <ul className="space-y-1 list-disc pl-5">
-                          {question.tips.map((tip, tIndex) => (
-                            <li key={tIndex} className="text-sm text-gray-600">
-                              {tip}
-                            </li>
-                          ))}
-                        </ul>
+                        <p className="text-gray-700 text-sm bg-white p-3 rounded border">{question.answer}</p>
                       </div>
                     )}
 

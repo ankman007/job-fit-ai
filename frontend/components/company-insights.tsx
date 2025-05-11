@@ -1,18 +1,34 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChevronDown, ChevronUp, Building, Users, Briefcase, TrendingUp, Globe } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card"
+import {
+  ChevronDown,
+  ChevronUp,
+  Building,
+  Users,
+  Briefcase,
+  TrendingUp,
+  Globe,
+  Info
+} from "lucide-react"
 
 interface CompanyInsightsProps {
   data: {
-    overview: string
-    culture: string[]
-    values: string[]
-    interviewStyle: string
-    expectations: string[]
-    additionalInfo?: string
-  }
+    company_overview: string;
+    company_values: string[];
+    culture_points: string[];
+    expectations: string;
+    interview_style: string;
+    additional_info?: string;
+    fallback: string;
+  };
 }
 
 export function CompanyInsights({ data }: CompanyInsightsProps) {
@@ -40,14 +56,16 @@ export function CompanyInsights({ data }: CompanyInsightsProps) {
       {isExpanded && (
         <CardContent className="pt-6">
           <div className="space-y-6">
+            {/* Company Overview */}
             <div>
               <h3 className="text-lg font-semibold text-teal-700 mb-3 flex items-center">
                 <Building className="h-5 w-5 mr-2" />
                 Company Overview
               </h3>
-              <p className="text-gray-700">{data.overview}</p>
+              <p className="text-gray-700">{data.company_overview || data.fallback}</p>
             </div>
 
+            {/* Culture + Values */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <h3 className="text-lg font-semibold text-teal-700 mb-3 flex items-center">
@@ -55,12 +73,16 @@ export function CompanyInsights({ data }: CompanyInsightsProps) {
                   Company Culture
                 </h3>
                 <ul className="space-y-2">
-                  {data.culture.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <div className="w-2 h-2 bg-teal-500 rounded-full mt-1.5 mr-2"></div>
-                      <span className="text-gray-700">{item}</span>
-                    </li>
-                  ))}
+                  {data.culture_points.length > 0 ? (
+                    data.culture_points.map((item, index) => (
+                      <li key={index} className="flex items-start">
+                        <div className="w-2 h-2 bg-teal-500 rounded-full mt-1.5 mr-2" />
+                        <span className="text-gray-700">{item}</span>
+                      </li>
+                    ))
+                  ) : (
+                    <li className="text-gray-500 italic">{data.fallback}</li>
+                  )}
                 </ul>
               </div>
 
@@ -70,43 +92,50 @@ export function CompanyInsights({ data }: CompanyInsightsProps) {
                   Company Values
                 </h3>
                 <ul className="space-y-2">
-                  {data.values.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <div className="w-2 h-2 bg-teal-500 rounded-full mt-1.5 mr-2"></div>
-                      <span className="text-gray-700">{item}</span>
-                    </li>
-                  ))}
+                  {data.company_values.length > 0 ? (
+                    data.company_values.map((item, index) => (
+                      <li key={index} className="flex items-start">
+                        <div className="w-2 h-2 bg-teal-500 rounded-full mt-1.5 mr-2" />
+                        <span className="text-gray-700">{item}</span>
+                      </li>
+                    ))
+                  ) : (
+                    <li className="text-gray-500 italic">{data.fallback}</li>
+                  )}
                 </ul>
               </div>
             </div>
 
+            {/* Interview Style */}
             <div>
               <h3 className="text-lg font-semibold text-teal-700 mb-3 flex items-center">
                 <Briefcase className="h-5 w-5 mr-2" />
                 Interview Style
               </h3>
-              <p className="text-gray-700 bg-gray-50 p-4 rounded-md border">{data.interviewStyle}</p>
+              <p className="text-gray-700 bg-gray-50 p-4 rounded-md border">
+                {data.interview_style || data.fallback}
+              </p>
             </div>
 
+            {/* Expectations */}
             <div>
               <h3 className="text-lg font-semibold text-teal-700 mb-3 flex items-center">
                 <Globe className="h-5 w-5 mr-2" />
                 What They Expect
               </h3>
-              <ul className="space-y-2">
-                {data.expectations.map((item, index) => (
-                  <li key={index} className="flex items-start bg-gray-50 p-3 rounded-md">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-1.5 mr-2"></div>
-                    <span className="text-gray-700">{item}</span>
-                  </li>
-                ))}
-              </ul>
+              <p className="text-gray-700 bg-gray-50 p-4 rounded-md border">
+                {data.expectations || data.fallback}
+              </p>
             </div>
 
-            {data.additionalInfo && (
+            {/* Additional Info */}
+            {data.additional_info && (
               <div className="bg-teal-50 p-4 rounded-md border border-teal-100">
-                <h3 className="text-sm font-semibold text-teal-700 mb-2">Additional Information</h3>
-                <p className="text-sm text-gray-700">{data.additionalInfo}</p>
+                <h3 className="text-sm font-semibold text-teal-700 mb-2 flex items-center">
+                  <Info className="h-4 w-4 mr-1" />
+                  Additional Information
+                </h3>
+                <p className="text-sm text-gray-700">{data.additional_info}</p>
               </div>
             )}
           </div>

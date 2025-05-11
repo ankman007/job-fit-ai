@@ -19,8 +19,9 @@ interface SwotAnalysisProps {
 }
 
 export function SwotAnalysis({ data }: SwotAnalysisProps) {
-  const [isExpanded, setIsExpanded] = useState(true)
-
+  const [isExpanded, setIsExpanded] = useState(true);
+  console.log("data", data);
+  
   return (
     <Card>
       <CardHeader

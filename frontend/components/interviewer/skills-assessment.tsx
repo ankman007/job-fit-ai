@@ -28,6 +28,8 @@ interface SkillsAssessmentProps {
 }
 
 export function SkillsAssessment({ data }: SkillsAssessmentProps) {
+    // console.log("SkillsAssessment data", data);
+
   const [isExpanded, setIsExpanded] = useState(true)
 
   const getStatusIcon = (status: string) => {

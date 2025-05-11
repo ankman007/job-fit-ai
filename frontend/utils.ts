@@ -1,5 +1,5 @@
 import { store } from "./redux/store";
-import { setTokens, clearTokens } from "./redux/slices/authSlice";
+import { logoutAndClearTimer, loginAndStartTimer } from "./redux/slices/authSlice";
 import { useSelector } from "react-redux";
 import type { RootState } from '@/redux/store';
 import { jwtDecode } from "jwt-decode";
@@ -26,7 +26,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}): Pro
 
     if (response.status === 401) {
         console.warn("Unauthorized. Clearing tokens.");
-        store.dispatch(clearTokens());
+        store.dispatch(logoutAndClearTimer());
     }
     return response;
 };

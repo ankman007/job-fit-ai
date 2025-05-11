@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from 'react-redux';
-import { setTokens, clearTokens } from "@/redux/slices/authSlice";
 import { setUserDetails, clearUserDetails } from "@/redux/slices/userSlice";
 import { setCheatsheets, clearCheatsheets } from "@/redux/slices/cheatsheetSlice";
+import { loginAndStartTimer, logoutAndClearTimer } from "@/redux/slices/authSlice";
 import type { AppDispatch } from "../redux/store";
 import { RootState } from "../redux/store";
 import Head from "next/head";
@@ -60,7 +60,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       const isTokenValid = !isTokenExpired(access);
       if (!isTokenValid) {
         console.warn("Token expired, clearing authentication...");
-        dispatch(clearTokens());
+        dispatch(logoutAndClearTimer());
         dispatch(clearUserDetails());
         return;
       }
