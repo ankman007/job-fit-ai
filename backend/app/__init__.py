@@ -21,7 +21,7 @@ def create_app():
     
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:3000", "https://ai-job-prep.vercel.app"],  
+        allow_origins=["http://localhost:3000", "https://job-fit-ai.vercel.app"],  
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],

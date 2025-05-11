@@ -5,8 +5,8 @@ import { ForgotPasswordForm } from "@/components/auth/forgot-password-form"
 import { AuthLayout } from "@/components/auth/auth-layout"
 
 // export const metadata: Metadata = {
-//   title: "Forgot Password | JobPrepAI",
-//   description: "Reset your JobPrepAI password",
+//   title: "Forgot Password | JobFitAI",
+//   description: "Reset your JobFitAI password",
 // }
 
 function ForgotPasswordPage() {

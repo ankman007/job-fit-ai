@@ -4,8 +4,8 @@ import { CheatsheetGenerator } from "@/components/cheatsheet-generator"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Generate Interview Cheatsheet | JobPrepAI",
-  description: "Create your personalized interview cheatsheet with JobPrepAI",
+  title: "Generate Interview Cheatsheet | JobFitAI",
+  description: "Create your personalized interview cheatsheet with JobFitAI",
 }
 
 export default function GeneratePage() {

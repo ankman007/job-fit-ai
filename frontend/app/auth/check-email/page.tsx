@@ -7,7 +7,7 @@ import { AuthLayout } from "@/components/auth/auth-layout"
 import { Mail } from "lucide-react"
 
 // export const metadata: Metadata = {
-//   title: "Check Your Email | JobPrepAI",
+//   title: "Check Your Email | JobFitAI",
 //   description: "Check your email for a password reset link",
 // }
 

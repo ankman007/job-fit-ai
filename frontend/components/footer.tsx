@@ -24,7 +24,7 @@ export function Footer() {
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
-            <h3 className="text-xl font-bold text-white mb-4">Job Prep AI</h3>
+            <h3 className="text-xl font-bold text-white mb-4">Job Fit AI</h3>
             <p className="mb-4 max-w-md">
               Helping job seekers prepare for interviews with AI-powered
               insights and personalized preparation guides.
@@ -156,7 +156,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-sm text-center">
-          <p>© {new Date().getFullYear()} Job Prep AI. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Job Fit AI. All rights reserved.</p>
           <p className="mt-2 text-gray-400">
             Support our work by becoming a{" "}
             <a

@@ -9,7 +9,7 @@ import { useState, useRef } from "react";
 
 import type { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Free Resume Templates | JobPrepAI",
+  title: "Free Resume Templates | JobFitAI",
   description:
     "Download free professional resume templates to help you land your dream job",
 };

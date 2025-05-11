@@ -5,8 +5,8 @@ import { AuthLayout } from "@/components/auth/auth-layout";
 import withGuest from "@/hoc/withGuest";
 
 // export const metadata: Metadata = {
-//   title: "Reset Password | JobPrepAI",
-//   description: "Set a new password for your JobPrepAI account",
+//   title: "Reset Password | JobFitAI",
+//   description: "Set a new password for your JobFitAI account",
 // }
 
 function ResetPasswordPage() {

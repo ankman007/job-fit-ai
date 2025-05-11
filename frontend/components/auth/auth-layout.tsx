@@ -27,7 +27,7 @@ export function AuthLayout({
           className="flex items-center justify-center text-2xl font-bold text-teal-600 hover:text-teal-700"
         >
           <Sparkles className="mr-2 h-6 w-6" />
-          JobPrepAI
+          JobFitAI
         </Link>
 
         <div className="space-y-2 text-center">

@@ -14,8 +14,8 @@ import type { Metadata } from "next";
 import withAuth from "@/hoc/withAuth";
 
 // export const metadata: Metadata = {
-//   title: "Candidate Cheatsheet | JobPrepAI",
-//   description: "Interview Preparation made easy with JobPrepAI",
+//   title: "Candidate Cheatsheet | JobFitAI",
+//   description: "Interview Preparation made easy with JobFitAI",
 // }
 
 function InterviewerResultsPage() {

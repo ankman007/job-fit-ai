@@ -32,7 +32,7 @@ export function Hero() {
           <div className="flex-1 space-y-6 max-w-2xl mx-auto lg:mx-0">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-center lg:text-left">
               Ace Your Next Interview with{" "}
-              <span className="text-teal-600">Job Prep AI</span>
+              <span className="text-teal-600">Job Fit AI</span>
             </h1>
 
             <div className="flex items-center justify-center lg:justify-start mt-3 mb-4">

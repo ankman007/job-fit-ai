@@ -11,7 +11,7 @@ export default function NotFound() {
           className="mb-8 flex items-center justify-center text-2xl font-bold text-teal-600 hover:text-teal-700"
         >
           <Sparkles className="mr-2 h-6 w-6" />
-          JobPrepAI
+          JobFitAI
         </Link>
 
         <div className="w-full max-w-md text-center space-y-6">
@@ -48,7 +48,7 @@ export default function NotFound() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search JobPrepAI..."
+                placeholder="Search JobFitAI..."
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               />
             </div>
@@ -57,7 +57,7 @@ export default function NotFound() {
       </div>
 
       <footer className="py-6 text-center text-sm text-gray-500">
-        <p>© {new Date().getFullYear()} JobPrepAI. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} JobFitAI. All rights reserved.</p>
       </footer>
     </div>
   )

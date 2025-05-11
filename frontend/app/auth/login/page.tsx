@@ -5,8 +5,8 @@ import { AuthLayout } from "@/components/auth/auth-layout"
 import withGuest from "@/hoc/withGuest"
 
 // export const metadata: Metadata = {
-//   title: "Login | JobPrepAI",
-//   description: "Login to your JobPrepAI account",
+//   title: "Login | JobFitAI",
+//   description: "Login to your JobFitAI account",
 // }
 
 function LoginPage() {

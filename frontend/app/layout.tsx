@@ -9,7 +9,7 @@ import Layout from "@/components/layout";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "JobPrepAI - Ace Your Next Interview",
+  title: "JobFitAI - Ace Your Next Interview",
   description: "Prepare for your next job interview with AI-powered insights and personalized preparation guides.",
 };
 

@@ -13,7 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Loader2, AlertCircle, CheckCircle } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useDispatch, useSelector } from 'react-redux';
-import { setTokens } from "@/redux/slices/authSlice";
+import { loginAndStartTimer } from "@/redux/slices/authSlice";
 import { setUserDetails } from "@/redux/slices/userSlice";
 import { setCheatsheets } from "@/redux/slices/cheatsheetSlice";
 
@@ -107,10 +107,10 @@ export function LoginForm() {
       const result = await handleLogin(data)
       
       if (result.access_token) {
-        dispatch(setTokens({ accessToken: result.access_token }))
+        dispatch(loginAndStartTimer(result.access_token))
         await fetchUserDetails(result.access_token)
         await fetchCheatsheets(result.access_token)
-        router.push("/")
+        router.push("/generate")
       }
     } catch (err: any) {
       setError(err.message || "Invalid email or password. Please try again.")

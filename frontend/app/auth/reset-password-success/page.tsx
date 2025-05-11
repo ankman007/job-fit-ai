@@ -7,7 +7,7 @@ import { AuthLayout } from "@/components/auth/auth-layout"
 import { CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Password Reset Success | JobPrepAI",
+  title: "Password Reset Success | JobFitAI",
   description: "Your password has been reset successfully",
 }
 
