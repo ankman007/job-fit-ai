@@ -53,7 +53,7 @@ export function ConceptRefresh({ data }: ConceptRefreshProps) {
       {isExpanded && (
         <CardContent className="pt-6">
           <div className="space-y-4">
-            {data.map((concept, index) => (
+            {data?.map((concept, index) => (
               <div key={index} className="border rounded-lg overflow-hidden">
                 <div
                   className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50"

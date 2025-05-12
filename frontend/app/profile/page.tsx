@@ -17,6 +17,12 @@ function ProfilePage() {
     location: userDetails.location
   }
 
+  const cheatsheets = useSelector((state: RootState) => state.cheatsheets.cheatsheets);
+  const sheet = cheatsheets.find((cs) => Number(cs.id) === Number(27));
+
+  console.log('Found cheatsheet:', cheatsheets);
+  console.log('Found sheet:', sheet);
+
   return (
     <main className="min-h-screen bg-gray-50">
       <Navbar />

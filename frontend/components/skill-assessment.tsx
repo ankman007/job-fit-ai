@@ -71,7 +71,7 @@ const getImportanceStars = (importance: "High" | "Medium" | "Low") => {
           </div>
           <div className="flex items-center">
             <div className="mr-4 bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-sm font-medium">
-              {data.match_percentage}% Match
+              {data?.match_percentage}% Match
             </div>
             {isExpanded ? (
               <ChevronUp className="h-5 w-5 text-gray-500" />
@@ -88,7 +88,7 @@ const getImportanceStars = (importance: "High" | "Medium" | "Low") => {
             <div>
               <h3 className="text-lg font-semibold text-teal-700 mb-3">Matched Skills</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {data.matched_skills.map((skill, index) => (
+                {data?.matched_skills.map((skill, index) => (
                   <div key={index} className="border rounded-md p-3 bg-green-50">
                     <div className="flex justify-between items-start">
                       <div className="flex items-center">
@@ -106,7 +106,7 @@ const getImportanceStars = (importance: "High" | "Medium" | "Low") => {
             <div>
               <h3 className="text-lg font-semibold text-teal-700 mb-3">Partial Matches</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {data.partial_matches.map((skill, index) => (
+                {data?.partial_matches.map((skill, index) => (
                   <div key={index} className="border rounded-md p-3 bg-amber-50">
                     <div className="flex justify-between items-start">
                       <div className="flex items-center">
@@ -124,7 +124,7 @@ const getImportanceStars = (importance: "High" | "Medium" | "Low") => {
             <div>
               <h3 className="text-lg font-semibold text-teal-700 mb-3">Missing Skills</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {data.missing_skills.map((skill, index) => (
+                {data?.missing_skills.map((skill, index) => (
                   <div key={index} className="border rounded-md p-3 bg-red-50">
                     <div className="flex justify-between items-start">
                       <div className="flex items-center">

@@ -51,7 +51,7 @@ export function SwotAnalysis({ data }: SwotAnalysisProps) {
                   Strengths
                 </h3>
                 <ul className="space-y-3">
-                  {data.strengths.map((item, index) => (
+                  {data?.strengths.map((item, index) => (
                     <li key={index} className="bg-green-50 p-3 rounded-md">
                       <h4 className="font-medium">{item.title}</h4>
                       <p className="text-sm text-gray-600 mt-1">{item.description}</p>
@@ -66,7 +66,7 @@ export function SwotAnalysis({ data }: SwotAnalysisProps) {
                   Weaknesses
                 </h3>
                 <ul className="space-y-3">
-                  {data.weaknesses.map((item, index) => (
+                  {data?.weaknesses.map((item, index) => (
                     <li key={index} className="bg-red-50 p-3 rounded-md">
                       <h4 className="font-medium">{item.title}</h4>
                       <p className="text-sm text-gray-600 mt-1">{item.description}</p>
@@ -83,7 +83,7 @@ export function SwotAnalysis({ data }: SwotAnalysisProps) {
                   Opportunities
                 </h3>
                 <ul className="space-y-3">
-                  {data.opportunities.map((item, index) => (
+                  {data?.opportunities.map((item, index) => (
                     <li key={index} className="bg-blue-50 p-3 rounded-md">
                       <h4 className="font-medium">{item.title}</h4>
                       <p className="text-sm text-gray-600 mt-1">{item.description}</p>
@@ -98,7 +98,7 @@ export function SwotAnalysis({ data }: SwotAnalysisProps) {
                   Threats
                 </h3>
                 <ul className="space-y-3">
-                  {data.threats.map((item, index) => (
+                  {data?.threats.map((item, index) => (
                     <li key={index} className="bg-amber-50 p-3 rounded-md">
                       <h4 className="font-medium">{item.title}</h4>
                       <p className="text-sm text-gray-600 mt-1">{item.description}</p>

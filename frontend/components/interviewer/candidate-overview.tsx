@@ -37,29 +37,29 @@ export function CandidateOverview({ data }: CandidateOverviewProps) {
           <Avatar className="h-24 w-24 mb-4">
             <AvatarFallback className="text-xl bg-teal-100 text-teal-700">{initials}</AvatarFallback>
           </Avatar>
-          <h3 className="text-xl font-semibold">{data.name}</h3>
-          <p className="text-gray-500">{data.appliedPosition}</p>
+          <h3 className="text-xl font-semibold">{data?.name}</h3>
+          <p className="text-gray-500">{data?.appliedPosition}</p>
         </div>
 
         <div className="space-y-4">
           <div className="space-y-2">
             <div className="flex items-center text-sm">
               <Mail className="h-4 w-4 mr-2 text-gray-500" />
-              <span>{data.email}</span>
+              <span>{data?.email}</span>
             </div>
             <div className="flex items-center text-sm">
               <Phone className="h-4 w-4 mr-2 text-gray-500" />
-              <span>{data.phone}</span>
+              <span>{data?.phone}</span>
             </div>
             <div className="flex items-center text-sm">
               <MapPin className="h-4 w-4 mr-2 text-gray-500" />
-              <span>{data.location}</span>
+              <span>{data?.location}</span>
             </div>
-            {data.website && (
+            {data?.website && (
               <div className="flex items-center text-sm">
                 <Globe className="h-4 w-4 mr-2 text-gray-500" />
                 <a
-                  href={data.website}
+                  href={data?.website}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-teal-600 hover:underline"
@@ -68,11 +68,11 @@ export function CandidateOverview({ data }: CandidateOverviewProps) {
                 </a>
               </div>
             )}
-            {data.linkedin && (
+            {data?.linkedin && (
               <div className="flex items-center text-sm">
                 <Linkedin className="h-4 w-4 mr-2 text-gray-500" />
                 <a
-                  href={data.linkedin}
+                  href={data?.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-teal-600 hover:underline"
@@ -81,11 +81,11 @@ export function CandidateOverview({ data }: CandidateOverviewProps) {
                 </a>
               </div>
             )}
-            {data.github && (
+            {data?.github && (
               <div className="flex items-center text-sm">
                 <Github className="h-4 w-4 mr-2 text-gray-500" />
                 <a
-                  href={data.github}
+                  href={data?.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-teal-600 hover:underline"

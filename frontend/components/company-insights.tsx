@@ -62,7 +62,7 @@ export function CompanyInsights({ data }: CompanyInsightsProps) {
                 <Building className="h-5 w-5 mr-2" />
                 Company Overview
               </h3>
-              <p className="text-gray-700">{data.company_overview || data.fallback}</p>
+              <p className="text-gray-700">{data?.company_overview || data?.fallback}</p>
             </div>
 
             {/* Culture + Values */}
@@ -73,15 +73,15 @@ export function CompanyInsights({ data }: CompanyInsightsProps) {
                   Company Culture
                 </h3>
                 <ul className="space-y-2">
-                  {data.culture_points.length > 0 ? (
-                    data.culture_points.map((item, index) => (
+                  {data?.culture_points.length > 0 ? (
+                    data?.culture_points?.map((item, index) => (
                       <li key={index} className="flex items-start">
                         <div className="w-2 h-2 bg-teal-500 rounded-full mt-1.5 mr-2" />
                         <span className="text-gray-700">{item}</span>
                       </li>
                     ))
                   ) : (
-                    <li className="text-gray-500 italic">{data.fallback}</li>
+                    <li className="text-gray-500 italic">{data?.fallback}</li>
                   )}
                 </ul>
               </div>
@@ -92,15 +92,15 @@ export function CompanyInsights({ data }: CompanyInsightsProps) {
                   Company Values
                 </h3>
                 <ul className="space-y-2">
-                  {data.company_values.length > 0 ? (
-                    data.company_values.map((item, index) => (
+                  {data?.company_values?.length > 0 ? (
+                    data?.company_values?.map((item, index) => (
                       <li key={index} className="flex items-start">
                         <div className="w-2 h-2 bg-teal-500 rounded-full mt-1.5 mr-2" />
                         <span className="text-gray-700">{item}</span>
                       </li>
                     ))
                   ) : (
-                    <li className="text-gray-500 italic">{data.fallback}</li>
+                    <li className="text-gray-500 italic">{data?.fallback}</li>
                   )}
                 </ul>
               </div>
@@ -113,7 +113,7 @@ export function CompanyInsights({ data }: CompanyInsightsProps) {
                 Interview Style
               </h3>
               <p className="text-gray-700 bg-gray-50 p-4 rounded-md border">
-                {data.interview_style || data.fallback}
+                {data?.interview_style || data?.fallback}
               </p>
             </div>
 
@@ -124,18 +124,18 @@ export function CompanyInsights({ data }: CompanyInsightsProps) {
                 What They Expect
               </h3>
               <p className="text-gray-700 bg-gray-50 p-4 rounded-md border">
-                {data.expectations || data.fallback}
+                {data?.expectations || data?.fallback}
               </p>
             </div>
 
             {/* Additional Info */}
-            {data.additional_info && (
+            {data?.additional_info && (
               <div className="bg-teal-50 p-4 rounded-md border border-teal-100">
                 <h3 className="text-sm font-semibold text-teal-700 mb-2 flex items-center">
                   <Info className="h-4 w-4 mr-1" />
                   Additional Information
                 </h3>
-                <p className="text-sm text-gray-700">{data.additional_info}</p>
+                <p className="text-sm text-gray-700">{data?.additional_info}</p>
               </div>
             )}
           </div>
