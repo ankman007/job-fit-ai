@@ -6,23 +6,21 @@ import { ChevronDown, ChevronUp, GraduationCap, Briefcase } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface EducationItem {
-  degree: string
+  degree_name: string
   institution: string
   location: string
-  graduationYear: string
-  fieldOfStudy: string
-  gpa?: string
-  achievements?: string[]
+  major: string
+  notable_points: string[]
 }
 
 interface ExperienceItem {
   title: string
   company: string
   location: string
-  startDate: string
-  endDate: string
-  description: string[]
-  relevance: "high" | "medium" | "low"
+  start_date: string
+  end_date: string
+  responsibilities: string[]
+  relevance_to_job: string
 }
 
 interface EducationExperienceProps {
@@ -31,21 +29,22 @@ interface EducationExperienceProps {
 }
 
 export function EducationExperience({ education, experience }: EducationExperienceProps) {
-  // console.log("EducationExperience data", data);
-
   const [isExpanded, setIsExpanded] = useState(true)
 
-  const getRelevanceBadge = (relevance: string) => {
-    switch (relevance) {
-      case "high":
-        return <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">High Relevance</span>
-      case "medium":
-        return <span className="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full">Medium Relevance</span>
-      case "low":
-        return <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">Low Relevance</span>
-      default:
-        return null
+  const getRelevanceBadge = (relevanceText: string) => {
+    if (!relevanceText) return null
+
+    const lower = relevanceText.toLowerCase()
+
+    if (lower.includes("high")) {
+      return <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">High Relevance</span>
+    } else if (lower.includes("medium")) {
+      return <span className="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full">Medium Relevance</span>
+    } else if (lower.includes("low")) {
+      return <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">Low Relevance</span>
     }
+
+    return null
   }
 
   return (
@@ -82,13 +81,13 @@ export function EducationExperience({ education, experience }: EducationExperien
                     <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full bg-teal-500"></div>
                     <div className="mb-1 flex items-center justify-between">
                       <h4 className="font-semibold">{item.title}</h4>
-                      {getRelevanceBadge(item.relevance)}
+                      {getRelevanceBadge(item.relevance_to_job)}
                     </div>
                     <div className="text-sm text-gray-600 mb-2">
-                      {item.company} • {item.location} • {item.startDate} - {item.endDate}
+                      {item.company} • {item.start_date} - {item.end_date}
                     </div>
                     <ul className="list-disc pl-5 space-y-1">
-                      {item.description.map((desc, descIndex) => (
+                      {item.responsibilities.map((desc, descIndex) => (
                         <li key={descIndex} className="text-sm text-gray-600">
                           {desc}
                         </li>
@@ -104,18 +103,18 @@ export function EducationExperience({ education, experience }: EducationExperien
                 {education.map((item, index) => (
                   <div key={index} className="relative pl-6 pb-6 border-l border-gray-200 last:pb-0">
                     <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full bg-teal-500"></div>
-                    <h4 className="font-semibold mb-1">{item.degree}</h4>
+                    <h4 className="font-semibold mb-1">{item.degree_name}</h4>
                     <div className="text-sm text-gray-600 mb-1">
-                      {item.institution} • {item.location} • {item.graduationYear}
+                      {item.institution}
                     </div>
                     <div className="text-sm text-gray-600 mb-2">
-                      {item.fieldOfStudy} {item.gpa && `• GPA: ${item.gpa}`}
+                      {item.major}
                     </div>
-                    {item.achievements && (
+                    {item.notable_points.length > 0 && (
                       <ul className="list-disc pl-5 space-y-1">
-                        {item.achievements.map((achievement, achieveIndex) => (
-                          <li key={achieveIndex} className="text-sm text-gray-600">
-                            {achievement}
+                        {item.notable_points.map((point, i) => (
+                          <li key={i} className="text-sm text-gray-600">
+                            {point}
                           </li>
                         ))}
                       </ul>

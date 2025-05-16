@@ -6,22 +6,20 @@ import { ChevronDown, ChevronUp, ThumbsUp, ThumbsDown, AlertCircle } from "lucid
 
 interface InterviewRecommendationProps {
   data: {
-    recommendation: "strong_yes" | "yes" | "maybe" | "no"
+    proceed: "Strong Yes" | "Yes" | "Consider" | "No"
     summary: string
-    strengths: string[]
+    key_strengths: string[]
     concerns: string[]
-    nextSteps: string[]
+    recommended_next_steps: string[]
   }
 }
 
 export function InterviewRecommendation({ data }: InterviewRecommendationProps) {
-  // console.log("InterviewRecommendation data", data);
-
   const [isExpanded, setIsExpanded] = useState(true)
 
   const getRecommendationDisplay = () => {
-    switch (data.recommendation) {
-      case "strong_yes":
+    switch (data.proceed) {
+      case "Strong Yes":
         return (
           <div className="flex items-center bg-green-100 text-green-800 px-4 py-3 rounded-lg">
             <ThumbsUp className="h-6 w-6 mr-3 fill-green-800" />
@@ -31,7 +29,7 @@ export function InterviewRecommendation({ data }: InterviewRecommendationProps) 
             </div>
           </div>
         )
-      case "yes":
+      case "Yes":
         return (
           <div className="flex items-center bg-teal-100 text-teal-800 px-4 py-3 rounded-lg">
             <ThumbsUp className="h-6 w-6 mr-3" />
@@ -41,17 +39,17 @@ export function InterviewRecommendation({ data }: InterviewRecommendationProps) 
             </div>
           </div>
         )
-      case "maybe":
+      case "Consider":
         return (
           <div className="flex items-center bg-amber-100 text-amber-800 px-4 py-3 rounded-lg">
             <AlertCircle className="h-6 w-6 mr-3" />
             <div>
-              <h3 className="font-bold text-lg">Maybe</h3>
+              <h3 className="font-bold text-lg">Consider</h3>
               <p className="text-sm">Consider additional evaluation before proceeding</p>
             </div>
           </div>
         )
-      case "no":
+      case "No":
         return (
           <div className="flex items-center bg-red-100 text-red-800 px-4 py-3 rounded-lg">
             <ThumbsDown className="h-6 w-6 mr-3" />
@@ -93,7 +91,7 @@ export function InterviewRecommendation({ data }: InterviewRecommendationProps) 
               <div>
                 <h3 className="text-lg font-medium text-green-700 mb-2">Key Strengths</h3>
                 <ul className="space-y-2">
-                  {data.strengths.map((strength, index) => (
+                  {data.key_strengths.map((strength, index) => (
                     <li key={index} className="flex items-start">
                       <ThumbsUp className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                       <span className="text-gray-700">{strength}</span>
@@ -118,7 +116,7 @@ export function InterviewRecommendation({ data }: InterviewRecommendationProps) 
             <div>
               <h3 className="text-lg font-medium text-teal-700 mb-2">Recommended Next Steps</h3>
               <ul className="space-y-2">
-                {data.nextSteps.map((step, index) => (
+                {data.recommended_next_steps.map((step, index) => (
                   <li key={index} className="bg-teal-50 border border-teal-100 rounded-md p-3">
                     {step}
                   </li>

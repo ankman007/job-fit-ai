@@ -8,15 +8,8 @@ import { InterviewQuestions } from "@/components/interview-questions";
 import { CompanyInsights } from "@/components/company-insights";
 import { Button } from "@/components/ui/button";
 import { Download, Printer, Share2 } from "lucide-react";
-import withAuth from "@/hoc/withAuth";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import { useParams } from "next/navigation";
-import { mockResultsData } from "@/lib/mock-data";
 
 export default function CandidateResultsPage({ sheet }: any) {
-  console.log("sheet", sheet);
-
   return (
     <main className="min-h-screen bg-gray-50">
       <Navbar />

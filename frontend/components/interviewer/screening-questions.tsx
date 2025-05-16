@@ -18,7 +18,7 @@ interface ScreeningQuestionsProps {
 }
 
 export function ScreeningQuestions({ data }: ScreeningQuestionsProps) {
-  // console.log("SkillGaps data", data);
+  console.log("SkillGaps data", data);
 
   const [isExpanded, setIsExpanded] = useState(true)
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null)

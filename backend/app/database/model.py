@@ -27,6 +27,7 @@ class InterviewCheatSheetModel(Base):
     generated_at = Column(DateTime, default=datetime.now)
     content = Column(JSON)
     cheatsheet_type = Column(String)
+    filename = Column(String, nullable=True)
     
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship("UserModel", back_populates="cheat_sheets")

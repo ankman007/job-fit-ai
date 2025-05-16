@@ -5,6 +5,8 @@ interface Cheatsheet {
     user_id: string;
     cheatsheet_type: string;
     content: string;
+    filename: string;
+    generated_at: string;
 }
 
 interface CheatsheetState {

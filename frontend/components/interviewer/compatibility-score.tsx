@@ -5,20 +5,20 @@ import { Progress } from "@/components/ui/progress"
 import { useState } from "react"
 import { ChevronDown, ChevronUp } from "lucide-react"
 
+interface RawCompatibilityData {
+  education_score: number
+  experience_score: number
+  technical_skills_score: number
+  cultural_fit_score: number
+  overall_score: number
+  match: string
+}
+
 interface CompatibilityScoreProps {
-  data: {
-    overall: number
-    categories: {
-      name: string
-      score: number
-      color: string
-    }[]
-  }
+  data: RawCompatibilityData
 }
 
 export function CompatibilityScore({ data }: CompatibilityScoreProps) {
-  // console.log("CompatibilityScore data", data);
-
   const [isExpanded, setIsExpanded] = useState(true)
 
   const getScoreColor = (score: number) => {
@@ -34,6 +34,17 @@ export function CompatibilityScore({ data }: CompatibilityScoreProps) {
     if (score >= 40) return "Moderate Match"
     return "Low Match"
   }
+
+  const formatScore = (score: number) => Math.round(score * 100)
+
+  const categories = [
+    { name: "Education", score: formatScore(data.education_score) },
+    { name: "Experience", score: formatScore(data.experience_score) },
+    { name: "Technical Skills", score: formatScore(data.technical_skills_score) },
+    { name: "Cultural Fit", score: formatScore(data.cultural_fit_score) },
+  ]
+
+  const overallScore = formatScore(data.overall_score)
 
   return (
     <Card>
@@ -52,13 +63,13 @@ export function CompatibilityScore({ data }: CompatibilityScoreProps) {
         <CardContent>
           <div className="text-center mb-6">
             <div className="inline-flex items-center justify-center rounded-full bg-gray-100 p-6 mb-2">
-              <div className="text-4xl font-bold text-teal-600">{data.overall}%</div>
+              <div className="text-4xl font-bold text-teal-600">{overallScore}%</div>
             </div>
-            <p className={`font-medium ${getScoreColor(data.overall)}`}>{getScoreText(data.overall)}</p>
+            <p className={`font-medium ${getScoreColor(overallScore)}`}>{getScoreText(overallScore)}</p>
           </div>
 
           <div className="space-y-4">
-            {data.categories.map((category, index) => (
+            {categories.map((category, index) => (
               <div key={index}>
                 <div className="flex justify-between items-center mb-1">
                   <span className="text-sm font-medium">{category.name}</span>
@@ -66,24 +77,7 @@ export function CompatibilityScore({ data }: CompatibilityScoreProps) {
                 </div>
                 <Progress
                   value={category.score}
-                  className={`h-2 ${
-                    category.color === "green"
-                      ? "bg-green-100"
-                      : category.color === "amber"
-                        ? "bg-amber-100"
-                        : category.color === "red"
-                          ? "bg-red-100"
-                          : "bg-teal-100"
-                  }`}
-                  indicatorClassName={
-                    category.color === "green"
-                      ? "bg-green-600"
-                      : category.color === "amber"
-                        ? "bg-amber-600"
-                        : category.color === "red"
-                          ? "bg-red-600"
-                          : "bg-teal-600"
-                  }
+                  className="h-2 bg-teal-100"
                 />
               </div>
             ))}

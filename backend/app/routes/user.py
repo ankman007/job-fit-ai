@@ -56,7 +56,9 @@ async def get_user_cheatsheets(
                     "id": sheet.id,
                     "user_id": sheet.user_id,
                     "cheatsheet_type": sheet.cheatsheet_type,
-                    "content": sheet.content
+                    "content": sheet.content,
+                    "filename": sheet.filename,
+                    "generated_at": sheet.generated_at
                 })
             except Exception as e:
                 logger.exception(f"Error parsing content for sheet id {sheet.id}: {e}")

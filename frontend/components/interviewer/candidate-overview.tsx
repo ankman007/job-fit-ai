@@ -3,24 +3,23 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { MapPin, Mail, Phone, Globe, Linkedin, Github } from "lucide-react"
 
-interface CandidateOverviewProps {
-  data: {
-    name: string
-    email: string
-    phone: string
-    location: string
-    website?: string
-    linkedin?: string
-    github?: string
-    appliedPosition: string
-    topSkills: string[]
-    summary: string
-  }
-}
-
-export function CandidateOverview({ data }: CandidateOverviewProps) {
+export function CandidateOverview({ data }) {
   console.log("CandidateOverview data", data);
-  const initials = data.name
+  const formattedCandidateData = data
+    ? {
+      name: data.full_name,
+      email: data.email,
+      phone: data.phone_number,
+      location: data.location,
+      website: data?.website,
+      linkedin: data?.linkedin,
+      github: data?.github,
+      appliedPosition: data.current_job_title,
+      topSkills: data.top_skills,
+      summary: data.candidate_summary,
+    } : null;
+    
+  const initials = formattedCandidateData?.name
     .split(" ")
     .map((n) => n[0])
     .join("")
@@ -37,29 +36,29 @@ export function CandidateOverview({ data }: CandidateOverviewProps) {
           <Avatar className="h-24 w-24 mb-4">
             <AvatarFallback className="text-xl bg-teal-100 text-teal-700">{initials}</AvatarFallback>
           </Avatar>
-          <h3 className="text-xl font-semibold">{data?.name}</h3>
-          <p className="text-gray-500">{data?.appliedPosition}</p>
+          <h3 className="text-xl font-semibold">{formattedCandidateData?.name}</h3>
+          <p className="text-gray-500">{formattedCandidateData?.appliedPosition}</p>
         </div>
 
         <div className="space-y-4">
           <div className="space-y-2">
             <div className="flex items-center text-sm">
               <Mail className="h-4 w-4 mr-2 text-gray-500" />
-              <span>{data?.email}</span>
+              <span>{formattedCandidateData?.email}</span>
             </div>
             <div className="flex items-center text-sm">
               <Phone className="h-4 w-4 mr-2 text-gray-500" />
-              <span>{data?.phone}</span>
+              <span>{formattedCandidateData?.phone}</span>
             </div>
             <div className="flex items-center text-sm">
               <MapPin className="h-4 w-4 mr-2 text-gray-500" />
-              <span>{data?.location}</span>
+              <span>{formattedCandidateData?.location}</span>
             </div>
-            {data?.website && (
+            {formattedCandidateData?.website && (
               <div className="flex items-center text-sm">
                 <Globe className="h-4 w-4 mr-2 text-gray-500" />
                 <a
-                  href={data?.website}
+                  href={formattedCandidateData?.website}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-teal-600 hover:underline"
@@ -68,11 +67,11 @@ export function CandidateOverview({ data }: CandidateOverviewProps) {
                 </a>
               </div>
             )}
-            {data?.linkedin && (
+            {formattedCandidateData?.linkedin && (
               <div className="flex items-center text-sm">
                 <Linkedin className="h-4 w-4 mr-2 text-gray-500" />
                 <a
-                  href={data?.linkedin}
+                  href={formattedCandidateData?.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-teal-600 hover:underline"
@@ -81,11 +80,11 @@ export function CandidateOverview({ data }: CandidateOverviewProps) {
                 </a>
               </div>
             )}
-            {data?.github && (
+            {formattedCandidateData?.github && (
               <div className="flex items-center text-sm">
                 <Github className="h-4 w-4 mr-2 text-gray-500" />
                 <a
-                  href={data?.github}
+                  href={formattedCandidateData?.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-teal-600 hover:underline"
@@ -99,7 +98,7 @@ export function CandidateOverview({ data }: CandidateOverviewProps) {
           <div>
             <h4 className="text-sm font-medium mb-2">Top Skills</h4>
             <div className="flex flex-wrap gap-2">
-              {data.topSkills.map((skill, index) => (
+              {formattedCandidateData?.topSkills?.map((skill, index) => (
                 <Badge key={index} variant="secondary">
                   {skill}
                 </Badge>
@@ -109,7 +108,7 @@ export function CandidateOverview({ data }: CandidateOverviewProps) {
 
           <div>
             <h4 className="text-sm font-medium mb-2">Summary</h4>
-            <p className="text-sm text-gray-600">{data.summary}</p>
+            <p className="text-sm text-gray-600">{formattedCandidateData?.summary}</p>
           </div>
         </div>
       </CardContent>

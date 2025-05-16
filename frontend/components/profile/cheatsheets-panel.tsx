@@ -188,7 +188,7 @@ export function CheatsheetPanel() {
                     </div>
 
                     <Button asChild size="sm">
-                      <Link href={`/interviewer/results/${sheet.id}`}>
+                      <Link href={`/results/${sheet.id}`}>
                         <Eye className="h-4 w-4 mr-2" />
                         View Assessment
                       </Link>

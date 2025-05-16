@@ -32,10 +32,9 @@ export function CheatsheetGenerator() {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
 
-  // Handle toggling between interviewer and candidate
   const handleRoleToggle = (role: "candidate" | "interviewer") => {
     setIsInterviewer(role === "interviewer");
-    setCheatsheetType(role);  // Update cheatsheet type based on role selection
+    setCheatsheetType(role);  
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,8 +63,7 @@ export function CheatsheetGenerator() {
     const formData = new FormData();
     formData.append("resume_pdf", uploadedFile);
     formData.append("job_description", jobDescription);
-    formData.append("cheatsheet_type", cheatsheetType);  // Ensure correct cheatsheet type
-
+    formData.append("cheatsheet_type", cheatsheetType);  
     try {
       const response = await fetch(`${apiBaseURL}/cheatsheet/generate`, {
         method: "POST",
@@ -77,10 +75,10 @@ export function CheatsheetGenerator() {
 
       const data = await response.json();
 
-      dispatch(setCurrentCheatsheet(data));
-      dispatch(addCheatsheet(data));
+      dispatch(addCheatsheet(data.data));
+      dispatch(setCurrentCheatsheet(data.data));
 
-      router.push(`/results/${data.data.cheatsheet_type}`);
+      router.push(`/results/${data.data.id}`);
     } catch (err) {
       console.error(err);
       toast({

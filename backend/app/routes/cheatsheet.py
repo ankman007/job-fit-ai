@@ -22,6 +22,7 @@ async def generate_cheatsheet(
 
 ):
     try: 
+        pdf_filename = resume_pdf.filename
         resume_text = extract_text_from_pdf(resume_pdf)
         res = get_interview_cheatsheet(resume_text, job_description, cheatsheet_type)
         
@@ -34,7 +35,8 @@ async def generate_cheatsheet(
             job_description=job_description,
             content=res,
             user_id=current_user.id,
-            cheatsheet_type=cheatsheet_type
+            cheatsheet_type=cheatsheet_type,
+            filename=pdf_filename
         )
         
         logger.info(f"res type{type(res)}")
@@ -47,9 +49,11 @@ async def generate_cheatsheet(
             "status": "success",
             "message": "Cheatsheet generated and stored successfully.",
             "data": {
-                "cheatsheet_id": cheatsheet_record.id,
+                "id": cheatsheet_record.id,
                 "cheatsheet_type": cheatsheet_type,
-                "cheatsheet": res
+                "content": res,
+                "generated_at": cheatsheet_record.generated_at,
+                "filename": pdf_filename
             }
         }
 
