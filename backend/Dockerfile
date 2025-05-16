@@ -1,19 +1,19 @@
-# Dockerfile
-
+# Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Install dependencies
+# Copy requirements and install
 COPY requirements.txt .
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy app code
-COPY ./app .
+# Copy the rest of the app
+COPY ./app ./app
 
-# Expose FastAPI port
+# Expose the port
 EXPOSE 8000
 
 # Run the app
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
