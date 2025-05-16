@@ -7,10 +7,10 @@ from os import getenv
 from fastapi.security import OAuth2PasswordBearer
 from loguru import logger
 
-from app.database.model import UserModel
+from app.models import UserModel
 from app import get_db
 from app.service.hashing import hash_password, verify_password
-from app.database.schemas import UserSignupRequest, UserLoginRequest
+from app.schemas import UserSignupRequest, UserLoginRequest
 
 router = APIRouter()
 

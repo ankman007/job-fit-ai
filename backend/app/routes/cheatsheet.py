@@ -6,7 +6,7 @@ import json
 
 from app.service.llm_service import get_interview_cheatsheet
 from app.service.extract_pdf import extract_text_from_pdf
-from app.database.model import InterviewCheatSheetModel
+from app.models import InterviewCheatSheetModel
 from app import get_db
 from app.routes.auth import get_current_user
 
