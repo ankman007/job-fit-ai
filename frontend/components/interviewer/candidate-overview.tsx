@@ -3,22 +3,40 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { MapPin, Mail, Phone, Globe, Linkedin, Github } from "lucide-react"
 
-export function CandidateOverview({ data }) {
-  console.log("CandidateOverview data", data);
+interface CandidateData {
+  full_name: string
+  email?: string | null
+  phone_number?: string | null
+  location?: string | null
+  website?: string | null
+  linkedin?: string | null
+  github?: string | null
+  current_job_title?: string | null
+  top_skills?: string[]
+  candidate_summary?: string | null
+}
+
+interface CandidateOverviewProps {
+  data: CandidateData | null
+}
+
+export function CandidateOverview({ data }: CandidateOverviewProps) {
+  // Provide default "Not specified" if empty or missing email/location
   const formattedCandidateData = data
     ? {
-      name: data.full_name,
-      email: data.email,
-      phone: data.phone_number,
-      location: data.location,
-      website: data?.website,
-      linkedin: data?.linkedin,
-      github: data?.github,
-      appliedPosition: data.current_job_title,
-      topSkills: data.top_skills,
-      summary: data.candidate_summary,
-    } : null;
-    
+        name: data.full_name,
+        email: data.email && data.email.trim() !== "" ? data.email : "Not specified",
+        phone: data.phone_number || "Not specified",
+        location: data.location && data.location.trim() !== "" ? data.location : "Not specified",
+        website: data.website,
+        linkedin: data.linkedin,
+        github: data.github,
+        appliedPosition: data.current_job_title,
+        topSkills: data.top_skills,
+        summary: data.candidate_summary,
+      }
+    : null
+
   const initials = formattedCandidateData?.name
     .split(" ")
     .map((n) => n[0])
@@ -58,7 +76,7 @@ export function CandidateOverview({ data }) {
               <div className="flex items-center text-sm">
                 <Globe className="h-4 w-4 mr-2 text-gray-500" />
                 <a
-                  href={formattedCandidateData?.website}
+                  href={formattedCandidateData.website}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-teal-600 hover:underline"
@@ -71,7 +89,7 @@ export function CandidateOverview({ data }) {
               <div className="flex items-center text-sm">
                 <Linkedin className="h-4 w-4 mr-2 text-gray-500" />
                 <a
-                  href={formattedCandidateData?.linkedin}
+                  href={formattedCandidateData.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-teal-600 hover:underline"
@@ -84,7 +102,7 @@ export function CandidateOverview({ data }) {
               <div className="flex items-center text-sm">
                 <Github className="h-4 w-4 mr-2 text-gray-500" />
                 <a
-                  href={formattedCandidateData?.github}
+                  href={formattedCandidateData.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-teal-600 hover:underline"

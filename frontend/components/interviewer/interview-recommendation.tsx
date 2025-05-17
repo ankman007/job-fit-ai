@@ -15,6 +15,7 @@ interface InterviewRecommendationProps {
 }
 
 export function InterviewRecommendation({ data }: InterviewRecommendationProps) {
+  console.log("InterviewRecommendation data", data);
   const [isExpanded, setIsExpanded] = useState(true)
 
   const getRecommendationDisplay = () => {

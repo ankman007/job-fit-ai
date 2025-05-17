@@ -229,16 +229,52 @@ interviewer_schema = {
 
     },
     "skills_assessment": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "skill_name": {"type": "string"},
-          "category": {"type": "string"},
-          "assessment": {"type": "string", "enum": ["exceeds", "meets", "below", "missing"]}
-        },
-        "required": ["skill_name", "category", "assessment"]
-      }
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "skillsByCategory": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "category": { "type": "string" },
+                  "skills": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": { "type": "string" },
+                        "level": { "type": "number" },
+                        "required": { "type": "number" },
+                        "status": {
+                          "type": "string",
+                          "enum": ["exceeds", "meets", "below", "missing"]
+                        }
+                      },
+                      "required": ["name", "level", "required", "status"]
+                    }
+                  }
+                },
+                "required": ["category", "skills"]
+              }
+            },
+            "skillsDistribution": {
+              "type": "object",
+              "properties": {
+                "exceeds": { "type": "number" },
+                "meets": { "type": "number" },
+                "below": { "type": "number" },
+                "missing": { "type": "number" }
+              },
+              "required": ["exceeds", "meets", "below", "missing"]
+            }
+          },
+          "required": ["skillsByCategory", "skillsDistribution"]
+        }
+      },
+      "required": ["data"]
     },
     "education": {
       "type": "array",
@@ -271,7 +307,7 @@ interviewer_schema = {
             "type": "array",
             "items": {"type": "string"}
           },
-          "relevance_to_job": {"type": "string"}
+          "relevance_to_job": {"type": "string", "enum": ["High", "Medium", "Low"]}
         },
         "required": ["title", "company", "responsibilities", "relevance_to_job"]
       }
@@ -282,12 +318,12 @@ interviewer_schema = {
         "type": "object",
         "properties": {
           "skill_name": {"type": "string"},
-          "experience_level": {"type": "string"},
           "recommendation": {"type": "string"},
-          "gap_level": {"type": "string", "enum": ["Critical Gap", "Minor Gap"]}
-        }
-      },
-      "required": ["skill_name", "experience_level", "recommendation", "gap_level"]
+          "gap_level": {"type": "string", "enum": ["Critical Gap", "Minor Gap"]},
+          "gap_severity": {"type": "string", "enum": ["High", "Medium", "Low"]}
+        },
+        "required": ["skill_name", "recommendation", "gap_level", "gap_severity"]
+      }
     },
     "recommended_screening_questions": {
       "type": "array",
@@ -305,7 +341,7 @@ interviewer_schema = {
     "interview_recommendation": {
       "type": "object",
       "properties": {
-        "proceed": {"type": "string", "enum": ["Proceed", "Reject", "Consider"]},
+        "proceed": {"type": "string", "enum": ["Strong Yes", "Yes", "Consider", "No"]},
         "summary": {"type": "string"},
         "key_strengths": {
           "type": "array",

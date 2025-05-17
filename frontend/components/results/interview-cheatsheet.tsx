@@ -71,11 +71,11 @@ export default function InterviewerResultsPage({ sheet }: any) {
 
             <div className="lg:col-span-2">
               <div className="space-y-8">
-                <SkillsAssessment data={sheet.skillAssessment} />
-                {/* <EducationExperience
+                <SkillsAssessment data={sheet.skillAssessment.data} />
+                <EducationExperience
                   education={sheet.education}
                   experience={sheet.experience}
-                /> */}
+                />
                 <SkillGaps data={sheet.skillGaps} />
                 <ScreeningQuestions data={sheet.screeningQuestions} />
                 <InterviewRecommendation data={sheet.interviewRecommendation} />
