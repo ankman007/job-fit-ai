@@ -1,18 +1,25 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Textarea } from "@/components/ui/textarea"
-import { Loader2, CheckCircle, ChevronRight, ChevronLeft, AlertCircle } from "lucide-react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Progress } from "@/components/ui/progress"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Loader2,
+  CheckCircle,
+  ChevronRight,
+  ChevronLeft,
+  AlertCircle,
+} from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Progress } from "@/components/ui/progress";
+import { apiBaseURL } from "@/utils";
 
 const signupSchema = z
   .object({
@@ -21,29 +28,42 @@ const signupSchema = z
     password: z
       .string()
       .min(8, { message: "Password must be at least 8 characters" })
-      .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter" })
-      .regex(/[a-z]/, { message: "Password must contain at least one lowercase letter" })
+      .regex(/[A-Z]/, {
+        message: "Password must contain at least one uppercase letter",
+      })
+      .regex(/[a-z]/, {
+        message: "Password must contain at least one lowercase letter",
+      })
       .regex(/[0-9]/, { message: "Password must contain at least one number" }),
     confirmPassword: z.string(),
     acceptTerms: z.boolean(),
 
-    jobTitle: z.string().min(2, { message: "Job title must be at least 2 characters" }).optional(),
-    location: z.string().min(2, { message: "Location must be at least 2 characters" }).optional(),
-    bio: z.string().max(300, { message: "Bio must be less than 300 characters" }).optional(),
+    jobTitle: z
+      .string()
+      .min(2, { message: "Job title must be at least 2 characters" })
+      .optional(),
+    location: z
+      .string()
+      .min(2, { message: "Location must be at least 2 characters" })
+      .optional(),
+    bio: z
+      .string()
+      .max(300, { message: "Bio must be less than 300 characters" })
+      .optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
-  })
+  });
 
-type SignUpFormValues = z.infer<typeof signupSchema>
+type SignUpFormValues = z.infer<typeof signupSchema>;
 
 export function SignUpForm() {
-  const router = useRouter()
-  const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [currentStep, setCurrentStep] = useState(1)
-  const totalSteps = 2
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+  const totalSteps = 2;
 
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signupSchema),
@@ -58,43 +78,49 @@ export function SignUpForm() {
       bio: "",
     },
     mode: "onChange",
-  })
+  });
 
   const {
     formState: { errors, isValid, dirtyFields },
     trigger,
     getValues,
-  } = form
+  } = form;
 
   const isStepValid = async (step: number) => {
     if (step === 1) {
-      const result = await trigger(["name", "email", "password", "confirmPassword", "acceptTerms"])
-      console.log("Step 1 valid?", result)
-      return result
+      const result = await trigger([
+        "name",
+        "email",
+        "password",
+        "confirmPassword",
+        "acceptTerms",
+      ]);
+      console.log("Step 1 valid?", result);
+      return result;
     } else if (step === 2) {
-      const result = await trigger(["jobTitle", "location", "bio"])
-      return result
+      const result = await trigger(["jobTitle", "location", "bio"]);
+      return result;
     }
-    return true
-  }
+    return true;
+  };
 
   const handleNextStep = async () => {
-    const isValid = await isStepValid(currentStep)
+    const isValid = await isStepValid(currentStep);
     if (isValid) {
-      setCurrentStep(currentStep + 1)
+      setCurrentStep(currentStep + 1);
     }
-  }
+  };
 
   const handlePrevStep = () => {
-    setCurrentStep(currentStep - 1)
-  }
+    setCurrentStep(currentStep - 1);
+  };
 
-  const progressPercentage = (currentStep / totalSteps) * 100
+  const progressPercentage = (currentStep / totalSteps) * 100;
 
   async function onSubmit(data: SignUpFormValues) {
-    setIsLoading(true)
-    setError(null)
-  
+    setIsLoading(true);
+    setError(null);
+
     try {
       const payload = {
         name: data.name,
@@ -103,37 +129,37 @@ export function SignUpForm() {
         job_title: data.jobTitle,
         location: data.location,
         bio: data.bio,
-      }
-      const response = await fetch('http://localhost:8000/auth/sign-up', {
-        method: 'POST',
+      };
+      const response = await fetch(`${apiBaseURL}/auth/sign-up`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
-      })
-  
+      });
+
       if (!response.ok) {
-        throw new Error('Signup failed. Please try again.')
+        throw new Error("Signup failed. Please try again.");
       }
-  
-      router.push("/auth/login")
+
+      router.push("/auth/login");
     } catch (err) {
-      setError("An error occurred during sign up. Please try again.")
+      setError("An error occurred during sign up. Please try again.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
   const getPasswordStrength = () => {
-    const password = getValues("password")
-    if (!password) return { strength: 0, text: "", color: "" }
+    const password = getValues("password");
+    if (!password) return { strength: 0, text: "", color: "" };
 
-    let strength = 0
-    if (password.length >= 8) strength += 1
-    if (/[A-Z]/.test(password)) strength += 1
-    if (/[a-z]/.test(password)) strength += 1
-    if (/[0-9]/.test(password)) strength += 1
-    if (/[^A-Za-z0-9]/.test(password)) strength += 1
+    let strength = 0;
+    if (password.length >= 8) strength += 1;
+    if (/[A-Z]/.test(password)) strength += 1;
+    if (/[a-z]/.test(password)) strength += 1;
+    if (/[0-9]/.test(password)) strength += 1;
+    if (/[^A-Za-z0-9]/.test(password)) strength += 1;
 
     const strengthMap = [
       { text: "Very weak", color: "bg-red-500" },
@@ -141,16 +167,16 @@ export function SignUpForm() {
       { text: "Medium", color: "bg-yellow-500" },
       { text: "Strong", color: "bg-blue-500" },
       { text: "Very strong", color: "bg-green-500" },
-    ]
+    ];
 
     return {
       strength: (strength / 5) * 100,
       text: strengthMap[strength - 1]?.text || "",
       color: strengthMap[strength - 1]?.color || "",
-    }
-  }
+    };
+  };
 
-  const passwordStrength = getPasswordStrength()
+  const passwordStrength = getPasswordStrength();
 
   return (
     <div className="space-y-4">
@@ -186,10 +212,12 @@ export function SignUpForm() {
                 placeholder="John Doe"
                 autoComplete="name"
                 disabled={isLoading}
-                className={errors.name ? "border-red-500 focus-visible:ring-red-500" : ""}
+                className={
+                  errors.name ? "border-red-500 focus-visible:ring-red-500" : ""
+                }
                 {...form.register("name", {
                   onChange: () => {
-                    if (errors.name) trigger("name")
+                    if (errors.name) trigger("name");
                   },
                 })}
               />
@@ -218,10 +246,14 @@ export function SignUpForm() {
                 placeholder="name@example.com"
                 autoComplete="email"
                 disabled={isLoading}
-                className={errors.email ? "border-red-500 focus-visible:ring-red-500" : ""}
+                className={
+                  errors.email
+                    ? "border-red-500 focus-visible:ring-red-500"
+                    : ""
+                }
                 {...form.register("email", {
                   onChange: () => {
-                    if (errors.email) trigger("email")
+                    if (errors.email) trigger("email");
                   },
                 })}
               />
@@ -249,11 +281,16 @@ export function SignUpForm() {
                 type="password"
                 autoComplete="new-password"
                 disabled={isLoading}
-                className={errors.password ? "border-red-500 focus-visible:ring-red-500" : ""}
+                className={
+                  errors.password
+                    ? "border-red-500 focus-visible:ring-red-500"
+                    : ""
+                }
                 {...form.register("password", {
                   onChange: () => {
-                    if (errors.password) trigger("password")
-                    if (getValues("confirmPassword")) trigger("confirmPassword")
+                    if (errors.password) trigger("password");
+                    if (getValues("confirmPassword"))
+                      trigger("confirmPassword");
                   },
                 })}
               />
@@ -267,7 +304,9 @@ export function SignUpForm() {
                       style={{ width: `${passwordStrength.strength}%` }}
                     ></div>
                   </div>
-                  <p className="text-xs mt-1">{passwordStrength.text || "Password strength"}</p>
+                  <p className="text-xs mt-1">
+                    {passwordStrength.text || "Password strength"}
+                  </p>
                 </div>
               )}
 
@@ -279,14 +318,38 @@ export function SignUpForm() {
               )}
 
               <ul className="text-xs text-gray-500 mt-1 space-y-1">
-                <li className={getValues("password")?.length >= 8 ? "text-green-500" : ""}>• At least 8 characters</li>
-                <li className={/[A-Z]/.test(getValues("password") || "") ? "text-green-500" : ""}>
+                <li
+                  className={
+                    getValues("password")?.length >= 8 ? "text-green-500" : ""
+                  }
+                >
+                  • At least 8 characters
+                </li>
+                <li
+                  className={
+                    /[A-Z]/.test(getValues("password") || "")
+                      ? "text-green-500"
+                      : ""
+                  }
+                >
                   • At least one uppercase letter
                 </li>
-                <li className={/[a-z]/.test(getValues("password") || "") ? "text-green-500" : ""}>
+                <li
+                  className={
+                    /[a-z]/.test(getValues("password") || "")
+                      ? "text-green-500"
+                      : ""
+                  }
+                >
                   • At least one lowercase letter
                 </li>
-                <li className={/[0-9]/.test(getValues("password") || "") ? "text-green-500" : ""}>
+                <li
+                  className={
+                    /[0-9]/.test(getValues("password") || "")
+                      ? "text-green-500"
+                      : ""
+                  }
+                >
                   • At least one number
                 </li>
               </ul>
@@ -302,10 +365,14 @@ export function SignUpForm() {
                 type="password"
                 autoComplete="new-password"
                 disabled={isLoading}
-                className={errors.confirmPassword ? "border-red-500 focus-visible:ring-red-500" : ""}
+                className={
+                  errors.confirmPassword
+                    ? "border-red-500 focus-visible:ring-red-500"
+                    : ""
+                }
                 {...form.register("confirmPassword", {
                   onChange: () => {
-                    if (errors.confirmPassword) trigger("confirmPassword")
+                    if (errors.confirmPassword) trigger("confirmPassword");
                   },
                 })}
               />
@@ -315,12 +382,14 @@ export function SignUpForm() {
                   {errors.confirmPassword.message}
                 </p>
               )}
-              {dirtyFields.confirmPassword && !errors.confirmPassword && getValues("confirmPassword") && (
-                <p className="text-sm text-green-500 flex items-center mt-1">
-                  <CheckCircle className="h-3 w-3 mr-1" />
-                  Passwords match!
-                </p>
-              )}
+              {dirtyFields.confirmPassword &&
+                !errors.confirmPassword &&
+                getValues("confirmPassword") && (
+                  <p className="text-sm text-green-500 flex items-center mt-1">
+                    <CheckCircle className="h-3 w-3 mr-1" />
+                    Passwords match!
+                  </p>
+                )}
             </div>
 
             <div className="flex items-start space-x-2">
@@ -329,7 +398,9 @@ export function SignUpForm() {
                 {...form.register("acceptTerms")}
                 className="mt-1"
                 onCheckedChange={(checked) => {
-                  form.setValue("acceptTerms", checked === true, { shouldValidate: true })
+                  form.setValue("acceptTerms", checked === true, {
+                    shouldValidate: true,
+                  });
                 }}
               />
               <Label htmlFor="terms" className="text-sm font-normal">
@@ -338,7 +409,10 @@ export function SignUpForm() {
                   Terms of Service
                 </a>{" "}
                 and{" "}
-                <a href="/privacy" className="text-teal-600 hover:text-teal-700">
+                <a
+                  href="/privacy"
+                  className="text-teal-600 hover:text-teal-700"
+                >
                   Privacy Policy
                 </a>
               </Label>
@@ -366,7 +440,9 @@ export function SignUpForm() {
         {currentStep === 2 && (
           <div className="space-y-4">
             <h2 className="text-lg font-medium">Profile Information</h2>
-            <p className="text-sm text-gray-500">Tell us a bit more about yourself (optional)</p>
+            <p className="text-sm text-gray-500">
+              Tell us a bit more about yourself (optional)
+            </p>
 
             <div className="space-y-2">
               <Label htmlFor="jobTitle">Job Title</Label>
@@ -374,10 +450,14 @@ export function SignUpForm() {
                 id="jobTitle"
                 placeholder="Software Engineer"
                 disabled={isLoading}
-                className={errors.jobTitle ? "border-red-500 focus-visible:ring-red-500" : ""}
+                className={
+                  errors.jobTitle
+                    ? "border-red-500 focus-visible:ring-red-500"
+                    : ""
+                }
                 {...form.register("jobTitle", {
                   onChange: () => {
-                    if (errors.jobTitle) trigger("jobTitle")
+                    if (errors.jobTitle) trigger("jobTitle");
                   },
                 })}
               />
@@ -395,10 +475,14 @@ export function SignUpForm() {
                 id="location"
                 placeholder="Kathmandu, Nepal"
                 disabled={isLoading}
-                className={errors.location ? "border-red-500 focus-visible:ring-red-500" : ""}
+                className={
+                  errors.location
+                    ? "border-red-500 focus-visible:ring-red-500"
+                    : ""
+                }
                 {...form.register("location", {
                   onChange: () => {
-                    if (errors.location) trigger("location")
+                    if (errors.location) trigger("location");
                   },
                 })}
               />
@@ -416,10 +500,12 @@ export function SignUpForm() {
                 id="bio"
                 placeholder="Tell us a bit about yourself and your career goals..."
                 disabled={isLoading}
-                className={errors.bio ? "border-red-500 focus-visible:ring-red-500" : ""}
+                className={
+                  errors.bio ? "border-red-500 focus-visible:ring-red-500" : ""
+                }
                 {...form.register("bio", {
                   onChange: () => {
-                    if (errors.bio) trigger("bio")
+                    if (errors.bio) trigger("bio");
                   },
                 })}
               />
@@ -447,7 +533,11 @@ export function SignUpForm() {
                 Previous Step
               </Button>
 
-              <Button type="submit" disabled={isLoading} className="flex items-center">
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="flex items-center"
+              >
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -462,5 +552,5 @@ export function SignUpForm() {
         )}
       </form>
     </div>
-  )
+  );
 }

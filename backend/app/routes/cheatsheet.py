@@ -23,7 +23,8 @@ async def generate_cheatsheet(
 ):
     try: 
         pdf_filename = resume_pdf.filename
-        resume_text = extract_text_from_pdf(resume_pdf)
+        resume_content = await resume_pdf.read()
+        resume_text = extract_text_from_pdf(resume_content)
         res = get_interview_cheatsheet(resume_text, job_description, cheatsheet_type)
         
         if res is None:

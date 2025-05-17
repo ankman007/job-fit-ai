@@ -48,13 +48,14 @@ def create_app():
 
     Base.metadata.create_all(bind=engine)
 
-    # Routes
     from app.routes.auth import router as auth_router
     from app.routes.cheatsheet import router as cheatsheet_router
     from app.routes.user import router as user_router
+    from app.routes.health import router as health_router
 
     app.include_router(auth_router, prefix="/auth")
     app.include_router(cheatsheet_router, prefix="/cheatsheet")
     app.include_router(user_router, prefix="/user")
+    app.include_router(health_router, prefix="/health")
 
     return app

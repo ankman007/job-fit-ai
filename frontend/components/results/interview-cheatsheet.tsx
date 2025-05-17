@@ -78,7 +78,7 @@ export default function InterviewerResultsPage({ sheet }: any) {
                 /> */}
                 <SkillGaps data={sheet.skillGaps} />
                 <ScreeningQuestions data={sheet.screeningQuestions} />
-                {/* <InterviewRecommendation data={sheet.interviewRecommendation} /> */}
+                <InterviewRecommendation data={sheet.interviewRecommendation} />
               </div>
             </div>
           </div>

@@ -53,7 +53,7 @@ function ResultsPage() {
           skillAssessment: (sheet.content as any).skill_assessment,
           conceptRefresh: (sheet.content as any).concept_refresh,
           interviewQuestions: (sheet.content as any).interview_questions,
-          companyInsights: (sheet.content as any).company_insights,
+          companyInsights: (sheet.content as any).company_insights, 
         }
       : null;
     console.log("candidateCheatsheet", candidateCheatsheet);
