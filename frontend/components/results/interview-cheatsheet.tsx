@@ -60,6 +60,7 @@ export default function InterviewerResultsPage({ sheet }: any) {
             </div>
           </div>
 
+        </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-1">
               <div className="space-y-8">
@@ -70,14 +71,14 @@ export default function InterviewerResultsPage({ sheet }: any) {
 
             <div className="lg:col-span-2">
               <div className="space-y-8">
-                <InterviewRecommendation data={sheet.interviewRecommendation} />
-                <ScreeningQuestions data={sheet.screeningQuestions} />
-                <EducationExperience
+                <SkillsAssessment data={sheet.skillAssessment} />
+                {/* <EducationExperience
                   education={sheet.education}
                   experience={sheet.experience}
-                />
-                {/* <SkillsAssessment data={sheet.skills} /> */}
+                /> */}
                 <SkillGaps data={sheet.skillGaps} />
+                <ScreeningQuestions data={sheet.screeningQuestions} />
+                {/* <InterviewRecommendation data={sheet.interviewRecommendation} /> */}
               </div>
             </div>
           </div>
@@ -107,7 +108,6 @@ export default function InterviewerResultsPage({ sheet }: any) {
               </Button>
             </div>
           </div>
-        </div>
       </div>
     </main>
   );

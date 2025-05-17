@@ -1,25 +1,27 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChevronDown, ChevronUp, AlertTriangle } from "lucide-react"
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChevronDown, ChevronUp, AlertTriangle } from "lucide-react";
 
 interface SkillGap {
-  experience_level: string
-  gap_level: string
-  recommendation: string
-  skill_name: string
+  experience_level: string;
+  gap_level: string;
+  recommendation: string;
+  skill_name: string;
 }
 
 interface SkillGapsProps {
-  data: SkillGap[]
+  data: SkillGap[];
 }
 
 export function SkillGaps({ data }: SkillGapsProps) {
-  const [isExpanded, setIsExpanded] = useState(true)
+  console.log("SkillGaps data", data);
 
-  const criticalGaps = data.filter(gap => gap.gap_level === "Critical Gap")
-  const minorGaps = data.filter(gap => gap.gap_level !== "Critical Gap")
+  const [isExpanded, setIsExpanded] = useState(true);
+
+  const criticalGaps = data.filter((gap) => gap.gap_level === "Critical Gap");
+  const minorGaps = data.filter((gap) => gap.gap_level !== "Critical Gap");
 
   return (
     <Card>
@@ -52,10 +54,16 @@ export function SkillGaps({ data }: SkillGapsProps) {
                     className="border border-red-200 rounded-md p-4 bg-red-50"
                   >
                     <h4 className="font-medium mb-2">{gap.skill_name}</h4>
-                    <div className="bg-white p-3 rounded border border-red-100">
-                      <h5 className="text-sm font-medium mb-1">Recommendation</h5>
-                      <p className="text-sm text-gray-600">{gap.recommendation}</p>
-                    </div>
+                    {gap.recommendation && (
+                      <div className="bg-white p-3 rounded border border-red-100">
+                        <h5 className="text-sm font-medium mb-1">
+                          Recommendation
+                        </h5>
+                        <p className="text-sm text-gray-600">
+                          {gap.recommendation}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -64,7 +72,9 @@ export function SkillGaps({ data }: SkillGapsProps) {
 
           {minorGaps.length > 0 && (
             <div>
-              <h3 className="text-lg font-medium text-amber-600 mb-3">Minor Gaps</h3>
+              <h3 className="text-lg font-medium text-amber-600 mb-3">
+                Minor Gaps
+              </h3>
               <div className="space-y-4">
                 {minorGaps.map((gap, index) => (
                   <div
@@ -73,8 +83,12 @@ export function SkillGaps({ data }: SkillGapsProps) {
                   >
                     <h4 className="font-medium mb-2">{gap.skill_name}</h4>
                     <div className="bg-white p-3 rounded border border-amber-100">
-                      <h5 className="text-sm font-medium mb-1">Recommendation</h5>
-                      <p className="text-sm text-gray-600">{gap.recommendation}</p>
+                      <h5 className="text-sm font-medium mb-1">
+                        Recommendation
+                      </h5>
+                      <p className="text-sm text-gray-600">
+                        {gap.recommendation}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -84,5 +98,5 @@ export function SkillGaps({ data }: SkillGapsProps) {
         </CardContent>
       )}
     </Card>
-  )
+  );
 }

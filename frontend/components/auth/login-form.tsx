@@ -16,8 +16,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginAndStartTimer } from "@/redux/slices/authSlice";
 import { setUserDetails } from "@/redux/slices/userSlice";
 import { setCheatsheets } from "@/redux/slices/cheatsheetSlice";
-
-const apiBaseURL = "http://localhost:8000";
+import { apiBaseURL } from "@/utils";
+import type { AppDispatch } from '@/redux/store';
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -29,7 +29,7 @@ type LoginFormValues = z.infer<typeof loginSchema>
 
 export function LoginForm() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 

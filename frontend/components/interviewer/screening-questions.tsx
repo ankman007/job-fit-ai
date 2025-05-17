@@ -9,8 +9,8 @@ interface Question {
   question: string
   purpose: string
   expectedAnswer?: string
-  category: "technical" | "behavioral" | "experience" | "cultural"
-  priority: "high" | "medium" | "low"
+  category: "technical" | "behavioral" | "experience" | "cultural | project"
+  priority: "High" | "Medium" | "Low"
 }
 
 interface ScreeningQuestionsProps {
@@ -18,8 +18,6 @@ interface ScreeningQuestionsProps {
 }
 
 export function ScreeningQuestions({ data }: ScreeningQuestionsProps) {
-  console.log("SkillGaps data", data);
-
   const [isExpanded, setIsExpanded] = useState(true)
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
 
@@ -39,6 +37,8 @@ export function ScreeningQuestions({ data }: ScreeningQuestionsProps) {
         return <span className="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Experience</span>
       case "cultural":
         return <span className="bg-teal-100 text-teal-800 text-xs px-2 py-1 rounded-full">Cultural Fit</span>
+      case "project":
+        return <span className="bg-teal-100 text-teal-800 text-xs px-2 py-1 rounded-full">Cultural Fit</span>
       default:
         return null
     }
@@ -46,11 +46,11 @@ export function ScreeningQuestions({ data }: ScreeningQuestionsProps) {
 
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
-      case "high":
+      case "High":
         return <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">High Priority</span>
-      case "medium":
+      case "Medium":
         return <span className="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full">Medium Priority</span>
-      case "low":
+      case "Low":
         return <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">Low Priority</span>
       default:
         return null

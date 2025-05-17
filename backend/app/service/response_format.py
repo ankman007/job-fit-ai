@@ -213,7 +213,7 @@ interviewer_schema = {
         },
         "candidate_summary": {"type": "string"}
       },
-      "required": ["full_name", "email", "candidate_summary"]
+      "required": ["full_name", "current_job_title", "email", "location", "candidate_summary", "top_skills"]
     },
     "compatibility_score": {
       "type": "object",
@@ -286,7 +286,8 @@ interviewer_schema = {
           "recommendation": {"type": "string"},
           "gap_level": {"type": "string", "enum": ["Critical Gap", "Minor Gap"]}
         }
-      }
+      },
+      "required": ["skill_name", "experience_level", "recommendation", "gap_level"]
     },
     "recommended_screening_questions": {
       "type": "array",

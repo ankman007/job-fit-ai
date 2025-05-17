@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 
 import InterviewerResultsPage from "@/components/results/interview-cheatsheet";
 import CandidateResultsPage from "@/components/results/candidate.cheatsheet";
+import { SkillAssessment } from "@/components/skill-assessment";
 
 function ResultsPage() {
   const router = useRouter();
@@ -70,7 +71,8 @@ function ResultsPage() {
           skills: (sheet.content as any).candidate_overview.top_skills,
           education: (sheet.content as any).education,
           experience: (sheet.content as any).experience,
-          skillGaps: (sheet.content as any).skill_gaps_and_concerns, 
+          skillGaps: (sheet.content as any).skill_gaps_and_concerns,
+          skillAssessment: (sheet.content as any).skills_assessment,
           screeningQuestions: (sheet.content as any)
             .recommended_screening_questions,
           interviewRecommendation: (sheet.content as any)

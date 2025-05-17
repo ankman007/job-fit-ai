@@ -4,13 +4,27 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChevronDown, ChevronUp } from "lucide-react"
 
+interface SkillItem {
+  assessment: string
+  category: string
+  skill_name: string
+}
+
 interface SkillsAssessmentProps {
-  data: string[] // Flat list of skill strings
+  data: SkillItem[]
 }
 
 export function SkillsAssessment({ data }: SkillsAssessmentProps) {
-  
   const [isExpanded, setIsExpanded] = useState(true)
+
+  // Group skills by category
+  const groupedSkills = data.reduce((acc: Record<string, SkillItem[]>, item) => {
+    if (!acc[item.category]) {
+      acc[item.category] = []
+    }
+    acc[item.category].push(item)
+    return acc
+  }, {})
 
   return (
     <Card>
@@ -30,21 +44,34 @@ export function SkillsAssessment({ data }: SkillsAssessmentProps) {
 
       {isExpanded && (
         <CardContent>
-          <div className="space-y-2">
-            {data.length > 0 ? (
-              data.map((skill, index) => (
-                <div
-                  key={index}
-                  className="p-3 rounded-md border flex items-center justify-between"
-                >
-                  <span className="font-medium">{skill}</span>
-                  <span className="text-xs text-gray-500">No assessment data</span>
+          {Object.keys(groupedSkills).length > 0 ? (
+            Object.entries(groupedSkills).map(([category, skills]) => (
+              <div key={category} className="mb-4">
+                <h4 className="text-sm font-semibold mb-2 text-gray-700">{category}</h4>
+                <div className="space-y-2">
+                  {skills.map((skill, index) => (
+                    <div
+                      key={index}
+                      className="p-3 rounded-md border flex items-center justify-between"
+                    >
+                      <span className="font-medium">{skill.skill_name}</span>
+                      <span
+                        className={`text-xs font-semibold px-2 py-1 rounded ${
+                          skill.assessment === "meets"
+                            ? "text-green-700 bg-green-100"
+                            : "text-red-700 bg-red-100"
+                        }`}
+                      >
+                        {skill.assessment === "meets" ? "Meets" : "Below"}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              ))
-            ) : (
-              <p className="text-sm text-gray-500">No skills provided.</p>
-            )}
-          </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-sm text-gray-500">No skills provided.</p>
+          )}
         </CardContent>
       )}
     </Card>

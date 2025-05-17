@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
-
+import { AppThunk } from '../store';
 interface RootState {
   auth: AuthState;
 }
@@ -71,50 +71,48 @@ export const authSlice = createSlice({
 
 export const { setAuthData, clearAuthData } = authSlice.actions;
 
-export const loginAndStartTimer =
-  (accessToken: string, durationMs: number = SESSION_DURATION_MS) =>
-  (dispatch: Dispatch) => {
-    if (autoLogoutTimerId) {
-      clearTimeout(autoLogoutTimerId);
-    }
+export const logoutAndClearTimer = (): AppThunk => (dispatch) => {
+  dispatch(clearAuthData());
 
-    dispatch(setAuthData({ accessToken, durationMs }));
+  if (autoLogoutTimerId) {
+    clearTimeout(autoLogoutTimerId);
+    autoLogoutTimerId = null;
+  }
+};
 
-    autoLogoutTimerId = setTimeout(() => {
-      dispatch(logoutAndClearTimer());
-    }, durationMs);
-  };
+export const loginAndStartTimer = (
+  accessToken: string,
+  durationMs: number = SESSION_DURATION_MS
+): AppThunk => (dispatch) => {
+  if (autoLogoutTimerId) {
+    clearTimeout(autoLogoutTimerId);
+  }
 
-export const logoutAndClearTimer =
-  () =>
-  (dispatch: Dispatch) => {
-    dispatch(clearAuthData());
+  dispatch(setAuthData({ accessToken, durationMs }));
 
-    if (autoLogoutTimerId) {
-      clearTimeout(autoLogoutTimerId);
-      autoLogoutTimerId = null;
-    }
-  };
+  autoLogoutTimerId = setTimeout(() => {
+    dispatch(logoutAndClearTimer());
+  }, durationMs);
+};
 
-export const initializeAuth =
-  () =>
-  (dispatch: Dispatch, getState: () => RootState) => {
-    const { accessToken, expiryTime } = getState().auth;
+export const initializeAuth = (): AppThunk => (dispatch, getState) => {
+  const { accessToken, expiryTime } = getState().auth;
 
-    if (accessToken && expiryTime) {
-      const remainingTimeMs = expiryTime - Date.now();
+  if (accessToken && expiryTime) {
+    const remainingTimeMs = expiryTime - Date.now();
 
-      if (remainingTimeMs > 0) {
-        if (autoLogoutTimerId) {
-          clearTimeout(autoLogoutTimerId);
-        }
-        autoLogoutTimerId = setTimeout(() => {
-          dispatch(logoutAndClearTimer());
-        }, remainingTimeMs);
-      } else {
-        dispatch(logoutAndClearTimer());
+    if (remainingTimeMs > 0) {
+      if (autoLogoutTimerId) {
+        clearTimeout(autoLogoutTimerId);
       }
+      autoLogoutTimerId = setTimeout(() => {
+        dispatch(logoutAndClearTimer());
+      }, remainingTimeMs);
+    } else {
+      dispatch(logoutAndClearTimer());
     }
-  };
+  }
+};
+
 
 export default authSlice.reducer;

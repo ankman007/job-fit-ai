@@ -10,8 +10,7 @@ import type { AppDispatch } from "../redux/store";
 import { RootState } from "../redux/store";
 import Head from "next/head";
 import { isTokenExpired } from "@/utils";
-
-const apiBaseURL = "http://localhost:8000";
+import { apiBaseURL } from "../utils";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch<AppDispatch>();

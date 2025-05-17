@@ -17,8 +17,7 @@ import {
   setCurrentCheatsheet,
   addCheatsheet,
 } from "@/redux/slices/cheatsheetSlice";
-
-const apiBaseURL = "http://localhost:8000";
+import { apiBaseURL } from "../utils";
 
 export function CheatsheetGenerator() {
   const [isSubmitting, setIsSubmitting] = useState(false);
