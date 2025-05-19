@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useEffect } from "react";
 import { usePathname, useRouter, useParams } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 import InterviewerResultsPage from "@/components/results/interview-cheatsheet";
 import CandidateResultsPage from "@/components/results/candidate.cheatsheet";

@@ -6,10 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileUploader } from "@/components/file-uploader";
-import { UserToggle } from "@/components/user-toggle";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "./ui/use-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { User, Users } from "lucide-react";
@@ -31,9 +30,13 @@ export function CheatsheetGenerator() {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
 
+  const wordCount = jobDescription.trim() === ""
+    ? 0
+    : jobDescription.trim().split(/\s+/).length;
+
   const handleRoleToggle = (role: "candidate" | "interviewer") => {
     setIsInterviewer(role === "interviewer");
-    setCheatsheetType(role);  
+    setCheatsheetType(role);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,12 +60,21 @@ export function CheatsheetGenerator() {
       return;
     }
 
+    if (wordCount < 120) {
+      toast({
+        title: "Job description too short",
+        description: "Please provide at least 120 words for better results.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     const formData = new FormData();
     formData.append("resume_pdf", uploadedFile);
     formData.append("job_description", jobDescription);
-    formData.append("cheatsheet_type", cheatsheetType);  
+    formData.append("cheatsheet_type", cheatsheetType);
     try {
       const response = await fetch(`${apiBaseURL}/cheatsheet/generate`, {
         method: "POST",
@@ -129,34 +141,41 @@ export function CheatsheetGenerator() {
           <div>
             <h3 className="text-lg font-medium mb-2">Upload Your Resume</h3>
             <FileUploader
-              onFileUploaded={() => console.log("File uploaded")} 
-              onFileSelect={(file) => setUploadedFile(file)} 
+              onFileUploaded={() => console.log("File uploaded")}
+              onFileSelect={(file) => setUploadedFile(file)}
             />
           </div>
 
           <div>
             <h3 className="text-lg font-medium mb-2">Enter Job Description</h3>
             <Textarea
-              placeholder="Paste the job description here..."
+              placeholder="Tell us everything about the role — outline key responsibilities, required skills, qualifications, experience level, company culture, and any other relevant details. The more specific, the better!"
               className="min-h-[150px]"
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
               required
             />
+            <p className="text-sm mt-1 text-gray-500">{wordCount} words</p>
+            {wordCount > 0 && wordCount < 120 && (
+              <p className="text-sm text-red-500">
+                Please write a more detailed job description (at least 120 words).
+              </p>
+            )}
           </div>
 
           <Button
             className="w-full"
             size="lg"
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || wordCount < 120}
           >
             {isSubmitting ? "Generating..." : "Generate Interview Cheatsheet"}
           </Button>
 
-          <p className="text-sm text-gray-500 text-center">
-            Our AI will analyze your resume and the job description to create a
-            personalized interview preparation guide.
+          <p className="text-sm text-gray-400 text-center mt-2">
+            To get the best results, use a real and specific job description and
+            resume. Our AI needs detailed information to generate accurate
+            interview guides.
           </p>
         </form>
       </CardContent>

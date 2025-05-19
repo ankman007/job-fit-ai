@@ -20,6 +20,7 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
 import { apiBaseURL } from "@/utils";
+import { useToast } from "@/hooks/use-toast";
 
 const signupSchema = z
   .object({
@@ -60,6 +61,7 @@ type SignUpFormValues = z.infer<typeof signupSchema>;
 
 export function SignUpForm() {
   const router = useRouter();
+  const { toast } = useToast();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);

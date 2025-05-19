@@ -124,7 +124,7 @@ export function Footer() {
                   Pricing
                 </span>
               </li>
-              {/* <li>
+              <li>
                 <Link
                   href="/resume-templates"
                   className="text-teal-300 hover:text-white font-medium transition-colors flex items-center cursor-pointer"
@@ -135,7 +135,7 @@ export function Footer() {
                     New
                   </span>
                 </Link>
-              </li> */}
+              </li>
             </ul>
           </div>
 

@@ -1,4 +1,4 @@
-// 'use client';
+'use client';
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
@@ -7,14 +7,20 @@ import { Download } from "lucide-react";
 import { ResumeTemplateAccess } from "@/components/resume-template-access";
 import { useState, useRef } from "react";
 
-import type { Metadata } from "next";
-export const metadata: Metadata = {
-  title: "Free Resume Templates | JobFitAI",
-  description:
-    "Download free professional resume templates to help you land your dream job",
-};
+// import type { Metadata } from "next";
+// export const metadata: Metadata = {
+//   title: "Free Resume Templates | JobFitAI",
+//   description:
+//     "Download free professional resume templates to help you land your dream job",
+// };
 
 export default function ResumeTemplatesPage() {
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <main className="min-h-screen">
@@ -39,6 +45,7 @@ export default function ResumeTemplatesPage() {
                 <Button
                   size="lg"
                   className="bg-white text-teal-700 hover:bg-teal-50"
+                  onClick={() => scrollToSection("access-templates")} // 👈 Added scroll
                 >
                   <Download className="mr-2 h-4 w-4" />
                   Browse Templates
