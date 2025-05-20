@@ -20,7 +20,6 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
 import { apiBaseURL } from "@/utils";
-import { useToast } from "@/hooks/use-toast";
 
 const signupSchema = z
   .object({
@@ -61,7 +60,6 @@ type SignUpFormValues = z.infer<typeof signupSchema>;
 
 export function SignUpForm() {
   const router = useRouter();
-  const { toast } = useToast();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
@@ -132,6 +130,7 @@ export function SignUpForm() {
         location: data.location,
         bio: data.bio,
       };
+
       const response = await fetch(`${apiBaseURL}/auth/sign-up`, {
         method: "POST",
         headers: {
@@ -141,12 +140,17 @@ export function SignUpForm() {
       });
 
       if (!response.ok) {
-        throw new Error("Signup failed. Please try again.");
+        const errorData = await response.json();
+        throw new Error(
+          errorData.message || "Signup failed. Please try again."
+        );
       }
-
+      
       router.push("/auth/login");
-    } catch (err) {
-      setError("An error occurred during sign up. Please try again.");
+    } catch (err: any) {
+      const message =
+        err?.message || "An error occurred during sign up. Please try again.";
+      setError(message);
     } finally {
       setIsLoading(false);
     }
@@ -187,7 +191,6 @@ export function SignUpForm() {
           <span>
             Step {currentStep} of {totalSteps}
           </span>
-          <span>{Math.round(progressPercentage)}% Complete</span>
         </div>
         <Progress value={progressPercentage} className="h-2" />
       </div>

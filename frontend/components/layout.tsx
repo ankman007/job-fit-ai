@@ -1,7 +1,5 @@
 'use client';
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails, clearUserDetails } from "@/redux/slices/userSlice";
 import { setCheatsheets, clearCheatsheets } from "@/redux/slices/cheatsheetSlice";
@@ -55,7 +53,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         return;
       }
 
-      // Check if the token is expired
       const isTokenValid = !isTokenExpired(access);
       if (!isTokenValid) {
         console.warn("Token expired, clearing authentication...");

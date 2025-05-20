@@ -97,24 +97,35 @@ export function SkillGaps({ data }: SkillGapsProps) {
               </div>
             </div>
           )}
+          {minorGaps.length > 0 && (
+            <div className="mb-6">
+              <h3 className="text-lg font-medium text-red-600 mb-3 flex items-center">
+                <AlertTriangle className="h-5 w-5 mr-2" />
+                Critical Gaps
+              </h3>
 
-          {minorGaps.map((gap, index) => (
-            <div
-              key={index}
-              className="border border-amber-200 rounded-md p-4 bg-amber-50"
-            >
-              <div className="flex justify-between items-start">
-                <h4 className="font-medium mb-2">{gap.skill_name}</h4>
-                <div className="ml-2 flex items-center">
-                  {getImportanceStars(gap.gap_severity)}
+              <div className="space-y-4"></div>
+              {minorGaps.map((gap, index) => (
+                <div
+                  key={index}
+                  className="border border-amber-200 rounded-md p-4 bg-amber-50"
+                >
+                  <div className="flex justify-between items-start">
+                    <h4 className="font-medium mb-2">{gap.skill_name}</h4>
+                    <div className="ml-2 flex items-center">
+                      {getImportanceStars(gap.gap_severity)}
+                    </div>
+                  </div>
+                  <div className="bg-white p-3 rounded border border-amber-100">
+                    <h5 className="text-sm font-medium mb-1">Recommendation</h5>
+                    <p className="text-sm text-gray-600">
+                      {gap.recommendation}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="bg-white p-3 rounded border border-amber-100">
-                <h5 className="text-sm font-medium mb-1">Recommendation</h5>
-                <p className="text-sm text-gray-600">{gap.recommendation}</p>
-              </div>
+              ))}
             </div>
-          ))}
+          )}
         </CardContent>
       )}
     </Card>

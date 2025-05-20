@@ -49,16 +49,17 @@ export function LoginForm() {
     register,
     handleSubmit,
     formState: { errors, dirtyFields },
-    trigger,
   } = form;
 
   const handleLogin = async (data: LoginFormValues) => {
     try {
+      console.log("Sending login request...");
       const response = await fetch(`${apiBaseURL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      console.log("Received response:", response.status);
 
       if (!response.ok) {
         let errorMsg = "Login failed";
@@ -110,6 +111,8 @@ export function LoginForm() {
   };
 
   const onSubmit = async (data: LoginFormValues) => {
+    console.log("Submitting with data:", data);
+
     setIsLoading(true);
     setError(null);
 
@@ -167,11 +170,7 @@ export function LoginForm() {
           className={
             errors.email ? "border-red-500 focus-visible:ring-red-500" : ""
           }
-          {...register("email", {
-            onChange: () => {
-              if (errors.email) trigger("email");
-            },
-          })}
+          {...register("email")}
         />
         {errors.email && (
           <p className="text-sm text-red-500 flex items-center mt-1">
@@ -208,11 +207,7 @@ export function LoginForm() {
           className={
             errors.password ? "border-red-500 focus-visible:ring-red-500" : ""
           }
-          {...register("password", {
-            onChange: () => {
-              if (errors.password) trigger("password");
-            },
-          })}
+          {...register("password")}
         />
         {errors.password && (
           <p className="text-sm text-red-500 flex items-center mt-1">
@@ -221,20 +216,6 @@ export function LoginForm() {
           </p>
         )}
       </div>
-
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id="remember"
-          {...register("rememberMe")}
-          onCheckedChange={(checked) => {
-            form.setValue("rememberMe", checked === true);
-          }}
-        />
-        <Label htmlFor="remember" className="text-sm font-normal">
-          Remember me
-        </Label>
-      </div>
-
       <Button type="submit" className="w-full" disabled={isLoading}>
         {isLoading ? (
           <>
