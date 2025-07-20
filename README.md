@@ -6,17 +6,13 @@ Job Fit AI is an AI-powered web platform that streamlines interview preparation 
 
 🔗 [Live Demo](https://job-fit-ai.vercel.app/)
 
----
-
-## Tech Stack & Deployement
+## Technology Stack
 
 This project is built using modern web technologies and deployed entirely on free-tier services:
 * Frontend: Next.js (hosted on Vercel)
 * Backend: FastAPI (hosted on Render)
 * Database: PostgreSQL (managed via Neon)
 * Other Tools: Docker, Redux, Shadcn UI, Google Gemini API
-
----
 
 ## Project Setup Guide
 
@@ -55,8 +51,6 @@ npm install
 npm run dev
 ```
 The frontend application should now be running and accessible on `http://localhost:3000`
-
----
 
 ## Support the Project
 
