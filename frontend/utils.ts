@@ -13,7 +13,8 @@ interface DecodedToken {
 // export const apiBaseURL = "http://localhost:8000";
 
 // Prod URL
-export const apiBaseURL = "https://job-fit-ai-production.up.railway.app";
+// export const apiBaseURL = "https://job-fit-ai-production.up.railway.app";
+export const apiBaseURL = "https://job-fit-ai.onrender.com/";
 
 export const fetchWithAuth = async (url: string, options: RequestInit = {}): Promise<Response> => {
     const accessToken = useSelector((state: RootState) => state.auth.accessToken);
