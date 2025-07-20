@@ -1,44 +1,20 @@
 ## Project Description
 
-Job Fit AI is an AI-powered web platform designed to enhance the interview preparation process for both candidates and interviewers. It leverages advanced large language models (LLMs) to analyze resumes and job descriptions, providing tailored insights and materials.
+Job Fit AI is an AI-powered web platform that streamlines interview preparation for both job seekers and interviewers using LLMs.
+* For candidates, it generates a personalized, AI-curated cheatsheet to guide preparation.
+* For interviewers, it offers a comprehensive candidate analysis and job compatibility insights.
 
-**For Job Seekers:**
-
-The platform generates a personalized AI-powered cheatsheet to aid in preparation, including:
-
-* Resume SWOT analysis (Strengths, Weaknesses, Opportunities, Threats)
-* Identification of skill gaps based on the job description
-* Suggestions for concept refresh or study areas
-* Predicted interview questions relevant to the role and resume
-* Insights about the target company
-
-**For Interviewers:**
-
-Job Fit AI offers a comprehensive evaluation toolkit to streamline the assessment process, featuring:
-
-* A concise candidate overview
-* Analysis of the candidate's experience and education history
-* A compatibility score indicating the fit between the candidate and the job
-* An assessment of the candidate's skills
-* Identified skill gaps and potential concerns
-* Recommended screening questions tailored to the candidate and role
-* Suggestions for interview strategy
-
-By providing these detailed analyses and preparation tools, Job Fit AI helps both parties prepare more efficiently and make more informed decisions during the hiring process.
-
-**[Project Link](https://job-fit-ai.vercel.app/)**
+🔗 [Live Demo](https://job-fit-ai.vercel.app/)
 
 ---
 
-## Technology Stack
+## Tech Stack & Deployement
 
-* FastAPI 
-* Next.js 
-* PostgreSQL
-* Docker 
-* Google Cloud AI API
-* Redux 
-* Shadcn UI
+This project is built using modern web technologies and deployed entirely on free-tier services:
+* Frontend: Next.js (hosted on Vercel)
+* Backend: FastAPI (hosted on Render)
+* Database: PostgreSQL (managed via Neon)
+* Other Tools: Docker, Redux, Shadcn UI, Google Gemini API
 
 ---
 
@@ -59,6 +35,7 @@ Open the newly created .env file and replace the placeholder values with your ow
 - SECRET_KEY: Provide a unique secret key for your application.
 - GEMINI_API_KEY: Obtain your API key from [Google AI Studio](https://aistudio.google.com/) and insert it here.
 - DATABASE_URL: Specify the connection URL for your PostgreSQL database instance.
+- ALGORITHM: Use HS256, common  algorithm for JWT auth in FastAPI
 
 ### 3. Build and Run the Backend Docker Image
 
