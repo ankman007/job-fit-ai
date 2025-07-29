@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from loguru import logger
 from sqlalchemy.orm import Session
 
-from app.models import InterviewCheatSheetModel
+from app.db.models import InterviewCheatSheetModel
 from app import get_db
 from app.routes.auth import get_current_user
 

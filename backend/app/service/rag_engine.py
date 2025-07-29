@@ -1,6 +1,7 @@
 from sentence_transformers import SentenceTransformer
 import faiss
 import numpy as np
+from loguru import logger
 
 class RAGEngine:
     def __init__(self):
@@ -16,4 +17,10 @@ class RAGEngine:
     def retrieve(self, query: str, top_k: int = 3) -> list[str]:
         query_emb = self.model.encode([query])
         D, I = self.index.search(np.array(query_emb), top_k)
-        return [self.docs[i] for i in I[0] if i < len(self.docs)]
+
+        if I is None or len(I) == 0 or len(I[0]) == 0:
+            logger.warning("No similar documents found for the given query.")
+            return []
+
+        valid_indices = [i for i in I[0] if 0 <= i < len(self.docs)]
+        return [self.docs[i] for i in valid_indices]

@@ -2,11 +2,10 @@ import google.generativeai as genai
 from loguru import logger
 from os import getenv
 import json
-import re
 import traceback
 import traceback
 
-from app.service.response_format import candidate_schema, interviewer_schema
+from app.schemas.response import candidate_schema, interviewer_schema
 from app.service.prompts import get_prompt
 from app.service.rag_engine import RAGEngine
 
