@@ -3,7 +3,7 @@ from loguru import logger
 from sqlalchemy.orm import Session
 import traceback
 
-from app.service.llm_service import get_interview_cheatsheet
+from app.service.interview_cheatsheet import get_interview_cheatsheet
 from app.service.extract_pdf import extract_text_from_pdf
 from app.db.models import InterviewCheatSheetModel
 from app import get_db

@@ -1,24 +1,14 @@
-import google.generativeai as genai
+import traceback
 from loguru import logger
-from os import getenv
-import json
-import traceback
-import traceback
 
 from app.schemas.response import candidate_schema, interviewer_schema
 from app.service.prompts import get_prompt
 from app.service.rag_engine import RAGEngine
+from app.service.llm.gemini import GeminiLLM
 
        
 def get_interview_cheatsheet(resume_text: str, job_description: str, cheatsheet_type: str = "interviewer") -> dict | None:
     try:
-        GEMINI_API_KEY = getenv('GEMINI_API_KEY') 
-        if not GEMINI_API_KEY:
-            logger.error("GEMINI_API_KEY not found in environment variables.")
-            return None
-
-        genai.configure(api_key=GEMINI_API_KEY)
-        
         rag_engine = RAGEngine()
         extra_contexts = rag_engine.retrieve(job_description, top_k=3)
         extra_context = "\n\n".join(extra_contexts) if extra_contexts else ""
@@ -26,23 +16,8 @@ def get_interview_cheatsheet(resume_text: str, job_description: str, cheatsheet_
         schema = interviewer_schema if cheatsheet_type == "interviewer" else candidate_schema
         prompt = get_prompt(resume_text, job_description, cheatsheet_type, extra_context)
         
-        model = genai.GenerativeModel(model_name="gemini-1.5-flash")
-
-        response = model.generate_content(
-            prompt,
-            generation_config={
-                'max_output_tokens': 5000,
-                'temperature': 0.1,
-                'response_mime_type': 'application/json',
-                'response_schema': schema,
-            },
-            safety_settings=[],
-            tools=[],
-        )
-
-        message = response.text
-        res = json.loads(message)
-        return res
+        llm = GeminiLLM()
+        return llm.generate(prompt, schema)
 
     except Exception as error:
         logger.error(f"Encountered error during interview cheatsheet generation: {error}")
