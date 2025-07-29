@@ -1,18 +1,30 @@
 ## Project Description
 
-Job Fit AI is an AI-powered web platform that streamlines interview preparation for both job seekers and interviewers using LLMs.
+Job Prep AI is an AI-powered interview preparation platform that leverages cutting-edge Retrieval-Augmented Generation (RAG) and LLMs to streamline the hiring process for both candidates and interviewers.
 * For candidates, it generates a personalized, AI-curated cheatsheet to guide preparation.
 * For interviewers, it offers a comprehensive candidate analysis and job compatibility insights.
 
-🔗 [Live Demo](https://job-fit-ai.vercel.app/)
+## Tech Stack
 
-## Technology Stack
+| Layer      | Technology |
+|------------|------------|
+| Frontend   | **Next.js**, **Shadcn UI**, **Redux** |
+| Backend    | **FastAPI**, **LangChain**, **FAISS**, **sentence-transformers** |
+| LLM        | **Google Gemini Flash 2.0 API** |
+| DB         | **PostgreSQL** via **Neon** |
+| Embeddings | **all-MiniLM-L6-v2** from `sentence-transformers` |
+| Deployment | **Docker**, **Vercel**, **Render** |
 
-This project is built using modern web technologies and deployed entirely on free-tier services:
-* Frontend: Next.js (hosted on Vercel)
-* Backend: FastAPI (hosted on Render)
-* Database: PostgreSQL (managed via Neon)
-* Other Tools: Docker, Redux, Shadcn UI, Google Gemini API
+---
+
+## Architecture
+
+- Retrieval-Augmented Generation (RAG) pipeline using FAISS + sentence-transformers
+- LangChain for orchestration
+- Custom context injection using resume + job description
+- JSON-structured LLM responses 
+- Modular FastAPI services
+- Schema-based response validation
 
 ## Project Setup Guide
 
