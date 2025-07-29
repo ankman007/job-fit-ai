@@ -1,4 +1,4 @@
-def get_prompt(resume_text, job_description, role):
+def get_prompt(resume_text, job_description, role, extra_context):
     if role == "candidate":
         instructions = """
         You are a professional candidate preparing for a job interview. Based on the resume and job description below, generate a cheatsheet in JSON format that STRICTLY adheres to the provided schema. This cheatsheet should highlight your key skills, experiences, and accomplishments that are most relevant to the job description. Focus on preparing concise talking points and examples.
@@ -18,4 +18,7 @@ def get_prompt(resume_text, job_description, role):
 
     JOB DESCRIPTION:
     {job_description}
+    
+    ADDITIONAL CONTEXT:
+    {extra_context}    
     """
